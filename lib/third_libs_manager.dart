@@ -33,7 +33,6 @@ class ThirdLibsManager implements TDelegate {
   }
 
   void adapterScreen(context) {
-    ScreenUtil().setWidth(1920);
-    ScreenUtil().setHeight(1080);
+    ScreenUtil.init(context, width: 1920, height: 1080);
   }
 }

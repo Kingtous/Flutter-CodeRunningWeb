@@ -6,7 +6,7 @@ Image getImage(path) {
 
 Image loadImageFullScreen(BuildContext context, String imagePath) {
   return new Image.asset(imagePath,
-      fit: BoxFit.fill,
+      fit: BoxFit.cover,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height);
 }

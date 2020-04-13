@@ -1,10 +1,10 @@
-import 'package:code_running_front/res/styles.dart';
+import 'package:code_running_front/common/utils/px_utils.dart';
+import 'package:code_running_front/ui/code_editor.dart';
+import 'package:codemirror/codemirror.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:rich_code_editor/code_editor/widgets/code_editable_text.dart';
-import 'package:rich_code_editor/code_editor/widgets/code_text_field.dart';
-import 'package:rich_code_editor/rich_code_editor.dart';
+import 'package:universal_html/html.dart';
 
 class MainLoginPage extends StatefulWidget {
   final int networkId;
@@ -17,43 +17,34 @@ class MainLoginPage extends StatefulWidget {
 }
 
 class _MainLoginPageState extends State<MainLoginPage> {
-  CodeEditingController _codeEditingController = new CodeEditingController();
-
   // UI变量
-  String _codeDetail;
+  String _codemirrorId = "code-edit";
+  Map options = {'mode': 'clike', 'theme': 'monokai'};
+  CodeMirror _codeMirror;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        middle: Text(
-          "登录界面",
-          style: TextStyles.textWhite12,
+        appBar: AppBar(
+          title: Text(
+            "码上登录",
+            style: TextStyle(fontSize: sp(42)),
+          ),
+          backgroundColor: Colors.transparent,
         ),
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text("登录时间（时间戳）：" + widget.timestamps.toString()),
-            Text("ID：" + widget.networkId.toString()),
-            Container(
-              width: 0.8 * MediaQuery.of(context).size.width,
-              height: 200,
-              child: CodeTextField(
-                highlighter: DummyHighlighter(),
-                controller: _codeEditingController,
-                style: TextStyle(fontSize: 16.0, color: Colors.black),
-                onChanged: (s) {
-                  _codeDetail = s;
-                },
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        body: CodeEditor(
+          editorId: _codemirrorId,
+          height: 800,
+          width: 400,
+          initialOptions: options,
+          onEditorCreated: (CodeMirror mirror) {
+            _codeMirror = mirror;
+          },
+        ));
   }
 }
