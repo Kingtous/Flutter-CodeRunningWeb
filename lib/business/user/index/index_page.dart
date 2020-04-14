@@ -1,10 +1,12 @@
-import 'package:code_running_front/common/utils/image_utils.dart';
 import 'package:code_running_front/common/utils/px_utils.dart';
 import 'package:code_running_front/res/styles.dart';
+import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/third_libs_manager.dart';
 import 'package:code_running_front/ui/bar/index_appbar.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
+import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
+import 'package:code_running_front/utils/enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,6 +29,7 @@ class _IndexPageState extends State<IndexPage> {
             "images/background/02.jpg",
             fit: BoxFit.cover,
             placeholder: "images/placeholders/black.jpg",
+            imageType: ImageType.assets,
           ),
           SingleChildScrollView(
             child: Column(
@@ -68,7 +71,9 @@ class _IndexPageState extends State<IndexPage> {
                     FlatButton(
                         padding: EdgeInsets.all(16),
                         shape: StadiumBorder(),
-                        color: Colors.indigo,
+                        color: Theme
+                            .of(context)
+                            .accentColor,
                         child: Text("进入社区",
                             style: TextStyles.textStyle(fontSize: 24)),
                         onPressed: handleEnter),
@@ -113,7 +118,9 @@ class _IndexPageState extends State<IndexPage> {
     );
   }
 
-  void handleEnter() {}
+  void handleEnter() {
+    NavUtil.navigator().pushNamed(Routes.loginRoute);
+  }
 
   Widget introCards(String title, String content, FaIcon icon) {
     return Card(

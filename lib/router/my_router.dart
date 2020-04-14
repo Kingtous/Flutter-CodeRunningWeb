@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:code_running_front/business/main/view/index_page.dart';
-import 'package:code_running_front/business/main/view/main_login_page.dart';
+import 'package:code_running_front/business/user/index/index_page.dart';
+import 'package:code_running_front/business/user/login/login_page.dart';
 
-@autoRouter
+
+@MaterialAutoRouter()
 class $Router {
   @initial
   IndexPage indexRoute;
+  LoginPage loginRoute;
 
-  MainLoginPage loginRoute;
 }

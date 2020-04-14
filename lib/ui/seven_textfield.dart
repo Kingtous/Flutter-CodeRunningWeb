@@ -1,5 +1,3 @@
-
-import 'package:code_running_front/common/utils/px_utils.dart';
 import 'package:flutter/material.dart';
 
 class SevenTextField extends StatefulWidget {
@@ -37,9 +35,6 @@ class SevenTextField extends StatefulWidget {
 class _SevenTextFieldState extends State<SevenTextField> {
   bool _isEmpty = true;
 
-  String _seenImage = "images/input/set_password/visible.png";
-  String _hideImage = "images/input/set_password/invisible.png";
-
   bool _hidePassword = true;
 
   @override
@@ -58,10 +53,11 @@ class _SevenTextFieldState extends State<SevenTextField> {
           children: <Widget>[
             Center(
               child: TextField(
-                style: TextStyle(fontSize: sp(42)),
+                style: TextStyle(fontSize: 16),
                 cursorColor: Colors.black,
                 onEditingComplete: widget.onEditComplete,
                 cursorWidth: 1,
+                maxLength: 16,
                 controller: widget.textEditingController,
                 onChanged: (s) {
                   var str = s.trim();
@@ -74,11 +70,11 @@ class _SevenTextFieldState extends State<SevenTextField> {
                 },
                 obscureText: _hidePassword,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.all(8),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(90)),
                   ),
-                  labelStyle: TextStyle(fontSize: sp(42)),
+                  labelStyle: TextStyle(fontSize: 16),
                   labelText: widget.labelText,
                   hoverColor: Colors.black,
                   prefixIcon: widget.icon,
@@ -94,12 +90,10 @@ class _SevenTextFieldState extends State<SevenTextField> {
               },
               child: Container(
                 alignment: Alignment.centerRight,
-                margin: EdgeInsets.only(right: w(52)),
-                child: Image.asset(
-                  _hidePassword ? _hideImage : _seenImage,
-                  width: w(54),
-                  height: h(40),
-                ),
+                margin: EdgeInsets.only(right: 16.0, bottom: 16),
+                child: _hidePassword
+                    ? Icon(Icons.remove_red_eye)
+                    : Icon(Icons.panorama_fish_eye),
               ),
             )
                 : SizedBox(

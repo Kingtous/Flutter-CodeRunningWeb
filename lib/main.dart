@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/application/application.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/third_libs_manager.dart';
@@ -19,14 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '码上社区-Coder Community',
-      theme: ThemeData(
-          brightness: Brightness.light,
-          accentColor: Colors.pinkAccent,
-          primaryColor: Colors.indigo
-      ),
-      onGenerateRoute: Router.onGenerateRoute,
-      initialRoute: Router.indexRoute,
+        title: '码上社区-Coder Community',
+        theme: ThemeData(
+            brightness: Brightness.light,
+            accentColor: Colors.blueAccent,
+            primaryColor: Colors.black
+        ),
+        builder: ExtendedNavigator<Router>(router: Router())
     );
   }
 }

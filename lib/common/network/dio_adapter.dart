@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'http_utils.dart';
 
@@ -21,7 +20,7 @@ class DioAdapter implements HAdapter {
         connectTimeout: ctx.timeout == null ? HConstants.timeout : ctx.timeout,
         receiveTimeout: ctx.timeout == null ? HConstants.timeout : ctx.timeout,
         headers: ctx.headerMap == null
-            ? {HttpHeaders.userAgentHeader: "dio-3.0.8"}
+            ? {}
             : ctx.headerMap,
         contentType: ctx.contentType == null
             ? ContentType.json.toString()
@@ -54,21 +53,22 @@ class DioAdapter implements HAdapter {
       default:
         response = _dio.get(url);
     }
-
-    if (ctx.callback != null) {
       if (ctx.parser == null) {
         ctx.callback(HState.fail, Exception('callback must be with a parser'));
       }
-      response.then((response) {
-        /// can by some response.statusCode to make some regex
-        /// if(response.data.code!=200){ctx.callback(HState.fail,response.data.msg)}else ...
-        ctx.callback(HState.success, ctx.parser.parse(response.data));
-        debugPrint(response.data);
-      }).catchError((e) {
+    try {
+      var resp = await response;
+      var data = ctx.parser.parse(resp.data);
+      resp.data = data;
+      if (ctx.callback != null) {
+        ctx.callback(HState.success, data);
+      }
+      return resp;
+    } catch (e) {
+      if (ctx.callback != null) {
         ctx.callback(HState.fail, e);
-      });
+      }
+      return null;
     }
-
-    return response;
   }
 }
