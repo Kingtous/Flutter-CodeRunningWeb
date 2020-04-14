@@ -3,6 +3,8 @@ import 'package:code_running_front/common/utils/px_utils.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/third_libs_manager.dart';
 import 'package:code_running_front/ui/bar/index_appbar.dart';
+import 'package:code_running_front/ui/image_load_view.dart';
+import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,7 +23,11 @@ class _IndexPageState extends State<IndexPage> {
       backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
-          loadImageFullScreen(context, "images/background/02.jpg"),
+          ImageLoadView(
+            "images/background/02.jpg",
+            fit: BoxFit.cover,
+            placeholder: "images/placeholders/black.jpg",
+          ),
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -36,8 +42,9 @@ class _IndexPageState extends State<IndexPage> {
                       builder: (context, num) {
                         return Opacity(
                           opacity: num,
-                          child: Text(
-                            "码上社区",
+                          child: 
+                          TypeWriterText(
+                            ["码上社区"],
                             style: TextStyles.textStyle(fontSize: 24),
                           ),
                         );
@@ -50,8 +57,8 @@ class _IndexPageState extends State<IndexPage> {
                       builder: (context, num) {
                         return Opacity(
                           opacity: num,
-                          child: Text(
-                            "无限创作，分享你的创造力",
+                          child: TypeWriterText(
+                            ["无限创作，分享你的创造力"],
                             style: TextStyles.textStyle(fontSize: 22),
                           ),
                         );
@@ -69,49 +76,44 @@ class _IndexPageState extends State<IndexPage> {
                     ControlledAnimation(
                       duration: Duration(milliseconds: 1500),
                       tween: Tween(begin: 0.0, end: 1.0),
-                      builder: (c, n) =>
-                          Opacity(
-                            opacity: n,
-                            child: Wrap(
-                              spacing: 40,
-                              runSpacing: 5,
-                              alignment: WrapAlignment.spaceAround,
-                              children: <Widget>[
-                                introCards(
-                                    "随心",
-                                    "传统OJ平台只执行题目解答，而你可以在这里随时随地编写属于你自己的项目！",
-                                    FaIcon(FontAwesomeIcons.accessibleIcon,
-                                        size: 50)
-                                ),
-                                introCards(
-                                    "分享", "向全社区的用户分享你的新创意，并赢取社区积分，成为社区支柱！",
-                                    FaIcon(
-                                      FontAwesomeIcons.shareSquare, size: 50,)
-                                ),
-                                introCards(
-                                    "开源",
-                                    "项目完全开源，隐私性得以保证，并提供丰富的API支持，欢迎编写前端界面！",
-                                    FaIcon(FontAwesomeIcons.doorOpen, size: 50)
-                                )
-                              ],
-                            ),
-                          ),
+                      builder: (c, n) => Opacity(
+                        opacity: n,
+                        child: Wrap(
+                          spacing: 40,
+                          runSpacing: 5,
+                          alignment: WrapAlignment.spaceAround,
+                          children: <Widget>[
+                            introCards(
+                                "随心",
+                                "传统OJ平台只执行题目解答，而你可以在这里随时随地编写属于你自己的项目！",
+                                FaIcon(FontAwesomeIcons.accessibleIcon,
+                                    size: 50)),
+                            introCards(
+                                "分享",
+                                "向全社区的用户分享你的新创意，并赢取社区积分，成为社区支柱！",
+                                FaIcon(
+                                  FontAwesomeIcons.shareSquare,
+                                  size: 50,
+                                )),
+                            introCards(
+                                "开源",
+                                "项目完全开源，隐私性得以保证，并提供丰富的API支持，欢迎编写前端界面！",
+                                FaIcon(FontAwesomeIcons.doorOpen, size: 50))
+                          ],
+                        ),
+                      ),
                     )
                   ],
                 )
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 
-  void handleEnter() {
-
-  }
-
+  void handleEnter() {}
 
   Widget introCards(String title, String content, FaIcon icon) {
     return Card(
@@ -121,18 +123,21 @@ class _IndexPageState extends State<IndexPage> {
       child: Container(
         margin: EdgeInsets.all(h(20)),
         width: 250,
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Gaps.vGap(h(50)),
             icon,
             Gaps.vGap(h(50)),
-            Text(title, overflow: TextOverflow.fade,
+            Text(
+              title,
+              overflow: TextOverflow.fade,
               textAlign: TextAlign.center,
-              softWrap: true,),
+              softWrap: true,
+            ),
             Gaps.vGap(h(25)),
-            Text(content, overflow: TextOverflow.fade,
+            Text(content,
+                overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
                 softWrap: true),
           ],

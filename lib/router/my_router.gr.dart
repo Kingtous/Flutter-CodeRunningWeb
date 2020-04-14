@@ -4,19 +4,17 @@
 // AutoRouteGenerator
 // **************************************************************************
 
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:auto_route/router_utils.dart';
 import 'package:code_running_front/business/main/view/index_page.dart';
 import 'package:code_running_front/business/main/view/main_login_page.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class Router {
   static const indexRoute = '/';
   static const loginRoute = '/login-route';
-
   static GlobalKey<NavigatorState> get navigatorKey =>
       getNavigatorKey<Router>();
-
   static NavigatorState get navigator => navigatorKey.currentState;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -52,6 +50,5 @@ class Router {
 class MainLoginPageArguments {
   final int networkId;
   final int timestamps;
-
   MainLoginPageArguments({this.networkId, this.timestamps});
 }
