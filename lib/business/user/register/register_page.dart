@@ -8,6 +8,7 @@ import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
+import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:code_running_front/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,7 @@ class _UserRegisterPageState extends BaseLoadingPageState<UserRegisterPage> {
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
+                imageType: ImageType.assets,
                 placeholder: "images/placeholders/black.jpg"),
             Center(
               child: Card(

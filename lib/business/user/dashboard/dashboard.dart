@@ -1,6 +1,7 @@
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
+import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,6 +37,7 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         placeholder: "images/placeholders/black.jpg",
+            imageType: ImageType.assets,
       )),
     );
   }
