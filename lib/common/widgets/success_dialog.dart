@@ -36,7 +36,7 @@ class SuccessDialog extends Dialog {
                 children: <Widget>[
                   SizedBox(
                     child: new FlareActor(
-                      "animations/status/okay.flr",
+                      "assets/animations/status/okay.flr",
                       animation: "okay",
                     ),
                     width: 75,
