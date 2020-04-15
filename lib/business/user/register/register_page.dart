@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/models/request/req_register_entity.dart';
 import 'package:code_running_front/business/user/register/bloc.dart';
 import 'package:code_running_front/business/user/register/register_bloc.dart';
@@ -58,7 +59,7 @@ class _UserRegisterPageState extends BaseLoadingPageState<UserRegisterPage> {
           Timer(
               Duration(seconds: 2),
               () => saveUserRegisterData(state.entity.data).then((value) =>
-                  Router.navigator.pushNamedAndRemoveUntil(
+                  ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
                       Routes.userDashBoard, (route) => false)));
         }
       },

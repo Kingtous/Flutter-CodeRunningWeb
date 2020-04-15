@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/common/utils/px_utils.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
@@ -46,7 +47,7 @@ class _IndexPageState extends State<IndexPage> {
                       builder: (context, num) {
                         return Opacity(
                           opacity: num,
-                          child: 
+                          child:
                           TypeWriterText(
                             ["码上社区"],
                             style: TextStyles.textStyle(fontSize: 24),
@@ -123,7 +124,7 @@ class _IndexPageState extends State<IndexPage> {
     if (getUserInfo() == null)
       NavUtil.navigator().pushNamed(Routes.loginRoute);
     else {
-      Router.navigator.pushNamedAndRemoveUntil(
+      ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
           Routes.userDashBoard, (route) => false);
     }
   }

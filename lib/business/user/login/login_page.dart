@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/login/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
@@ -67,7 +68,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
             showSuccess(msg: _loginMsg);
             saveUserLoginData(curr.entity.data).then((value) =>
                 Timer(Duration(seconds: 2), () {
-                  Router.navigator.pushNamedAndRemoveUntil(
+                  ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
                       Routes.userDashBoard, (route) => false);
                 }));
           });
@@ -227,7 +228,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
 
   void handleRegister() {
     // jump
-    Router.navigator.pushNamed(Routes.userRegisterPage);
+    ExtendedNavigator.ofRouter<Router>().pushNamed(Routes.userRegisterPage);
   }
 
   void handleLoginBlocChanged(BuildContext context, LoginState state) {

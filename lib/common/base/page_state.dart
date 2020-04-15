@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/common/widgets/success_dialog.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/utils/sharedpreference_util.dart';
@@ -80,7 +81,7 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
           ),
           entryAnimation: EntryAnimation.DEFAULT,
           onOkButtonPressed: () {
-            Router.navigator.pop();
+            ExtendedNavigator.ofRouter<Router>().pop();
           },
         ));
   }
@@ -118,7 +119,7 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
   @override
   void logOut() async {
     await sp().remove("user");
-    Router.navigator.pushNamedAndRemoveUntil(
+    ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
         Routes.indexRoute, (route) => false);
   }
 }
