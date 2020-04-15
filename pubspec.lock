@@ -63,14 +63,14 @@ packages:
       name: auto_route
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.2"
+    version: "0.4.4"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.2"
+    version: "0.4.4"
   auto_size_text:
     dependency: "direct main"
     description:
@@ -190,13 +190,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.2.1"
-  codemirror:
-    dependency: "direct main"
-    description:
-      name: codemirror
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.5.15+5.52.2"
   collection:
     dependency: transitive
     description:
@@ -345,6 +338,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.8.0"
+  giffy_dialog:
+    dependency: "direct main"
+    description:
+      name: giffy_dialog
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.7.0"
   glob:
     dependency: transitive
     description:
@@ -408,6 +408,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  load:
+    dependency: "direct main"
+    description:
+      name: load
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.5+1"
   logging:
     dependency: transitive
     description:
@@ -693,20 +700,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.6"
-  universal_html:
-    dependency: "direct main"
-    description:
-      name: universal_html
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.2.2"
-  universal_io:
-    dependency: transitive
-    description:
-      name: universal_io
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1"
   url_launcher:
     dependency: "direct main"
     description:
@@ -770,13 +763,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.2.0"
-  zone_local:
-    dependency: transitive
-    description:
-      name: zone_local
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.2"
 sdks:
   dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.4 <2.0.0"

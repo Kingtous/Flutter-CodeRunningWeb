@@ -1,8 +1,7 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:load/load.dart';
 
 // ignore: must_be_immutable
 class LoadingDialog extends Dialog {
@@ -37,7 +36,7 @@ class LoadingDialog extends Dialog {
                     children: <Widget>[
                       SizedBox(
                         child: new FlareActor(
-                          "animations/status/loading.flr",
+                          "assets/animations/status/loading.flr",
                           animation: "spin2",
                         ),
                         width: 75,
@@ -59,8 +58,7 @@ class LoadingDialog extends Dialog {
                         ),
                         child: GestureDetector(
                           onTap: () =>
-                              ExtendedNavigator.ofRouter<Router>()
-                                  .pop(),
+                              hideLoadingDialog(),
                           child: new Text(
                             "取消",
                             style: new TextStyle(

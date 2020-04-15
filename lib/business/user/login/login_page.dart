@@ -1,4 +1,5 @@
-import 'package:auto_route/auto_route.dart';
+import 'dart:async';
+
 import 'package:code_running_front/business/user/login/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
@@ -9,6 +10,7 @@ import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/ui/seven_textfield.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:code_running_front/utils/enum.dart';
+import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -53,15 +55,21 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
       listener: handleLoginBlocChanged,
       condition: (prev, curr) {
         if (prev is InLoginState && curr is NoLoginState) {
-          ExtendedNavigator.ofRouter<Router>().pop();
+          closeLoading();
           setState(() {
             _loginMsg = curr.msg;
           });
         }
         if (prev is! LoginedState && curr is LoginedState) {
-          ExtendedNavigator.ofRouter<Router>().pop();
           setState(() {
+            closeLoading();
             _loginMsg = "登录成功";
+            showSuccess(msg: _loginMsg);
+            saveUserLoginData(curr.entity.data).then((value) =>
+                Timer(Duration(seconds: 2), () {
+                  Router.navigator.pushNamedAndRemoveUntil(
+                      Routes.userDashBoard, (route) => false);
+                }));
           });
         }
         return true;
@@ -108,8 +116,8 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
                         runSpacing: 50,
                         children: <Widget>[
                           ImageLoadView(loginLeftImageUrl,
-                              width: 200,
-                              height: 200,
+                              width: 50,
+                              height: 50,
                               placeholder: "images/placeholders/black.jpg"),
 //                    Gaps.hGap(100),
                           Card(
@@ -170,11 +178,12 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
                                           children: <Widget>[
                                             Expanded(
                                               child: Offstage(
-                                                  offstage: _loginMsg.length ==
-                                                      0,
-                                                  child: Text(_loginMsg,
-                                                    style: TextStyles
-                                                        .textRed14,)),
+                                                  offstage:
+                                                  _loginMsg.length == 0,
+                                                  child: Text(
+                                                    _loginMsg,
+                                                    style: TextStyles.textRed14,
+                                                  )),
                                             ),
                                             FlatButton(
                                               child: Text(
@@ -216,7 +225,10 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
     );
   }
 
-  void handleRegister() {}
+  void handleRegister() {
+    // jump
+    Router.navigator.pushNamed(Routes.userRegisterPage);
+  }
 
   void handleLoginBlocChanged(BuildContext context, LoginState state) {
     if (state is InLoginState) {

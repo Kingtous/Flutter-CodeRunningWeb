@@ -31,6 +31,7 @@ dependencies:
   fluttertoast: ^3.1.3
   shared_preferences: ^0.5.6+1
   auto_route: ^0.4.4
+  load: ^0.1.5+1
   #codemirror: 0.5.15+5.52.2
   after_layout: 1.0.7+2
   #universal_html: 1.2.2
@@ -48,6 +49,7 @@ dependencies:
   photo_view: 0.9.2
   flare_loading: 2.1.1
   flare_splash_screen: 3.0.1
+  giffy_dialog: 1.7.0
 
 dev_dependencies:
   flutter_test:
@@ -72,8 +74,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/background/
-    - animations/status/
+    - assets/animations/status/
     - assets/html/
+    - assets/status/
     - images/placeholders/
 
   # An image asset can refer to one or more resolution-specific "variants", see

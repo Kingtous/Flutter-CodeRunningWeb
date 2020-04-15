@@ -7,6 +7,7 @@ import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:code_running_front/utils/enum.dart';
+import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -119,7 +120,12 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   void handleEnter() {
-    NavUtil.navigator().pushNamed(Routes.loginRoute);
+    if (getUserInfo() == null)
+      NavUtil.navigator().pushNamed(Routes.loginRoute);
+    else {
+      Router.navigator.pushNamedAndRemoveUntil(
+          Routes.userDashBoard, (route) => false);
+    }
   }
 
   Widget introCards(String title, String content, FaIcon icon) {

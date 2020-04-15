@@ -1,10 +1,12 @@
 import 'dart:async';
 
-import 'package:code_running_front/common/utils/toast_utils.dart';
-import 'package:code_running_front/common/widgets/loading_dialog.dart';
 import 'package:code_running_front/common/widgets/success_dialog.dart';
+import 'package:code_running_front/router/my_router.gr.dart';
+import 'package:code_running_front/utils/sharedpreference_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:load/load.dart';
 
 import 'mvp.dart';
 
@@ -65,23 +67,28 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
 
   @override
   void showError({String msg}) {
-    if (msg != null) {
-      ToastUtils.show(msg);
-    }
+    showDialog(
+        context: context, builder: (_) =>
+        FlareGiffyDialog(
+          flarePath: 'animations/status/space.flr',
+          flareAnimation: 'Untitled',
+          title: Text('注册失败',
+            style: TextStyle(
+                fontSize: 22.0, fontWeight: FontWeight.w600),
+          ),
+          description: Text(msg
+          ),
+          entryAnimation: EntryAnimation.DEFAULT,
+          onOkButtonPressed: () {
+            Router.navigator.pop();
+          },
+        ));
   }
 
   @override
   void showLoading({String msg}) {
     /// 把 dialog 的 show 从 普通页面里分离
-    showDialog<Null>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new LoadingDialog(
-            //调用对话框
-            text: msg == null ? '加载中' : msg,
-          );
-        });
+    showLoadingDialog();
   }
 
   @override
@@ -104,10 +111,14 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
   @override
   void closeLoading() {
     /// 必须和 showLoading 方法配对使用 ，避免 pop 当前页面
-    Navigator.pop(context);
+    hideLoadingDialog();
   }
 
   /// 只是弹出页面，不与后端交付
   @override
-  void logOut() async {}
+  void logOut() async {
+    await sp().remove("user");
+    Router.navigator.pushNamedAndRemoveUntil(
+        Routes.indexRoute, (route) => false);
+  }
 }
