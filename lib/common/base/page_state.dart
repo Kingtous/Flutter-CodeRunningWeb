@@ -73,7 +73,7 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
         FlareGiffyDialog(
           flarePath: 'assets/animations/status/space.flr',
           flareAnimation: 'Untitled',
-          title: Text('注册失败',
+          title: Text('请求失败',
             style: TextStyle(
                 fontSize: 22.0, fontWeight: FontWeight.w600),
           ),

@@ -50,6 +50,8 @@ dependencies:
   flare_loading: 2.1.1
   flare_splash_screen: 3.0.1
   giffy_dialog: 1.7.0
+  slide_countdown_clock: 1.0.3
+  flutter_analog_clock: 0.1.0
 
 dev_dependencies:
   flutter_test:
