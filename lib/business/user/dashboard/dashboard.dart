@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:code_running_front/business/user/dashboard/modules/code/get/bloc.dart';
-import 'package:code_running_front/business/user/dashboard/modules/code/result/bloc.dart';
-import 'package:code_running_front/business/user/dashboard/modules/code/upload/bloc.dart';
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
+import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
+import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
@@ -18,26 +17,6 @@ class UserDashBoard extends StatefulWidget {
 }
 
 class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
-  GetCodeResultBloc _getCodeResultBloc;
-  GetCodesBloc _getCodesBloc;
-  UploadCodeBloc _uploadCodeBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _getCodeResultBloc = GetCodeResultBloc();
-    _getCodesBloc = GetCodesBloc();
-    _uploadCodeBloc = UploadCodeBloc();
-  }
-
-  @override
-  void dispose() {
-    _getCodeResultBloc?.close();
-    _getCodesBloc?.close();
-    _uploadCodeBloc?.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,28 +89,64 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
           runSpacing: 10,
           children: <Widget>[
             buildMenuBtn(
-                FaIcon(FontAwesomeIcons.code, size: 25, color: Colors.white,),
-                "我的编辑器", "开始创作"),
-            buildMenuBtn(
-                FaIcon(FontAwesomeIcons.cloud, size: 25, color: Colors.white,),
-                "我的动态", "代码历史，帖子，评论"),
+                GestureDetector(
+                  child: FaIcon(
+                    FontAwesomeIcons.code,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  onTap: () => {handleEditorOpen(context)},
+                ),
+                "我的编辑器",
+                "开始创作"),
             buildMenuBtn(
                 FaIcon(
-                  FontAwesomeIcons.warehouse, size: 25, color: Colors.white,),
-                "论坛广场", "发现你的所见所闻"),
+                  FontAwesomeIcons.cloud,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "我的动态",
+                "代码历史，帖子，评论"),
             buildMenuBtn(
                 FaIcon(
-                  FontAwesomeIcons.campground, size: 25, color: Colors.white,),
-                "干货广场", "学习使我快乐"),
+                  FontAwesomeIcons.warehouse,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "论坛广场",
+                "发现你的所见所闻"),
             buildMenuBtn(
-                FaIcon(FontAwesomeIcons.store, size: 25, color: Colors.white,),
-                "我的商店", "看看今天都卖了啥"),
+                FaIcon(
+                  FontAwesomeIcons.campground,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "干货广场",
+                "学习使我快乐"),
             buildMenuBtn(
-                FaIcon(FontAwesomeIcons.shoppingCart, size: 25,
-                  color: Colors.white,), "我的购物车", "知识带回家"),
+                FaIcon(
+                  FontAwesomeIcons.store,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "我的商店",
+                "看看今天都卖了啥"),
             buildMenuBtn(
-                FaIcon(FontAwesomeIcons.cogs, size: 25, color: Colors.white,),
-                "个人设置", "资料、密码、主页...")
+                FaIcon(
+                  FontAwesomeIcons.shoppingCart,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "我的购物车",
+                "知识带回家"),
+            buildMenuBtn(
+                FaIcon(
+                  FontAwesomeIcons.cogs,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                "个人设置",
+                "资料、密码、主页...")
           ],
         ),
       );
@@ -179,7 +194,8 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
         ],
       );
 
-  Widget buildMenuBtn(Widget img, String text, String subtext) =>
+  Widget buildMenuBtn(Widget img, String text, String subtext,
+      {Function() onclick}) =>
       Card(
         elevation: 10,
         shape: RoundedRectangleBorder(),
@@ -189,9 +205,7 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
           height: 150,
           padding: const EdgeInsets.all(16.0),
           alignment: Alignment.center,
-          decoration: BoxDecoration(border: Border.all(
-              color: Colors.white
-          )),
+          decoration: BoxDecoration(border: Border.all(color: Colors.white)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -214,4 +228,8 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
           ),
         ),
       );
+
+  void handleEditorOpen(context) {
+    NavUtil.navigator().pushNamed(Routes.codePage);
+  }
 }

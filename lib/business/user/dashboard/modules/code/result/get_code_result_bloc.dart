@@ -23,16 +23,22 @@ class GetCodeResultBloc extends Bloc<GetCodeResultEvent, GetCodeResultState> {
   Stream<GetCodeResultState> mapInGetCodeResultEvent(
       InGetCodeResultEvent event) async* {
     yield InGetCodeResultState();
-    var callback = await ApiRequest.getCodeResult(event.entity);
-    if (callback != null && callback.data != null) {
-      RespGetCodeResultEntity entity = callback.data;
-      if (entity.code == 0) {
-        yield GetCodeResultedState(entity);
+    while (true) {
+      var callback = await ApiRequest.getCodeResult(event.entity);
+      if (callback != null && callback.data != null) {
+        RespGetCodeResultEntity entity = callback.data;
+        if (entity.code == 0) {
+          yield GetCodeResultedState(entity);
+          if (entity.data.status > 2) {
+            // status >2 表示服务器已经处理完请求
+            break;
+          }
+        } else {
+          yield NoGetCodeResultState(true, msg: getErrMsg(entity.code));
+        }
       } else {
-        yield NoGetCodeResultState(true, msg: getErrMsg(entity.code));
+        yield NoGetCodeResultState(true, msg: "网络错误");
       }
-    } else {
-      yield NoGetCodeResultState(true, msg: "网络错误");
     }
   }
 }

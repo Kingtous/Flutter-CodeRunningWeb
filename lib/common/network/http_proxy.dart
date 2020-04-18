@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:code_running_front/business/user/dashboard/modules/code/result/get_code_result_event.dart';
+import 'package:code_running_front/business/user/models/request/req_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_register_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_login_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
@@ -58,5 +60,13 @@ class ApiRequest {
         method: HConstants.get,
         parser: GeneralJsonParser(RespGetCodeResultEntity()),
         params: {"code_id": entity.codeId});
+  }
+
+  /// 执行代码
+  static executeCode(ReqExecuteCodeEntity entity) async {
+    return await HttpUtils.get().req(getCodeResultApi,
+        method: HConstants.post,
+        parser: GeneralJsonParser(RespExecuteCodeEntity()),
+        body: entity.toJson());
   }
 }

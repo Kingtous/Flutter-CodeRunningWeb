@@ -32,9 +32,9 @@ dependencies:
   shared_preferences: ^0.5.6+1
   auto_route: ^0.4.4
   load: ^0.1.5+1
-  #codemirror: 0.5.15+5.52.2
+  codemirror: 0.5.15+5.52.2
   after_layout: 1.0.7+2
-  #universal_html: 1.2.2
+  universal_html: 1.2.2
   font_awesome_flutter: ^8.8.0
   flutter_bloc: 3.2.0
   equatable: 1.1.1

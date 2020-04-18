@@ -21,6 +21,7 @@ class NoGetCodeResultState extends GetCodeResultState {
 }
 
 class InGetCodeResultState extends GetCodeResultState {
+
   @override
   List<Object> get props => [];
 }
