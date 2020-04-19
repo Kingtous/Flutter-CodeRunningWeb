@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:ui' as ui;
 
 import 'package:after_layout/after_layout.dart';
@@ -10,13 +9,18 @@ import 'package:code_running_front/business/user/dashboard/modules/code/upload/b
 import 'package:code_running_front/business/user/models/request/req_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/res/styles.dart';
+import 'package:code_running_front/ui/code_editor.dart';
+import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/ui/nav_util.dart';
+import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:codemirror/codemirror.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:universal_html/html.dart';
 
 import 'get/bloc.dart';
 import 'result/get_code_result_bloc.dart';
@@ -26,28 +30,29 @@ class CodingPage extends StatefulWidget {
   _CodingPageState createState() => _CodingPageState();
 }
 
-class _CodingPageState extends BaseLoadingPageState<CodingPage>
-    with AfterLayoutMixin {
+class _CodingPageState extends BaseLoadingPageState<CodingPage> {
   GetCodeResultBloc _getCodeResultBloc;
   GetCodesBloc _getCodesBloc;
   UploadCodeBloc _uploadCodeBloc;
   ExecuteCodeBloc _executeCodeBloc;
 
-  final String _editorId = "editor";
+  final String _editorId = "coding-editor";
 
   Map _editorOptions = {
-    'theme': 'monokai',
+    'theme': 'default',
     'mode': 'python',
+    'styleActiveLine':true
   };
 
-  // web editor ui variables
-  DivElement _codeContent = DivElement();
   CodeMirror _codeMirror;
-  HtmlElementView _codeView;
-  FocusNode focusNode = FocusNode();
-
   // TODO 后期改成static
   String _storeUrl;
+  String _codeType = "Python3";
+
+  var _colNumbers = 0;
+  var _lineNumbers = 0;
+
+  var _focusNode = FocusNode();
 
 //
 //  var _textEditingController =
@@ -56,13 +61,6 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage>
   @override
   void initState() {
     super.initState();
-    // 注册codemirror标签
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry
-        .registerViewFactory(_editorId, (int viewId) => _codeContent);
-    _codeView = HtmlElementView(
-      viewType: _editorId,
-    );
     // blocs
     _getCodeResultBloc = GetCodeResultBloc();
     _getCodesBloc = GetCodesBloc();
@@ -85,112 +83,152 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage>
       appBar: AppBar(
         title: Text("代码编辑器"),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Wrap(
-          spacing: 10,
-          children: <Widget>[
-            RawKeyboardListener(
-              autofocus: true,
-              focusNode: focusNode,
-              child: Container(
-                width: 400,
-                height: 400,
-                child: _codeView,
-              ),
-              onKey: (RawKeyEvent event) {
-                if (event.runtimeType == RawKeyDownEvent &&
-                    (event.logicalKey.keyId == KeyCode.SPACE ||
-                        event.logicalKey.keyId == KeyCode.TAB)) {
-                  _codeMirror.focus();
-                  debugPrint("focus!");
-                }
-              },
-            ),
-            Container(
-              width: 400,
-              height: 400,
-              alignment: Alignment.topCenter,
-              child: Column(
+      backgroundColor: Colors.black,
+      body: Stack(children: <Widget>[
+        ImageLoadView(
+          "images/background/02.jpg",
+          imageType: ImageType.assets,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          fit: BoxFit.cover,
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Card(
+            elevation: 10,
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10,
                 children: <Widget>[
-                  Wrap(
+                  Column(
                     children: <Widget>[
-                      FlatButton.icon(
-                          onPressed: () => handleStore,
-                          icon: FaIcon(FontAwesomeIcons.save),
-                          label: Text("保存至我的仓库")),
-                      BlocBuilder(
-                        bloc: _uploadCodeBloc,
-                        builder: (BuildContext context, state) {
-                          if (state is UploadCodeedState) {
-                            _storeUrl = state.entity.data.url;
-                            return FlatButton.icon(
-                                onPressed: () => handleExe,
-                                icon: FaIcon(FontAwesomeIcons.save),
-                                label: Text("执行"));
-                          }
-                          if (state is NoUploadCodeState && state.msg != "") {
-                            showError(msg: state.msg);
-                          }
-                          return FlatButton.icon(
-                              onPressed: null,
-                              icon: FaIcon(FontAwesomeIcons.save),
-                              label: Text("执行"));
-                        },
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          // Text("代码编辑器"),
+                          // Gaps.hGap(8.0),
+                          DropdownButton(
+                              items: <String>["C/C++", "Java", "Python3"].map(
+                                  (String e) =>
+                                      DropdownMenuItem<String>(child: Text(e),value: e)).toList(),
+                                      value: _codeType,
+                              onChanged: handleCodeTypeChanged),
+                              Gaps.hGap(4.0),
+                              Text("$_lineNumbers/$_colNumbers"),
+                        ],
                       ),
-                      FlatButton.icon(
-                          onPressed: handleClose,
-                          icon: FaIcon(FontAwesomeIcons.save),
-                          label: Text("关闭编辑器"))
+                      CodeEditor(
+                        editorId: _editorId,
+                        height: 800,
+                        width: 400,
+                        initialOptions: _editorOptions,
+                        onEditorCreated: handleEditorCreated,
+                        focusNode: _focusNode
+                      ),
                     ],
                   ),
-                  Expanded(
-                      child: BlocListener(
-                    bloc: _executeCodeBloc,
-                    listener: (BuildContext context, state) {
-                      if (state is ExecuteCodeedState) {
-                        _getCodeResultBloc?.add(InGetCodeResultEvent(
-                            ReqGetCodeResultEntity(state.entity.data.codeId)));
-                      }
-                    },
-                    child: Container(
-                      width: 400,
-                      decoration: BoxDecoration(color: Colors.grey),
-                      child: BlocBuilder(
-                        bloc: _getCodeResultBloc,
-                        builder: (BuildContext context, state) {
-                          if (state is InGetCodeResultState) {
-                            return Text("已提交，等待服务器响应，请勿重复提交");
-                          } else if (state is NoGetCodeResultState) {
-                            return Text(state.msg);
-                          } else if (state is InitialGetCodeResultState) {
-                            return Text("请在代码写好后保存至仓库再执行");
-                          } else if (state is GetCodeResultedState) {
-                            return Text(
-                              "${state.entity.data.status}: " +
-                                  state.entity.data.result,
-                              overflow: TextOverflow.clip,
-                              softWrap: true,
-                            );
-                          }
-                        },
-                      ),
+                  Container(
+                    width: 400,
+                    height: 800,
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: <Widget>[
+                        Wrap(
+                          children: <Widget>[
+                            BlocListener(
+                              bloc: _uploadCodeBloc,
+                              listener: (BuildContext context, state) {
+                                if (state is UploadCodeedState) {
+                                  _storeUrl = state.entity.data.url;
+                                  showSuccess(msg: "上传成功！");
+                                }
+                              },
+                              child: FlatButton.icon(
+                                  onPressed: handleStore,
+                                  icon: FaIcon(FontAwesomeIcons.save),
+                                  label: Text("保存至我的仓库")),
+                            ),
+                            BlocListener(
+                              bloc: _uploadCodeBloc,
+                              listener: (BuildContext context, state) {
+                                if (state is UploadCodeedState) {
+                                  setState(() {
+                                    _storeUrl = state.entity.data.url;
+                                  });
+                                }
+                              },
+                              child: FlatButton.icon(
+                                  onPressed:
+                                      _storeUrl != null ? handleExe : null,
+                                  icon: FaIcon(FontAwesomeIcons.save),
+                                  label: Text("直接执行")),
+                            )
+                          ],
+                        ),
+                        Expanded(
+                            child: BlocListener(
+                          bloc: _executeCodeBloc,
+                          listener: (BuildContext context, state) {
+                            if (state is ExecuteCodeedState) {
+                              _getCodeResultBloc?.add(InGetCodeResultEvent(
+                                  ReqGetCodeResultEntity(
+                                      state.entity.data.codeId)));
+                            }
+                          },
+                          child: Container(
+                            width: 400,
+                            decoration: BoxDecoration(color: Colors.grey),
+                            child: BlocBuilder(
+                              bloc: _getCodeResultBloc,
+                              builder: (BuildContext context, state) {
+                                if (state is InGetCodeResultState) {
+                                  return Text("已提交，等待服务器响应");
+                                } else if (state is NoGetCodeResultState) {
+                                  return Text(state.msg);
+                                } else if (state is InitialGetCodeResultState) {
+                                  return Text("请在代码写好后保存至仓库再执行");
+                                } else if (state is GetCodeResultedState) {
+                                  return Text(
+                                    "${state.entity.data.status}: " +
+                                        state.entity.data.result,
+                                    overflow: TextOverflow.clip,
+                                    softWrap: true,
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ))
+                      ],
                     ),
-                  ))
+                  )
                 ],
               ),
-            )
-          ],
+            ),
+          ),
         ),
-      ),
+      ]),
     );
   }
 
   handleEditorCreated(CodeMirror mirror) {
     _codeMirror = mirror;
+    _codeMirror.setSize(400, 800);
+    _codeMirror.setLineNumbers(false);
+    _codeMirror.onDoubleClick.listen((event) {
+      // 行列号
+      setState(() {
+        _colNumbers = _codeMirror.getCursor().ch;
+        _lineNumbers = _codeMirror.getCursor().line;
+        _focusNode.requestFocus();
+      });
+    });
   }
 
   void handleStore() {
+    debugPrint("store");
     _uploadCodeBloc?.add(InUploadCodeEvent(ReqUploadCodeEntity()
       ..fileName =
           getUserInfo().nickname + "-" + DateTime.now().toString() + ".py"
@@ -207,43 +245,19 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage>
   }
 
   void handleExe() {
+    debugPrint("exe:$_storeUrl");
     _executeCodeBloc
         ?.add(InExecuteCodeEvent(ReqExecuteCodeEntity()..url = _storeUrl));
   }
 
-  @override
-  void afterFirstLayout(BuildContext context) {
-    buildCodeMirror();
-  }
-
-  // TODO 失效了
-  void buildCodeMirror() {
-//    Future.delayed(const Duration(seconds: 1),(){
-    var node;
-//      while (true) {
-    var array = document.getElementsByTagName("flt-platform-view");
-    if (array.length != 0) {
-      node = array[0] as HtmlElement;
-//          break;
+  void handleCodeTypeChanged(String value) {
+    if (value == "Python3") {
+      debugPrint("switch python");
+      _codeMirror?.setMode("python");
+    } else {
+      debugPrint("switch clike");
+      _codeMirror?.setMode("clike");
     }
-//      }
-    var headElement = HeadElement();
-    final NodeValidatorBuilder _htmlValidator =
-        new NodeValidatorBuilder.common()
-          ..allowElement('link', attributes: ["rel", "href"])
-          ..allowElement('script', attributes: ["src"]);
-    rootBundle.loadString("assets/html/codemirror_header.html").then((value) {
-      debugPrint("property: $value");
-      debugPrint("options: $_editorOptions");
-      headElement.setInnerHtml(value, validator: _htmlValidator);
-      _codeMirror =
-          CodeMirror.fromElement(_codeContent, options: _editorOptions);
-      debugPrint("insert root");
-      node.shadowRoot.children.insert(0, headElement);
-      onEditorCreated(_codeMirror);
-    });
-//    });
+    setState(() {_codeType = value;});
   }
-
-  void onEditorCreated(CodeMirror codeMirror) {}
 }

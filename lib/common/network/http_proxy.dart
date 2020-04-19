@@ -15,12 +15,15 @@ import 'package:code_running_front/common/network/http_utils.dart';
 import 'package:code_running_front/utils/general_json_parser.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ApiRequest {
   static Map<String, dynamic> addBasicAuthHeader(Map<String, dynamic> header) {
     String token = getStoredToken();
+    debugPrint("token:$token");
     String basicAuth = "Basic " + base64Encode(utf8.encode('$token:'));
     header["Authorization"] = basicAuth;
+    debugPrint("header:${header.toString()}");
     return header;
   }
 
@@ -49,6 +52,7 @@ class ApiRequest {
   /// 代码上传
   static Future<Response> uploadCode(ReqUploadCodeEntity entity) async {
     return await HttpUtils.get().req(uploadApi,
+    header: addBasicAuthHeader(Map()),
         method: HConstants.post,
         body: entity.toJson(),
         parser: GeneralJsonParser(RespUploadCodeEntity()));
@@ -57,6 +61,7 @@ class ApiRequest {
   /// 获取代码结果
   static getCodeResult(ReqGetCodeResultEntity entity) async {
     return await HttpUtils.get().req(getCodeResultApi,
+    header: addBasicAuthHeader(Map()),
         method: HConstants.get,
         parser: GeneralJsonParser(RespGetCodeResultEntity()),
         params: {"code_id": entity.codeId});
@@ -64,7 +69,8 @@ class ApiRequest {
 
   /// 执行代码
   static executeCode(ReqExecuteCodeEntity entity) async {
-    return await HttpUtils.get().req(getCodeResultApi,
+    return await HttpUtils.get().req(runApi,
+        header: addBasicAuthHeader(Map()),
         method: HConstants.post,
         parser: GeneralJsonParser(RespExecuteCodeEntity()),
         body: entity.toJson());

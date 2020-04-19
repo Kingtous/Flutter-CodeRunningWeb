@@ -14,17 +14,14 @@ void popToUserIndex() {
 }
 
 String getStoredToken() {
-  try {
-    String token = Application.sp.get("token");
+    String token = getUserInfo()?.token;
     if (token == null) {
       // 退出
+      popToUserIndex();
       return "";
     } else {
       return token;
     }
-  } finally {
-    popToUserIndex();
-  }
 }
 
 Future<void> saveUserLoginData(RespLoginData data) async {

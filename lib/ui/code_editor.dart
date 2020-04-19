@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js';
 import 'dart:ui' as ui;
 
 import 'package:after_layout/after_layout.dart';
@@ -13,6 +14,7 @@ class CodeEditor extends StatefulWidget {
   final double height;
   final String editorId;
   final Map initialOptions;
+  final FocusNode focusNode;
 
   const CodeEditor(
       {Key key,
@@ -20,7 +22,7 @@ class CodeEditor extends StatefulWidget {
       @required this.width,
       @required this.height,
       @required this.editorId,
-      @required this.initialOptions})
+      @required this.initialOptions, this.focusNode})
       : super(key: key);
 
   @override
@@ -31,7 +33,6 @@ class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
   DivElement _codeContent = DivElement();
   CodeMirror _codeMirror;
   HtmlElementView _codeView;
-  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -43,26 +44,25 @@ class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
     _codeView = HtmlElementView(
       viewType: widget.editorId,
     );
+    // 禁止tab键
+    document.onKeyDown.listen((event) {
+      if (event.keyCode == 9) {
+        event.preventDefault();
+      }
+    });
   }
 
   @override
   void dispose() {
     _codeMirror?.dispose();
-    focusNode?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    document.onKeyDown.listen((event) {
-      if (event.which == 9) {
-        debugPrint("prevent");
-        event.preventDefault();
-      }
-    });
     return RawKeyboardListener(
       autofocus: true,
-      focusNode: focusNode,
+      focusNode: widget.focusNode,
       child: Container(
         width: widget.width,
         height: widget.height,
@@ -85,29 +85,32 @@ class _CodeEditorState extends State<CodeEditor> with AfterLayoutMixin {
   }
 
   void buildCodeMirror() {
-    Future.delayed(const Duration(seconds: 1), () {
-      var node;
-      while (true) {
-        var array = document.getElementsByTagName("flt-platform-view");
-        if (array.length != 0) {
-          node = array[0] as HtmlElement;
-          break;
+    var headElement = HeadElement();
+    final NodeValidatorBuilder _htmlValidator =
+        new NodeValidatorBuilder.common()
+          ..allowElement('link', attributes: ["rel", "href"])
+          ..allowElement('script', attributes: ["src"]);
+    rootBundle.loadString("assets/html/codemirror_header.html").then((value) {
+      // create codeMirror
+      _codeMirror =
+          CodeMirror.fromElement(_codeContent, options: widget.initialOptions);
+      debugPrint("insert root");
+      widget.onEditorCreated(_codeMirror);
+      // add headers
+      debugPrint("property: $value");
+      debugPrint("options: ${widget.initialOptions.toString()}");
+      headElement.setInnerHtml(value, validator: _htmlValidator);
+      // 查找
+      Future.delayed(const Duration(milliseconds: 500), () {
+        var node;
+        while (true) {
+          var array = document.getElementsByTagName("flt-platform-view");
+          if (array.length != 0) {
+            node = array[0] as HtmlElement;
+            break;
+          }
         }
-      }
-      var headElement = HeadElement();
-      final NodeValidatorBuilder _htmlValidator =
-          new NodeValidatorBuilder.common()
-            ..allowElement('link', attributes: ["rel", "href"])
-            ..allowElement('script', attributes: ["src"]);
-      rootBundle.loadString("assets/html/codemirror_header.html").then((value) {
-        debugPrint("property: $value");
-        debugPrint("options: ${widget.initialOptions.toString()}");
-        headElement.setInnerHtml(value, validator: _htmlValidator);
-        _codeMirror = CodeMirror.fromElement(_codeContent,
-            options: widget.initialOptions);
-        debugPrint("insert root");
         node.shadowRoot.children.insert(0, headElement);
-        widget.onEditorCreated(_codeMirror);
       });
     });
   }
