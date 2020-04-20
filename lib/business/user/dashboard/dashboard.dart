@@ -88,49 +88,46 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
           spacing: 10,
           runSpacing: 10,
           children: <Widget>[
-            buildMenuBtn(
-                GestureDetector(
-                  child: FaIcon(
-                    FontAwesomeIcons.code,
+            GestureDetector(
+                onTap: () => {handleEditorOpen(context)},
+                child: buildMenuBtn(
+                    FaIcon(
+                      FontAwesomeIcons.code,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                    "我的编辑器",
+                    "开始创作")),
+            GestureDetector(
+              onTap: () => {handleRepositoryOpen(context)},
+              child: buildMenuBtn(
+                  FaIcon(
+                    FontAwesomeIcons.cloud,
                     size: 25,
                     color: Colors.white,
                   ),
-                  onTap: () => {handleEditorOpen(context)},
-                ),
-                "我的编辑器",
-                "开始创作"),
+                  "我的码库",
+                  "代码历史"),
+            ),
+            GestureDetector(
+              onTap: () => {handleGroundOpen(context)},
+              child: buildMenuBtn(
+                  FaIcon(
+                    FontAwesomeIcons.warehouse,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  "论坛广场",
+                  "发现你的所见所闻"),
+            ),
             buildMenuBtn(
                 FaIcon(
-                  FontAwesomeIcons.cloud,
+                  FontAwesomeIcons.shoppingCart,
                   size: 25,
                   color: Colors.white,
                 ),
-                "我的动态",
-                "代码历史，帖子，评论"),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.warehouse,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "论坛广场",
-                "发现你的所见所闻"),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.campground,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "干货广场",
-                "学习使我快乐"),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.store,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "我的商店",
-                "看看今天都卖了啥"),
+                "社区点点通",
+                "知识带回家"),
             buildMenuBtn(
                 FaIcon(
                   FontAwesomeIcons.shoppingCart,
@@ -138,7 +135,7 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
                   color: Colors.white,
                 ),
                 "我的购物车",
-                "知识带回家"),
+                "我的知识宝库"),
             buildMenuBtn(
                 FaIcon(
                   FontAwesomeIcons.cogs,
@@ -152,47 +149,77 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
       );
 
   /// 动态
-  Widget buildMoments() =>
-      Column(
-        children: <Widget>[
-          //时间面板
-          FlutterAnalogClock(
-            dateTime: DateTime.now(),
-            dialPlateColor: Colors.white,
-            hourHandColor: Colors.black,
-            minuteHandColor: Colors.black,
-            secondHandColor: Colors.black,
-            numberColor: Colors.black,
-            borderColor: Colors.black,
-            tickColor: Colors.black,
-            centerPointColor: Colors.black,
-            showBorder: true,
-            showTicks: true,
-            showMinuteHand: true,
-            showSecondHand: true,
-            showNumber: true,
-            borderWidth: 8.0,
-            hourNumberScale: .10,
-            hourNumbers: [
-              'I',
-              'II',
-              'III',
-              'IV',
-              'V',
-              'VI',
-              'VII',
-              'VIII',
-              'IX',
-              'X',
-              'XI',
-              'XII'
-            ],
-            isLive: true,
-            width: 100,
-            height: 100,
-          )
-        ],
-      );
+  Widget buildMoments() {
+    var info = getUserInfo();
+    return Column(
+      children: <Widget>[
+        //时间面板
+        FlutterAnalogClock(
+          dateTime: DateTime.now(),
+          dialPlateColor: Colors.white,
+          hourHandColor: Colors.black,
+          minuteHandColor: Colors.black,
+          secondHandColor: Colors.black,
+          numberColor: Colors.black,
+          borderColor: Colors.black,
+          tickColor: Colors.black,
+          centerPointColor: Colors.black,
+          showBorder: true,
+          showTicks: true,
+          showMinuteHand: true,
+          showSecondHand: true,
+          showNumber: true,
+          borderWidth: 8.0,
+          hourNumberScale: .10,
+          hourNumbers: [
+            'I',
+            'II',
+            'III',
+            'IV',
+            'V',
+            'VI',
+            'VII',
+            'VIII',
+            'IX',
+            'X',
+            'XI',
+            'XII'
+          ],
+          isLive: true,
+          width: 250,
+          height: 250,
+        ),
+        Gaps.vGap(16.0),
+        Card(
+          child: Container(
+            padding: EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  child: ImageLoadView(info.avatarUrl, height: 75, width: 75),
+                ),
+                Gaps.vGap(8.0),
+                Text(
+                  "ID:${info.username}",
+                  style: TextStyles.textDark14,
+                  textAlign: TextAlign.start,
+                ),
+                Gaps.vGap(8.0),
+                Text("昵称:${info.nickname}",
+                    style: TextStyles.textDark14, textAlign: TextAlign.start),
+                Gaps.vGap(8.0),
+                Text("积分:${info.credits}",
+                    style: TextStyles.textDark14, textAlign: TextAlign.start),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
   Widget buildMenuBtn(Widget img, String text, String subtext,
       {Function() onclick}) =>
@@ -231,5 +258,13 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   void handleEditorOpen(context) {
     NavUtil.navigator().pushNamed(Routes.codePage);
+  }
+
+  handleRepositoryOpen(BuildContext context) {
+    NavUtil.navigator().pushNamed(Routes.userRepositoryPage);
+  }
+
+  handleGroundOpen(BuildContext context) {
+    NavUtil.navigator().pushNamed(Routes.threadGroundPage);
   }
 }

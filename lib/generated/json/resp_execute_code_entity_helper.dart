@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 
-respExecuteCodeEntityFromJson(
-    RespExecuteCodeEntity data, Map<String, dynamic> json) {
+respExecuteCodeEntityFromJson(RespExecuteCodeEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -20,8 +20,8 @@ Map<String, dynamic> respExecuteCodeEntityToJson(RespExecuteCodeEntity entity) {
   return data;
 }
 
-respExecuteCodeDataFromJson(
-    RespExecuteCodeData data, Map<String, dynamic> json) {
+respExecuteCodeDataFromJson(RespExecuteCodeData data,
+    Map<String, dynamic> json) {
   if (json['code_id'] != null) {
     data.codeId = json['code_id']?.toInt();
   }

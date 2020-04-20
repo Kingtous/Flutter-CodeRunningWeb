@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:code_running_front/business/user/dashboard/dashboard.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/coding_page.dart';
+import 'package:code_running_front/business/user/dashboard/modules/ground/comments/thread_page.dart';
+import 'package:code_running_front/business/user/dashboard/modules/ground/ground_page.dart';
+import 'package:code_running_front/business/user/dashboard/modules/repository/repository_page.dart';
 import 'package:code_running_front/business/user/index/index_page.dart';
 import 'package:code_running_front/business/user/login/login_page.dart';
 import 'package:code_running_front/business/user/register/register_page.dart';
@@ -14,5 +17,8 @@ class $Router {
   UserRegisterPage userRegisterPage;
   UserDashBoard userDashBoard;
   CodingPage codePage;
+  RepositoryPage userRepositoryPage;
+  ThreadGroundPage threadGroundPage;
+  ThreadPage threadDetailPage;
 
 }

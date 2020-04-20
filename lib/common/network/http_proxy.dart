@@ -2,13 +2,22 @@ import 'dart:convert';
 
 import 'package:code_running_front/business/user/dashboard/modules/code/result/get_code_result_event.dart';
 import 'package:code_running_front/business/user/models/request/req_execute_code_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_repository_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_thread_comment_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_threads_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_post_thread_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_register_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_repository_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_thread_comment_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_threads_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_login_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_status_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_upload_code_entity.dart';
 import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/common/network/http_utils.dart';
@@ -52,7 +61,7 @@ class ApiRequest {
   /// 代码上传
   static Future<Response> uploadCode(ReqUploadCodeEntity entity) async {
     return await HttpUtils.get().req(uploadApi,
-    header: addBasicAuthHeader(Map()),
+        header: addBasicAuthHeader(Map()),
         method: HConstants.post,
         body: entity.toJson(),
         parser: GeneralJsonParser(RespUploadCodeEntity()));
@@ -61,7 +70,7 @@ class ApiRequest {
   /// 获取代码结果
   static getCodeResult(ReqGetCodeResultEntity entity) async {
     return await HttpUtils.get().req(getCodeResultApi,
-    header: addBasicAuthHeader(Map()),
+        header: addBasicAuthHeader(Map()),
         method: HConstants.get,
         parser: GeneralJsonParser(RespGetCodeResultEntity()),
         params: {"code_id": entity.codeId});
@@ -73,6 +82,60 @@ class ApiRequest {
         header: addBasicAuthHeader(Map()),
         method: HConstants.post,
         parser: GeneralJsonParser(RespExecuteCodeEntity()),
+        body: entity.toJson());
+  }
+
+  /// 获取自己的代码仓库
+  static getRepository(ReqGetRepositoryEntity entity) async {
+    return await HttpUtils.get().req(
+      '$getSelfCodesApi${entity.offset}',
+      header: addBasicAuthHeader(Map()),
+      method: HConstants.get,
+      parser: GeneralJsonParser(RespGetRepositoryEntity()),
+    );
+  }
+
+  /// 获取热门帖子
+  static getThreads(ReqGetThreadsEntity entity) async {
+    return await HttpUtils.get().req(getThreadsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.get,
+        parser: GeneralJsonParser(
+          RespGetThreadsEntity(),
+        ),
+        params: entity.toJson());
+  }
+
+  /// 获取评论
+  static getThreadComment(ReqGetThreadCommentEntity entity) async {
+    return await HttpUtils.get().req(getThreadCommentsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.get,
+        parser: GeneralJsonParser(
+          RespGetThreadCommentEntity(),
+        ),
+        params: entity.toJson());
+  }
+
+  /// 发表评论
+  static postThreadComment(ReqThreadCommentEntity entity) async {
+    return await HttpUtils.get().req(postThreadCommentApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.post,
+        parser: GeneralJsonParser(
+          RespStatusEntity(),
+        ),
+        body: entity.toJson());
+  }
+
+  /// 发布帖子
+  static postThread(ReqPostThreadEntity entity) async {
+    return await HttpUtils.get().req(postThreadApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.post,
+        parser: GeneralJsonParser(
+          RespStatusEntity(),
+        ),
         body: entity.toJson());
   }
 }
