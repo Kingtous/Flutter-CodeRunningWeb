@@ -52,6 +52,7 @@ dependencies:
   giffy_dialog: 1.7.0
   slide_countdown_clock: 1.0.3
   flutter_analog_clock: 0.1.0
+  pull_to_refresh: 1.5.8
 
 dev_dependencies:
   flutter_test:

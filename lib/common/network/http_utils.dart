@@ -20,7 +20,7 @@ class HttpUtils {
 
   Future<dynamic> req(String url,
       {String method,
-      int timeout,
+        int timeout = 10000,
       Map<String, dynamic> header,
       Map<String, dynamic> params,
       Map<String, dynamic> body,

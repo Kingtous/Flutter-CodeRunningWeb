@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import 'http_utils.dart';
 
@@ -42,6 +43,7 @@ class DioAdapter implements HAdapter {
     }
 
     String url = HttpUtils.get().wrapUrlByParams(ctx.url, ctx.paramMap);
+    debugPrint("query:$url");
 
     switch (ctx.method) {
       case "get":
@@ -53,13 +55,13 @@ class DioAdapter implements HAdapter {
       default:
         response = _dio.get(url);
     }
-      if (ctx.parser == null) {
-        ctx.callback(HState.fail, Exception('callback must be with a parser'));
-      }
     try {
       var resp = await response;
-      var data = ctx.parser.parse(resp.data);
-      resp.data = data;
+      var data;
+      if (ctx.parser != null) {
+        data = ctx.parser.parse(resp.data);
+        resp.data = data;
+      }
       if (ctx.callback != null) {
         ctx.callback(HState.success, data);
       }
