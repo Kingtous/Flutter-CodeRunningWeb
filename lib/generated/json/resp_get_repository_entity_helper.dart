@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_repository_entity.dart';
 
-respGetRepositoryEntityFromJson(
-    RespGetRepositoryEntity data, Map<String, dynamic> json) {
+respGetRepositoryEntityFromJson(RespGetRepositoryEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -24,8 +24,8 @@ Map<String, dynamic> respGetRepositoryEntityToJson(
   return data;
 }
 
-respGetRepositoryDataFromJson(
-    RespGetRepositoryData data, Map<String, dynamic> json) {
+respGetRepositoryDataFromJson(RespGetRepositoryData data,
+    Map<String, dynamic> json) {
   if (json['code_type'] != null) {
     data.codeType = json['code_type']?.toInt();
   }

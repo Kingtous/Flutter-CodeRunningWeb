@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_thread_comment_entity.dart';
 
-respGetThreadCommentEntityFromJson(
-    RespGetThreadCommentEntity data, Map<String, dynamic> json) {
+respGetThreadCommentEntityFromJson(RespGetThreadCommentEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -24,8 +24,8 @@ Map<String, dynamic> respGetThreadCommentEntityToJson(
   return data;
 }
 
-respGetThreadCommentDataFromJson(
-    RespGetThreadCommentData data, Map<String, dynamic> json) {
+respGetThreadCommentDataFromJson(RespGetThreadCommentData data,
+    Map<String, dynamic> json) {
   if (json['code_url'] != null) {
     data.codeUrl = json['code_url']?.toString();
   }

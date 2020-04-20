@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_reset_password_entity.dart';
 
-reqResetPasswordEntityFromJson(
-    ReqResetPasswordEntity data, Map<String, dynamic> json) {
+reqResetPasswordEntityFromJson(ReqResetPasswordEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toString();
   }

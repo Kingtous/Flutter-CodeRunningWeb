@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_get_threads_entity.dart';
 
-reqGetThreadsEntityFromJson(
-    ReqGetThreadsEntity data, Map<String, dynamic> json) {
+reqGetThreadsEntityFromJson(ReqGetThreadsEntity data,
+    Map<String, dynamic> json) {
   if (json['page'] != null) {
     data.page = json['page']?.toInt();
   }

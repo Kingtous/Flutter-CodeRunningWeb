@@ -50,8 +50,10 @@ String get addToRepositoryApi => baseUrl + "/mall/cart/add";
 
 String get delFromRepositoryApi => baseUrl + "/mall/cart/del";
 
-/// 错误原因
+/// 错误原因 TODO 1013、1012
 Map<int, String> errorMap = {
+  1013: "",
+  1012: "",
   1011: "服务器拒绝",
   1010: "已经点过赞了",
   1009: "评论不存在",
