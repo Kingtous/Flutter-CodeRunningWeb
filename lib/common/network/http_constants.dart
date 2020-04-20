@@ -40,6 +40,16 @@ String get sendResetPasswordMail => baseUrl + "/auth/mail/reset_password";
 
 String get resetPasswordApi => baseUrl + "/auth/profile/reset_password";
 
+String get getMallItemsApi => baseUrl + "/mall/get_items";
+
+String get getCartItemsApi => baseUrl + "/mall/my_cart";
+
+String get getRepositoryItemsApi => baseUrl + "/repository/get";
+
+String get addToRepositoryApi => baseUrl + "/mall/cart/add";
+
+String get delFromRepositoryApi => baseUrl + "/mall/cart/del";
+
 /// 错误原因
 Map<int, String> errorMap = {
   1011: "服务器拒绝",

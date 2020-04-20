@@ -1,12 +1,20 @@
 import 'dart:convert';
 
 import 'package:code_running_front/business/user/dashboard/modules/code/result/get_code_result_event.dart';
+import 'package:code_running_front/business/user/models/request/req_add_cart_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_del_cart_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_execute_code_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_mall_items_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_my_cart_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_my_repository_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_register_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_mall_items_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_my_cart_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_my_repository_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_login_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_upload_code_entity.dart';
@@ -73,6 +81,51 @@ class ApiRequest {
         header: addBasicAuthHeader(Map()),
         method: HConstants.post,
         parser: GeneralJsonParser(RespExecuteCodeEntity()),
+        body: entity.toJson());
+  }
+
+  /// 获取商城商品
+  static getMallItems(ReqGetMallItemsEntity entity) async {
+    return await HttpUtils.get().req(getMallItemsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.get,
+        parser: GeneralJsonParser(RespGetMallItemsEntity()),
+        body: entity.toJson());
+  }
+
+  /// 获取购物车
+  static getMyCart(ReqGetMyCartEntity entity) async {
+    return await HttpUtils.get().req(getMallItemsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.get,
+        parser: GeneralJsonParser(RespGetMyCartEntity()),
+        body: entity.toJson());
+  }
+
+  /// 获取我的仓库/购买的内容
+  static getMyRepository(ReqGetMyRepositoryEntity entity) async {
+    return await HttpUtils.get().req(getMallItemsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.get,
+        parser: GeneralJsonParser(RespGetMyRepositoryEntity()),
+        body: entity.toJson());
+  }
+
+  /// 添加入购物车
+  static addCart(ReqAddCartEntity entity) async {
+    return await HttpUtils.get().req(getMallItemsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.post,
+        parser: GeneralJsonParser(RespStatusEntity()),
+        body: entity.toJson());
+  }
+
+  /// 添加入购物车
+  static delCart(ReqDelCartEntity entity) async {
+    return await HttpUtils.get().req(getMallItemsApi,
+        header: addBasicAuthHeader(Map()),
+        method: HConstants.post,
+        parser: GeneralJsonParser(RespStatusEntity()),
         body: entity.toJson());
   }
 }
