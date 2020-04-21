@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/models/request/req_register_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_send_register_email_entity.dart';
 import 'package:code_running_front/business/user/register/bloc.dart';
 import 'package:code_running_front/business/user/register/register_bloc.dart';
+import 'package:code_running_front/business/user/register/send_email/bloc.dart';
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
@@ -14,6 +16,7 @@ import 'package:code_running_front/utils/user_util.dart';
 import 'package:code_running_front/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:load/load.dart';
 
 class UserRegisterPage extends StatefulWidget {
   @override
@@ -25,22 +28,37 @@ class _UserRegisterPageState extends BaseLoadingPageState<UserRegisterPage> {
   GlobalKey<FormState> registerKey = GlobalKey<FormState>();
 
   RegisterBloc _bloc;
+  SendRegisterEmailBloc _sBloc;
+
+  bool isEmailSent = false;
 
   @override
   void initState() {
     super.initState();
     _bloc = RegisterBloc();
+    _sBloc = SendRegisterEmailBloc();
+    _sBloc.listen((state) {
+      if (state is SendRegisterEmailedState) {
+        hideLoadingDialog();
+        showSuccess(msg: "已发送邮件，请查收");
+      } else if (state is NoSendRegisterEmailState) {
+        hideLoadingDialog();
+        showError(msg: state.msg);
+      }
+    });
   }
 
   @override
   void dispose() {
     _bloc?.close();
+    _sBloc?.close();
     super.dispose();
   }
 
   String username;
   String email;
   String password;
+  String code;
 
   @override
   Widget build(BuildContext context) {
@@ -113,28 +131,55 @@ class _UserRegisterPageState extends BaseLoadingPageState<UserRegisterPage> {
                           // 当用户确定已经完成编辑时触发
                           onFieldSubmitted: (value) {},
                         ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: '请输入邮箱（用于密码重置等）',
+                                  hintText: "example@kingtous.cn",
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                  prefixIcon: Icon(Icons.person),
+                                ),
+                                //校验用户
+                                validator: (value) {
+                                  return Utils.isEmail(value.trim())
+                                      ? null
+                                      : "邮箱格式不正确";
+                                },
+                                //当 Form 表单调用保存方法 Save时回调的函数。
+                                onSaved: (value) {
+                                  email = value;
+                                },
+                                // 当用户确定已经完成编辑时触发
+                                onFieldSubmitted: (value) {},
+                              ),
+                            ),
+                            FlatButton(
+                                onPressed: isEmailSent ? null : handleEmailSend,
+                                child: Text("发送验证码"))
+                          ],
+                        ),
                         TextFormField(
                           decoration: InputDecoration(
-                            labelText: '请输入邮箱（用于密码重置等）',
-                            hintText: "example@kingtous.cn",
+                            labelText: '邮箱验证码',
+                            hintText: 'xxxxxx',
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
                             ),
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.lock),
                           ),
-                          //校验用户
+                          //校验密码
                           validator: (value) {
-                            return Utils.isEmail(value.trim())
-                                ? null
-                                : "邮箱格式不正确";
+                            return value.length != 6 ? '验证码不为6位' : null;
                           },
-                          //当 Form 表单调用保存方法 Save时回调的函数。
                           onSaved: (value) {
-                            email = value;
+                            code = value;
                           },
-                          // 当用户确定已经完成编辑时触发
-                          onFieldSubmitted: (value) {},
                         ),
                         TextFormField(
                           decoration: InputDecoration(
@@ -194,12 +239,26 @@ class _UserRegisterPageState extends BaseLoadingPageState<UserRegisterPage> {
       _bloc?.add(InRegisterEvent(ReqRegisterEntity()
         ..username = username
         ..password = password
-        ..mail = email));
+        ..mail = email
+        ..code = code));
     }
   }
 
   @override
   void preparedPage() {
     // TODO: implement preparedPage
+  }
+
+  handleEmailSend() {
+    var state = registerKey.currentState;
+    state.save();
+    if (Utils.isEmail(email)) {
+      showLoadingDialog();
+      _sBloc.add(
+          InSendRegisterEmailEvent(ReqSendRegisterEmailEntity()
+            ..email = email));
+    } else {
+      showError(msg: "请输入一个正确的邮箱！");
+    }
   }
 }

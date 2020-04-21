@@ -1,7 +1,6 @@
 import 'dart:js' as js;
 
 import 'package:after_layout/after_layout.dart';
-import 'package:code_running_front/business/user/dashboard/modules/repository/get/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_get_repository_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_repository_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
@@ -19,6 +18,7 @@ import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:universal_html/html.dart';
 
+import 'get/bloc.dart';
 import 'get/get_repository_bloc.dart';
 
 class RepositoryPage extends StatefulWidget {

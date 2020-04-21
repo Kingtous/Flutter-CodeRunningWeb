@@ -35,6 +35,9 @@ respGetMallItemsDataFromJson(RespGetMallItemsData data,
   if (json['id'] != null) {
     data.id = json['id']?.toInt();
   }
+  if (json['img'] != null) {
+    data.img = json['img']?.toString();
+  }
   if (json['name'] != null) {
     data.name = json['name']?.toString();
   }
@@ -46,6 +49,7 @@ Map<String, dynamic> respGetMallItemsDataToJson(RespGetMallItemsData entity) {
   data['credits'] = entity.credits;
   data['detail'] = entity.detail;
   data['id'] = entity.id;
+  data['img'] = entity.img;
   data['name'] = entity.name;
   return data;
 }

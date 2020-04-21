@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:code_running_front/business/user/dashboard/modules/profile/get/credits/bloc.dart';
+import 'package:code_running_front/business/user/models/request/req_get_credits_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_get_profile_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
@@ -9,14 +12,44 @@ import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'modules/profile/get/credits/get_credits_bloc.dart';
+import 'modules/profile/get/profile/bloc.dart';
+
 class UserDashBoard extends StatefulWidget {
+  UserDashBoard({Key key}) : super(key: key);
+
   @override
-  _UserDashBoardState createState() => _UserDashBoardState();
+  UserDashBoardState createState() => UserDashBoardState();
 }
 
-class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
+class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
+  GetProfileBloc _getProfileBloc;
+  GetCreditsBloc _getCreditsBloc;
+
+  GetProfileBloc get getProfileBloc => _getProfileBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _getProfileBloc = GetProfileBloc();
+    _getCreditsBloc = GetCreditsBloc();
+    _getProfileBloc
+        ?.add(InGetProfileEvent(ReqGetProfileEntity()
+      ..id = getUserInfo().id));
+    _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity()));
+  }
+
+  @override
+  void dispose() {
+    debugPrint("dispose dashboard");
+    _getProfileBloc?.close();
+    _getCreditsBloc?.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,30 +153,39 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
                   "论坛广场",
                   "发现你的所见所闻"),
             ),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.shoppingCart,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "社区点点通",
-                "知识带回家"),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.shoppingCart,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "我的购物车",
-                "我的知识宝库"),
-            buildMenuBtn(
-                FaIcon(
-                  FontAwesomeIcons.cogs,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                "个人设置",
-                "资料、密码、主页...")
+            GestureDetector(
+              onTap: () => {handleMallOpen(context)},
+              child: buildMenuBtn(
+                  FaIcon(
+                    FontAwesomeIcons.shoppingCart,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  "社区点点通",
+                  "知识带回家"),
+            ),
+            GestureDetector(
+              onTap: () => {handleCartOpen(context)},
+              child: buildMenuBtn(
+                  FaIcon(
+                    FontAwesomeIcons.shoppingCart,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  "我的购物车",
+                  "我的知识宝库"),
+            ),
+            GestureDetector(
+              onTap: () => {handleHomeOpen(context)},
+              child: buildMenuBtn(
+                  FaIcon(
+                    FontAwesomeIcons.cogs,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  "个人主页",
+                  "购买的项目、资料设置"),
+            )
           ],
         ),
       );
@@ -197,22 +239,73 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  child: ImageLoadView(info.avatarUrl, height: 75, width: 75),
+                BlocBuilder(
+                  bloc: _getProfileBloc,
+                  builder: (BuildContext context, state) {
+                    if (state is GetProfileedState) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: ImageLoadView(
+                          state.entity.data.avatarUrl,
+                          height: 75,
+                          width: 75,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    } else {
+                      return SizedBox(
+                        width: 0,
+                      );
+                    }
+                  },
                 ),
                 Gaps.vGap(8.0),
-                Text(
-                  "ID:${info.username}",
-                  style: TextStyles.textDark14,
-                  textAlign: TextAlign.start,
+                BlocBuilder(
+                  bloc: _getProfileBloc,
+                  builder: (BuildContext context, state) {
+                    if (state is GetProfileedState) {
+                      return Text(
+                        "ID:${state.entity.data.username}",
+                        style: TextStyles.textDark14,
+                        textAlign: TextAlign.start,
+                      );
+                    } else {
+                      return SizedBox(
+                        width: 0,
+                      );
+                    }
+                  },
                 ),
                 Gaps.vGap(8.0),
-                Text("昵称:${info.nickname}",
-                    style: TextStyles.textDark14, textAlign: TextAlign.start),
+                BlocBuilder(
+                  bloc: _getProfileBloc,
+                  builder: (BuildContext context, state) {
+                    if (state is GetProfileedState) {
+                      return Text("昵称:${state.entity.data.nickname}",
+                          style: TextStyles.textDark14,
+                          textAlign: TextAlign.start);
+                    } else {
+                      return SizedBox(
+                        width: 0,
+                      );
+                    }
+                  },
+                ),
                 Gaps.vGap(8.0),
-                Text("积分:${info.credits}",
-                    style: TextStyles.textDark14, textAlign: TextAlign.start),
+                BlocBuilder(
+                  bloc: _getCreditsBloc,
+                  builder: (BuildContext context, state) {
+                    if (state is GetCreditsedState) {
+                      return Text("积分:${state.entity.data.credits}",
+                          style: TextStyles.textDark14,
+                          textAlign: TextAlign.start);
+                    } else {
+                      return SizedBox(
+                        width: 0,
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -265,6 +358,27 @@ class _UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
   }
 
   handleGroundOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.threadGroundPage);
+    NavUtil.navigator().pushNamed(Routes.threadGroundPage).then((value) =>
+        _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
+  }
+
+  handleMallOpen(BuildContext context) {
+    NavUtil.navigator().pushNamed(Routes.mallPage);
+  }
+
+  handleCartOpen(BuildContext context) {
+    NavUtil.navigator()
+        .pushNamed(Routes.cartPage,
+        arguments: CartPageArguments(getCreditsBloc: _getCreditsBloc))
+        .then((value) =>
+        _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
+  }
+
+  handleHomeOpen(BuildContext context) {
+    NavUtil.navigator().pushNamed(Routes.homePage,
+        arguments: HomePageArguments(pBloc: _getProfileBloc)).then((value) =>
+        _getProfileBloc
+            ?.add(InGetProfileEvent(ReqGetProfileEntity()
+          ..id = getUserInfo().id)));
   }
 }

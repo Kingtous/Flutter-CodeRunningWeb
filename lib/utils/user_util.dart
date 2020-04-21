@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:code_running_front/application/application.dart';
 import 'package:code_running_front/business/user/models/response/resp_login_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
 import 'package:code_running_front/generated/json/resp_login_entity_helper.dart';
@@ -32,9 +31,14 @@ Future<void> saveUserRegisterData(RespRegisterData data) async {
   await sp().setString("user", json.encode(data.toJson()));
 }
 
+Future<void> removeUserData() async {
+  await sp().remove("user");
+}
+
 RespLoginData getUserInfo() {
   String jsonStr = sp().getString("user");
   return jsonStr != null
       ? respLoginDataFromJson(RespLoginData(), json.decode(jsonStr))
       : null;
 }
+

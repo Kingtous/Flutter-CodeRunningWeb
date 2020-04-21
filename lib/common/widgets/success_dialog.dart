@@ -19,8 +19,8 @@ class SuccessDialog extends Dialog {
             //保证控件居中效果
             child: SingleChildScrollView(
           child: new SizedBox(
-            width: ScreenUtil().setWidth(250),
-            height: ScreenUtil().setHeight(250),
+            width: 250,
+            height: 250,
             child: new Container(
               decoration: ShapeDecoration(
                 color: Color(0xff262626),

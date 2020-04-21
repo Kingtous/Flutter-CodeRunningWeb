@@ -9,5 +9,6 @@ class RespGetMallItemsData with JsonConvert<RespGetMallItemsData> {
   int credits;
   String detail;
   int id;
+  String img;
   String name;
 }

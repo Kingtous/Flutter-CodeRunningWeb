@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:code_running_front/router/my_router.gr.dart';
+import 'package:code_running_front/ui/nav_util.dart';
+import 'package:code_running_front/utils/user_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +47,7 @@ class DioAdapter implements HAdapter {
 
     String url = HttpUtils.get().wrapUrlByParams(ctx.url, ctx.paramMap);
     debugPrint("query:$url");
+    debugPrint("body:${ctx.bodyMap.toString()}");
 
     switch (ctx.method) {
       case "get":
@@ -61,6 +65,11 @@ class DioAdapter implements HAdapter {
       if (ctx.parser != null) {
         data = ctx.parser.parse(resp.data);
         resp.data = data;
+        if (resp.data.code == 1002) {
+          await removeUserData();
+          NavUtil.navigator().pushNamedAndRemoveUntil(
+              Routes.indexRoute, (route) => false);
+        }
       }
       if (ctx.callback != null) {
         ctx.callback(HState.success, data);

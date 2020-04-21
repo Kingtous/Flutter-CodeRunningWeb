@@ -8,6 +8,7 @@ import 'package:code_running_front/common/network/image_constants.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
+import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/ui/seven_textfield.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:code_running_front/utils/enum.dart';
@@ -250,7 +251,9 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
     password = text;
   }
 
-  void handleForgetPassword() {}
+  void handleForgetPassword() {
+    NavUtil.navigator().pushNamed(Routes.findBackPasswordPage);
+  }
 
   void handleLogin() {
     _loginBloc?.add(InLoginEvent(ReqLoginEntity()

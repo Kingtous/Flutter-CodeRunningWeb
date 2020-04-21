@@ -24,6 +24,9 @@ Map<String, dynamic> respGetMyCartEntityToJson(RespGetMyCartEntity entity) {
 }
 
 respGetMyCartDataFromJson(RespGetMyCartData data, Map<String, dynamic> json) {
+  if (json['cart_item_id'] != null) {
+    data.cartItemId = json['cart_item_id']?.toInt();
+  }
   if (json['credits'] != null) {
     data.credits = json['credits']?.toInt();
   }
@@ -32,6 +35,9 @@ respGetMyCartDataFromJson(RespGetMyCartData data, Map<String, dynamic> json) {
   }
   if (json['id'] != null) {
     data.id = json['id']?.toInt();
+  }
+  if (json['img'] != null) {
+    data.img = json['img']?.toString();
   }
   if (json['isOn'] != null) {
     data.isOn = json['isOn'];
@@ -44,9 +50,11 @@ respGetMyCartDataFromJson(RespGetMyCartData data, Map<String, dynamic> json) {
 
 Map<String, dynamic> respGetMyCartDataToJson(RespGetMyCartData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
+  data['cart_item_id'] = entity.cartItemId;
   data['credits'] = entity.credits;
   data['detail'] = entity.detail;
   data['id'] = entity.id;
+  data['img'] = entity.img;
   data['isOn'] = entity.isOn;
   data['name'] = entity.name;
   return data;

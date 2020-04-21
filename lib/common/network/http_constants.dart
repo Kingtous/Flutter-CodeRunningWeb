@@ -1,4 +1,8 @@
-String get baseUrl => "http://code-api.kingtous.cn";
+String get productionUrl => "https://code-api.kingtous.cn";
+
+String get developmentUrl => "http://127.0.0.1:5000";
+
+String get baseUrl => productionUrl;
 
 String get loginApi => baseUrl + "/auth/login";
 
@@ -36,24 +40,34 @@ String get likeProfileApi => baseUrl + "/user/profile/like/";
 
 String get getUserProfileApi => baseUrl + "/user/profile/";
 
-String get sendResetPasswordMail => baseUrl + "/auth/mail/reset_password";
+String get sendResetPasswordMailApi => baseUrl + "/auth/mail/reset_password";
 
 String get resetPasswordApi => baseUrl + "/auth/profile/reset_password";
 
+String get sendResetEmailApi => baseUrl + "/auth/sendRegisterMail";
+
 String get getMallItemsApi => baseUrl + "/mall/get_items";
+
+String get buyCartItemsApi => baseUrl + "/mall/cart/buy";
 
 String get getCartItemsApi => baseUrl + "/mall/my_cart";
 
+String get adminAddItems => baseUrl + "/mall/add_items";
+
 String get getRepositoryItemsApi => baseUrl + "/repository/get";
 
-String get addToRepositoryApi => baseUrl + "/mall/cart/add";
+String get addToCartApi => baseUrl + "/mall/cart/add";
 
-String get delFromRepositoryApi => baseUrl + "/mall/cart/del";
+String get delFromCartApi => baseUrl + "/mall/cart/del";
+
+String get alterProfileApi => baseUrl + "/user/profile/alter";
 
 /// 错误原因 TODO 1013、1012
 Map<int, String> errorMap = {
-  1013: "",
-  1012: "",
+  1015: "无权限",
+  1013: "操作太快，请稍后再试",
+  1014: "您没有足够的积分",
+  1012: "购物车物品不存在",
   1011: "服务器拒绝",
   1010: "已经点过赞了",
   1009: "评论不存在",

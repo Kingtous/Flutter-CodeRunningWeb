@@ -230,6 +230,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     _codeMirror.setSize(400, 800);
     // 显示行数导致无法使用
     _codeMirror.setLineNumbers(false);
+    _codeMirror.getDoc().setValue("");
     _codeMirror.onDoubleClick.listen((event) {
       // 行列号
       setState(() {
@@ -244,12 +245,21 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     });
   }
 
+  String getPrefix() {
+    debugPrint("当前扩展名$_codeType");
+    if (_codeType == "Python3") {
+      return ".py";
+    } else if (_codeType == "Java") {
+      return ".java";
+    } else {
+      return ".cpp";
+    }
+  }
+
   void handleStore() {
-    debugPrint("store");
     _uploadCodeBloc?.add(InUploadCodeEvent(ReqUploadCodeEntity()
       ..fileName =
-      getUserInfo().nickname + "-" + DateTime.now().toString() + _codeType ==
-          "Python3" ? ".py" : _codeType == "Java" ? ".java" : ".cpp"
+          getUserInfo().nickname + "-" + DateTime.now().toString() + getPrefix()
       ..content = _codeMirror?.getDoc()?.getValue()));
   }
 

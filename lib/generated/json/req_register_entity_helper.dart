@@ -7,6 +7,9 @@ reqRegisterEntityFromJson(ReqRegisterEntity data, Map<String, dynamic> json) {
   if (json['password'] != null) {
     data.password = json['password']?.toString();
   }
+  if (json['code'] != null) {
+    data.code = json['code']?.toString();
+  }
   if (json['mail'] != null) {
     data.mail = json['mail']?.toString();
   }
@@ -17,6 +20,7 @@ Map<String, dynamic> reqRegisterEntityToJson(ReqRegisterEntity entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
   data['username'] = entity.username;
   data['password'] = entity.password;
+  data['code'] = entity.code;
   data['mail'] = entity.mail;
   return data;
 }
