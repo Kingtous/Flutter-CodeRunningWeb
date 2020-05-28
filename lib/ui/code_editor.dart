@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js';
 import 'dart:ui' as ui;
 
 import 'package:after_layout/after_layout.dart';

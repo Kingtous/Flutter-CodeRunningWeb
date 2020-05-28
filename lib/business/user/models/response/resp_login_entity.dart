@@ -7,11 +7,12 @@ class RespLoginEntity with JsonConvert<RespLoginEntity> {
 }
 
 class RespLoginData with JsonConvert<RespLoginData> {
-  @JSONField(name: "avatar_url")
-  String avatarUrl;
-  int credits;
-  int id;
-  String nickname;
-  String token;
-  String username;
+	@JSONField(name: "avatar_url")
+	String avatarUrl;
+	int credits;
+	int id;
+	String nickname;
+	String token;
+	String username;
+	int role;
 }

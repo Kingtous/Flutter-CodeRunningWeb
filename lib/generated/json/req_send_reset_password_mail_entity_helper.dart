@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_send_reset_password_mail_entity.dart';
 
-reqSendResetPasswordMailEntityFromJson(ReqSendResetPasswordMailEntity data,
-    Map<String, dynamic> json) {
+reqSendResetPasswordMailEntityFromJson(
+    ReqSendResetPasswordMailEntity data, Map<String, dynamic> json) {
   if (json['username'] != null) {
     data.username = json['username']?.toString();
   }

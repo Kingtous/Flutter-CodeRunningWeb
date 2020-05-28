@@ -30,6 +30,9 @@ respGetProfileDataFromJson(RespGetProfileData data, Map<String, dynamic> json) {
   if (json['nickname'] != null) {
     data.nickname = json['nickname']?.toString();
   }
+  if (json['role'] != null) {
+    data.role = json['role']?.toInt();
+  }
   if (json['username'] != null) {
     data.username = json['username']?.toString();
   }
@@ -41,6 +44,7 @@ Map<String, dynamic> respGetProfileDataToJson(RespGetProfileData entity) {
   data['avatar_url'] = entity.avatarUrl;
   data['id'] = entity.id;
   data['nickname'] = entity.nickname;
+  data['role'] = entity.role;
   data['username'] = entity.username;
   return data;
 }

@@ -2,7 +2,10 @@ import 'package:code_running_front/business/user/models/request/req_get_thread_c
 import 'package:code_running_front/business/user/models/request/req_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_threads_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_status_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/common/network/http_constants.dart';
+import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/nav_util.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -48,11 +51,10 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
         _refreshController.refreshCompleted();
         _refreshController.loadComplete();
       } else if (state is InPostThreadCommentState) {
-        showLoadingDialog();
       } else {
         _refreshController.refreshFailed();
         _refreshController.loadFailed();
-        hideLoadingDialog();
+
       }
     });
     _pbloc.listen((state) {
@@ -63,7 +65,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
           ..threadId = widget.data.id
           ..page = page));
       } else if (state is InPostThreadCommentState) {
-        showLoadingDialog();
+
       } else {
         hideLoadingDialog();
       }
@@ -111,7 +113,6 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                   builder: (BuildContext context, state) {
                     switch (state.runtimeType) {
                       case GetThreadCommentedState:
-                        hideLoadingDialog();
                         return ListView.builder(
                           controller: _scrollController,
                           itemBuilder: (context, index) =>
@@ -119,9 +120,6 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                           itemCount: state.entity.data.length,
                         );
                       default:
-                        if (state is InGetThreadCommentEvent) {
-                          showLoadingDialog();
-                        }
                         return SizedBox(
                           key: Key("assets/animations/status/loading.flr"),
                           child: new FlareActor(
@@ -174,28 +172,70 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
               Gaps.vGap(16),
               Row(
                 children: <Widget>[
+                  Image.network(
+                    data.avatar,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  Gaps.hGap(16),
                   Expanded(
-                      child: Text(
-                    data.title,
-                    style: TextStyle(fontSize: 20),
-                  )),
-                  Gaps.hGap(4),
-                  Text(
-                    data.username,
-                    style: TextStyle(fontSize: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              data.username,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                        Gaps.vGap(8),
+                        Row(
+                          children: [
+                            Text(
+                              data.createDate,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               Gaps.vGap(16),
               Row(
-                children: <Widget>[
+                children: [
+                  Text(
+                    data.title,
+                    style: TextStyle(fontSize: 16),
+                  )
+                ],
+              ),
+              Gaps.vGap(16),
+              Row(
+                children: [
                   Text(
                     data.subtitle,
                     style: TextStyle(fontSize: 14),
-                    overflow: TextOverflow.clip,
-                  ),
+                  )
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        handleLike(data.userId);
+                      },
+                      child: Icon(Icons.favorite_border)),
+                  Gaps.hGap(4),
+                  Text("${data.userLike}")
+                ],
+              )
             ],
           ),
         ),
@@ -215,17 +255,40 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
-                    data.username,
-                    style: TextStyle(fontSize: 16),
+                  Image.network(
+                    data.avatar,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
                   ),
-                  Gaps.hGap(8.0),
-                  Text(
-                    DateTime.fromMillisecondsSinceEpoch(
-                            data.createDate.toInt() * 1000)
-                        .toLocal()
-                        .toString(),
-                    style: TextStyle(fontSize: 14),
+                  Gaps.hGap(16),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              data.username,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                        Gaps.vGap(8),
+                        Row(
+                          children: [
+                            Text(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  data.createDate.toInt() * 1000)
+                                  .toLocal()
+                                  .toString(),
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -234,7 +297,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                 children: <Widget>[
                   Text(
                     data.content,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 14),
                   ),
                 ],
               )
@@ -321,5 +384,18 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
     _pbloc.add(InPostThreadCommentEvent(ReqThreadCommentEntity()
       ..threadId = widget.data.id
       ..content = comment));
+  }
+
+  handleLike(int userId) async {
+    RespStatusEntity entity = (await ApiRequest.likeUser(userId)).data;
+    debugPrint("start process");
+    if (entity.code == 0) {
+      setState(() {
+        widget.data.userLike += 1;
+      });
+    }
+    else {
+      showError(msg: getErrMsg(entity.code));
+    }
   }
 }

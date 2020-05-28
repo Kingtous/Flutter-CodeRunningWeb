@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_my_cart_entity.dart';
 
-respGetMyCartEntityFromJson(RespGetMyCartEntity data,
-    Map<String, dynamic> json) {
+respGetMyCartEntityFromJson(
+    RespGetMyCartEntity data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }

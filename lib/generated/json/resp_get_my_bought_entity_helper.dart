@@ -23,8 +23,8 @@ Map<String, dynamic> respGetMyBoughtEntityToJson(RespGetMyBoughtEntity entity) {
   return data;
 }
 
-respGetMyBoughtDataFromJson(
-    RespGetMyBoughtData data, Map<String, dynamic> json) {
+respGetMyBoughtDataFromJson(RespGetMyBoughtData data,
+    Map<String, dynamic> json) {
   if (json['credits'] != null) {
     data.credits = json['credits']?.toInt();
   }

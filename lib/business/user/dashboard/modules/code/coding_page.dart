@@ -88,140 +88,135 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
         title: Text("代码编辑器"),
       ),
       backgroundColor: Colors.black,
-      body: Stack(children: <Widget>[
-        ImageLoadView(
-          "images/background/02.jpg",
-          imageType: ImageType.assets,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          fit: BoxFit.cover,
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: Card(
-            elevation: 10,
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 10,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          // Text("代码编辑器"),
-                          // Gaps.hGap(8.0),
-                          DropdownButton(
-                              items: <String>["C++", "Java", "Python3"].map(
-                                      (String e) =>
-                                      DropdownMenuItem<String>(
-                                          child: Text(e), value: e)).toList(),
-                              value: _codeType,
-                              onChanged: handleCodeTypeChanged),
-                          Gaps.hGap(4.0),
-                          Text("$_lineNumbers/$_colNumbers"),
-                        ],
-                      ),
-                      CodeEditor(
-                          editorId: _editorId,
-                          height: 800,
-                          width: 400,
-                          initialOptions: _editorOptions,
-                          onEditorCreated: handleEditorCreated,
-                          focusNode: _focusNode
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 400,
-                    height: 800,
-                    alignment: Alignment.topCenter,
-                    child: Column(
+      body: SingleChildScrollView(
+        child: Stack(children: <Widget>[
+          ImageLoadView(
+            "images/background/02.jpg",
+            imageType: ImageType.assets,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Card(
+              elevation: 10,
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 10,
+                  children: <Widget>[
+                    Column(
                       children: <Widget>[
-                        Wrap(
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            BlocListener(
-                              bloc: _uploadCodeBloc,
-                              listener: (BuildContext context, state) {
-                                if (state is UploadCodeedState) {
-                                  _storeUrl = state.entity.data.url;
-                                  showSuccess(msg: "上传成功！");
-                                }
-                              },
-                              child: FlatButton.icon(
-                                  onPressed: handleStore,
-                                  icon: FaIcon(FontAwesomeIcons.save),
-                                  label: Text("保存至我的仓库")),
-                            ),
-                            BlocListener(
-                              bloc: _uploadCodeBloc,
-                              listener: (BuildContext context, state) {
-                                if (state is UploadCodeedState) {
-                                  setState(() {
-                                    _storeUrl = state.entity.data.url;
-                                  });
-                                }
-                              },
-                              child: FlatButton.icon(
-                                  onPressed:
-                                  _storeUrl != null ? handleExe : null,
-                                  icon: FaIcon(FontAwesomeIcons.save),
-                                  label: Text("直接执行")),
-                            )
+                            // Text("代码编辑器"),
+                            // Gaps.hGap(8.0),
+                            DropdownButton(
+                                items: <String>["C++", "Java", "Python3"]
+                                    .map((String e) => DropdownMenuItem<String>(
+                                        child: Text(e), value: e))
+                                    .toList(),
+                                value: _codeType,
+                                onChanged: handleCodeTypeChanged),
+                            Gaps.hGap(4.0),
+                            Text("$_lineNumbers/$_colNumbers"),
                           ],
                         ),
-                        Expanded(
-                            child: BlocListener(
-                              bloc: _executeCodeBloc,
-                              listener: (BuildContext context, state) {
-                                if (state is ExecuteCodeedState) {
-                                  _getCodeResultBloc?.add(InGetCodeResultEvent(
-                                      ReqGetCodeResultEntity(
-                                          state.entity.data.codeId)));
-                                }
-                              },
-                              child: Container(
-                                width: 400,
-                                decoration: BoxDecoration(color: Colors.grey),
-                                child: BlocBuilder(
-                                  bloc: _getCodeResultBloc,
-                                  builder: (BuildContext context, state) {
-                                    if (state is InGetCodeResultState) {
-                                      return Text("已提交，等待服务器响应");
-                                    } else if (state is NoGetCodeResultState) {
-                                      return Text(state.msg);
-                                    } else
-                                    if (state is InitialGetCodeResultState) {
-                                      return Text("请在代码写好后保存至仓库再执行");
-                                    } else if (state is GetCodeResultedState) {
-                                      return Text(
-                                        "${state.entity.data.status}: " +
-                                            state.entity.data.result,
-                                        overflow: TextOverflow.clip,
-                                        softWrap: true,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ))
+                        CodeEditor(
+                            editorId: _editorId,
+                            height: 800,
+                            width: 400,
+                            initialOptions: _editorOptions,
+                            onEditorCreated: handleEditorCreated,
+                            focusNode: _focusNode),
                       ],
                     ),
-                  )
-                ],
+                    Container(
+                      width: 400,
+                      height: 800,
+                      alignment: Alignment.topCenter,
+                      child: Column(
+                        children: <Widget>[
+                          Wrap(
+                            children: <Widget>[
+                              BlocListener(
+                                bloc: _uploadCodeBloc,
+                                listener: (BuildContext context, state) {
+                                  if (state is UploadCodeedState) {
+                                    _storeUrl = state.entity.data.url;
+                                    showSuccess(msg: "上传成功！");
+                                  }
+                                },
+                                child: FlatButton.icon(
+                                    onPressed: handleStore,
+                                    icon: FaIcon(FontAwesomeIcons.save),
+                                    label: Text("1.保存")),
+                              ),
+                              BlocListener(
+                                bloc: _uploadCodeBloc,
+                                listener: (BuildContext context, state) {
+                                  if (state is UploadCodeedState) {
+                                    setState(() {
+                                      _storeUrl = state.entity.data.url;
+                                    });
+                                  }
+                                },
+                                child: FlatButton.icon(
+                                    onPressed:
+                                        _storeUrl != null ? handleExe : null,
+                                    icon: FaIcon(FontAwesomeIcons.autoprefixer),
+                                    label: Text("2.执行")),
+                              )
+                            ],
+                          ),
+                          Expanded(
+                              child: BlocListener(
+                            bloc: _executeCodeBloc,
+                            listener: (BuildContext context, state) {
+                              if (state is ExecuteCodeedState) {
+                                _getCodeResultBloc?.add(InGetCodeResultEvent(
+                                    ReqGetCodeResultEntity(
+                                        state.entity.data.codeId)));
+                              }
+                            },
+                            child: Container(
+                              width: 400,
+                              decoration: BoxDecoration(color: Colors.grey),
+                              child: BlocBuilder(
+                                bloc: _getCodeResultBloc,
+                                builder: (BuildContext context, state) {
+                                  if (state is InGetCodeResultState) {
+                                    return Text("已提交，等待服务器响应");
+                                  } else if (state is NoGetCodeResultState) {
+                                    return Text(state.msg);
+                                  } else if (state
+                                      is InitialGetCodeResultState) {
+                                    return Text("请在代码写好后保存至仓库再执行");
+                                  } else if (state is GetCodeResultedState) {
+                                    return Text(
+                                      "状态号：${state.entity.data.status}: \n" +
+                                          state.entity.data.result,
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 

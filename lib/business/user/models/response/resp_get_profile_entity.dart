@@ -7,9 +7,10 @@ class RespGetProfileEntity with JsonConvert<RespGetProfileEntity> {
 }
 
 class RespGetProfileData with JsonConvert<RespGetProfileData> {
-  @JSONField(name: "avatar_url")
-  String avatarUrl;
-  int id;
-  String nickname;
-  String username;
+	@JSONField(name: "avatar_url")
+	String avatarUrl;
+	int id;
+	String nickname;
+	int role;
+	String username;
 }

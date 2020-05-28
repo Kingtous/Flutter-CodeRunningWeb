@@ -7,14 +7,19 @@ class RespGetThreadsEntity with JsonConvert<RespGetThreadsEntity> {
 }
 
 class RespGetThreadsData with JsonConvert<RespGetThreadsData> {
-  @JSONField(name: "code_url")
-  String codeUrl;
-  @JSONField(name: "comment_id")
-  dynamic commentId;
-  int id;
-  String subtitle;
-  String title;
-  @JSONField(name: "user_id")
-  int userId;
-  String username;
+	String avatar;
+	@JSONField(name: "code_url")
+	String codeUrl;
+	@JSONField(name: "comment_id")
+	int commentId;
+	@JSONField(name: "create_date")
+	String createDate;
+	int id;
+	String subtitle;
+	String title;
+	@JSONField(name: "user_id")
+	int userId;
+	@JSONField(name: "user_like")
+	int userLike;
+	String username;
 }

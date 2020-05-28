@@ -272,4 +272,13 @@ class ApiRequest {
         body: entity.toJson());
   }
 
+  /// 喜爱用户
+  static likeUser(int id) async {
+    return await HttpUtils.get().req(
+      "$likeProfileApi$id",
+      method: HConstants.get,
+      header: addBasicAuthHeader(Map()),
+      parser: GeneralJsonParser(RespStatusEntity()),
+    );
+  }
 }

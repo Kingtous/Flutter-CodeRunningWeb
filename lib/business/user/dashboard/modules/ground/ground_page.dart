@@ -245,28 +245,57 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                 Gaps.vGap(16),
                 Row(
                   children: <Widget>[
+                    Image.network(
+                      data.avatar,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                    Gaps.hGap(16),
                     Expanded(
-                        child: Text(
-                      data.title,
-                      style: TextStyle(fontSize: 20),
-                    )),
-                    Gaps.hGap(4),
-                    Text(
-                      data.username,
-                      style: TextStyle(fontSize: 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                data.username,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          Gaps.vGap(8),
+                          Row(
+                            children: [
+                              Text(
+                                data.createDate,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
                 Gaps.vGap(16),
                 Row(
-                  children: <Widget>[
+                  children: [
                     Text(
-                      data.subtitle,
+                      data.title,
                       style: TextStyle(fontSize: 14),
-                      overflow: TextOverflow.clip,
-                    ),
+                    )
                   ],
                 ),
+                Gaps.vGap(16),
+                Row(children: [
+                  Text(
+                    data.subtitle,
+                    style: TextStyle(fontSize: 12),
+                  )
+                ],),
+                Gaps.vGap(4),
               ],
             ),
           ),

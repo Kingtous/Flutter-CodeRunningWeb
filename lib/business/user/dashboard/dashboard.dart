@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:universal_html/html.dart' hide Platform;
 
 import 'modules/profile/get/credits/get_credits_bloc.dart';
 import 'modules/profile/get/profile/bloc.dart';
@@ -37,8 +38,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
     _getProfileBloc = GetProfileBloc();
     _getCreditsBloc = GetCreditsBloc();
     _getProfileBloc
-        ?.add(InGetProfileEvent(ReqGetProfileEntity()
-      ..id = getUserInfo().id));
+        ?.add(InGetProfileEvent(ReqGetProfileEntity()..id = getUserInfo().id));
     _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity()));
   }
 
@@ -114,80 +114,92 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
       );
 
   Widget buildMenu() =>
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Wrap(
-          direction: Axis.vertical,
-          spacing: 10,
-          runSpacing: 10,
-          children: <Widget>[
-            GestureDetector(
-                onTap: () => {handleEditorOpen(context)},
-                child: buildMenuBtn(
-                    FaIcon(
-                      FontAwesomeIcons.code,
-                      size: 25,
-                      color: Colors.white,
-                    ),
-                    "我的编辑器",
-                    "开始创作")),
-            GestureDetector(
-              onTap: () => {handleRepositoryOpen(context)},
-              child: buildMenuBtn(
-                  FaIcon(
-                    FontAwesomeIcons.cloud,
-                    size: 25,
-                    color: Colors.white,
+      BlocBuilder(
+        bloc: _getProfileBloc,
+        builder: (BuildContext context, state) {
+          if (state is GetProfileedState) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: () => {handleEditorOpen(context)},
+                      child: buildMenuBtn(
+                          FaIcon(
+                            FontAwesomeIcons.code,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                          "我的编辑器",
+                          "开始创作")),
+                  GestureDetector(
+                    onTap: () => {handleRepositoryOpen(context)},
+                    child: buildMenuBtn(
+                        FaIcon(
+                          FontAwesomeIcons.cloud,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        "我的码库",
+                        "代码历史"),
                   ),
-                  "我的码库",
-                  "代码历史"),
-            ),
-            GestureDetector(
-              onTap: () => {handleGroundOpen(context)},
-              child: buildMenuBtn(
-                  FaIcon(
-                    FontAwesomeIcons.warehouse,
-                    size: 25,
-                    color: Colors.white,
+                  GestureDetector(
+                    onTap: () => {handleGroundOpen(context)},
+                    child: buildMenuBtn(
+                        FaIcon(
+                          FontAwesomeIcons.warehouse,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        "论坛广场",
+                        "发现你的所见所闻"),
                   ),
-                  "论坛广场",
-                  "发现你的所见所闻"),
-            ),
-            GestureDetector(
-              onTap: () => {handleMallOpen(context)},
-              child: buildMenuBtn(
-                  FaIcon(
-                    FontAwesomeIcons.shoppingCart,
-                    size: 25,
-                    color: Colors.white,
+                  GestureDetector(
+                    onTap: () => {handleMallOpen(context)},
+                    child: buildMenuBtn(
+                        FaIcon(
+                          FontAwesomeIcons.shoppingCart,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        "社区点点通",
+                        "知识带回家"),
                   ),
-                  "社区点点通",
-                  "知识带回家"),
-            ),
-            GestureDetector(
-              onTap: () => {handleCartOpen(context)},
-              child: buildMenuBtn(
-                  FaIcon(
-                    FontAwesomeIcons.shoppingCart,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                  "我的购物车",
-                  "我的知识宝库"),
-            ),
-            GestureDetector(
-              onTap: () => {handleHomeOpen(context)},
-              child: buildMenuBtn(
-                  FaIcon(
-                    FontAwesomeIcons.cogs,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                  "个人主页",
-                  "购买的项目、资料设置"),
-            )
-          ],
-        ),
+                  state.entity.data.role == 0
+                      ? GestureDetector(
+                    onTap: () => {handleCartOpen(context)},
+                    child: buildMenuBtn(
+                        FaIcon(
+                          FontAwesomeIcons.shoppingCart,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        "我的购物车",
+                        "我的知识宝库"),
+                  )
+                      : SizedBox(),
+                  state.entity.data.role == 0 ?
+                  GestureDetector(
+                    onTap: () => {handleHomeOpen(context)},
+                    child: buildMenuBtn(
+                        FaIcon(
+                          FontAwesomeIcons.cogs,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                        "个人主页",
+                        "购买的项目、资料设置"),
+                  ) : SizedBox()
+                ],
+              ),
+            );
+          } else {
+            return SizedBox();
+          }
+        },
       );
 
   /// 动态
@@ -228,8 +240,8 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
             'XII'
           ],
           isLive: true,
-          width: 250,
-          height: 250,
+          width: 150,
+          height: 150,
         ),
         Gaps.vGap(16.0),
         Card(
@@ -375,10 +387,12 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
   }
 
   handleHomeOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.homePage,
-        arguments: HomePageArguments(pBloc: _getProfileBloc)).then((value) =>
-        _getProfileBloc
-            ?.add(InGetProfileEvent(ReqGetProfileEntity()
-          ..id = getUserInfo().id)));
+    NavUtil.navigator()
+        .pushNamed(Routes.homePage,
+        arguments: HomePageArguments(pBloc: _getProfileBloc))
+        .then((value) =>
+        _getProfileBloc?.add(
+            InGetProfileEvent(ReqGetProfileEntity()
+              ..id = getUserInfo().id)));
   }
 }

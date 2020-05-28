@@ -7,6 +7,7 @@ class RespGetThreadCommentEntity with JsonConvert<RespGetThreadCommentEntity> {
 }
 
 class RespGetThreadCommentData with JsonConvert<RespGetThreadCommentData> {
+  String avatar;
   @JSONField(name: "code_url")
   String codeUrl;
   String content;
@@ -16,7 +17,7 @@ class RespGetThreadCommentData with JsonConvert<RespGetThreadCommentData> {
   @JSONField(name: "next_id")
   dynamic nextId;
   @JSONField(name: "parent_id")
-  int parentId;
+  dynamic parentId;
   @JSONField(name: "threads_id")
   int threadsId;
   @JSONField(name: "user_id")

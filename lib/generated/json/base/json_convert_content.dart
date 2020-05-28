@@ -99,417 +99,417 @@ class JsonConvert<T> {
 
   static _getFromJson<T>(Type type, data, json) {
     switch (type) {
-      case RespMyCreditsEntity:
-        return respMyCreditsEntityFromJson(
-            data as RespMyCreditsEntity, json) as T;
-      case RespMyCreditsData:
-        return respMyCreditsDataFromJson(data as RespMyCreditsData, json) as T;
-      case ReqMyCreditsEntity:
-        return reqMyCreditsEntityFromJson(
-            data as ReqMyCreditsEntity, json) as T;
-      case ReqUploadCodeEntity:
-        return reqUploadCodeEntityFromJson(
-            data as ReqUploadCodeEntity, json) as T;
+      case ReqDelCartEntity:
+        return reqDelCartEntityFromJson(data as ReqDelCartEntity, json) as T;
+      case ReqGetMyCartEntity:
+        return reqGetMyCartEntityFromJson(data as ReqGetMyCartEntity, json)
+            as T;
+      case RespGetMyCartEntity:
+        return respGetMyCartEntityFromJson(data as RespGetMyCartEntity, json)
+            as T;
+      case RespGetMyCartData:
+        return respGetMyCartDataFromJson(data as RespGetMyCartData, json) as T;
+      case ReqResetPasswordEntity:
+        return reqResetPasswordEntityFromJson(
+            data as ReqResetPasswordEntity, json) as T;
+      case ReqAlterProfileEntity:
+        return reqAlterProfileEntityFromJson(
+            data as ReqAlterProfileEntity, json) as T;
+      case RespGetCodesEntity:
+        return respGetCodesEntityFromJson(data as RespGetCodesEntity, json)
+            as T;
+      case RespGetCodesData:
+        return respGetCodesDataFromJson(data as RespGetCodesData, json) as T;
+      case ReqRegisterEntity:
+        return reqRegisterEntityFromJson(data as ReqRegisterEntity, json) as T;
+      case RespRegisterEntity:
+        return respRegisterEntityFromJson(data as RespRegisterEntity, json)
+            as T;
+      case RespRegisterData:
+        return respRegisterDataFromJson(data as RespRegisterData, json) as T;
+      case ReqPostThreadEntity:
+        return reqPostThreadEntityFromJson(data as ReqPostThreadEntity, json)
+            as T;
+      case RespGetMyBoughtEntity:
+        return respGetMyBoughtEntityFromJson(
+            data as RespGetMyBoughtEntity, json) as T;
+      case RespGetMyBoughtData:
+        return respGetMyBoughtDataFromJson(data as RespGetMyBoughtData, json)
+            as T;
       case RespBuyCartItemsEntity:
         return respBuyCartItemsEntityFromJson(
             data as RespBuyCartItemsEntity, json) as T;
+      case RespMyCreditsEntity:
+        return respMyCreditsEntityFromJson(data as RespMyCreditsEntity, json)
+            as T;
+      case RespMyCreditsData:
+        return respMyCreditsDataFromJson(data as RespMyCreditsData, json) as T;
+      case ReqMyCreditsEntity:
+        return reqMyCreditsEntityFromJson(data as ReqMyCreditsEntity, json)
+            as T;
+      case ReqGetMallItemsEntity:
+        return reqGetMallItemsEntityFromJson(
+            data as ReqGetMallItemsEntity, json) as T;
+      case RespGetMallItemsEntity:
+        return respGetMallItemsEntityFromJson(
+            data as RespGetMallItemsEntity, json) as T;
+      case RespGetMallItemsData:
+        return respGetMallItemsDataFromJson(data as RespGetMallItemsData, json)
+            as T;
+      case ReqUploadCodeEntity:
+        return reqUploadCodeEntityFromJson(data as ReqUploadCodeEntity, json)
+            as T;
+      case RespGetProfileEntity:
+        return respGetProfileEntityFromJson(data as RespGetProfileEntity, json)
+            as T;
+      case RespGetProfileData:
+        return respGetProfileDataFromJson(data as RespGetProfileData, json)
+            as T;
+      case ReqAddItemEntity:
+        return reqAddItemEntityFromJson(data as ReqAddItemEntity, json) as T;
+      case RespGetThreadsEntity:
+        return respGetThreadsEntityFromJson(data as RespGetThreadsEntity, json)
+            as T;
+      case RespGetThreadsData:
+        return respGetThreadsDataFromJson(data as RespGetThreadsData, json)
+            as T;
       case RespGetCodeResultEntity:
         return respGetCodeResultEntityFromJson(
             data as RespGetCodeResultEntity, json) as T;
       case RespGetCodeResultData:
         return respGetCodeResultDataFromJson(
             data as RespGetCodeResultData, json) as T;
-      case ReqSendResetPasswordMailEntity:
-        return reqSendResetPasswordMailEntityFromJson(
-            data as ReqSendResetPasswordMailEntity, json) as T;
+      case ReqThreadCommentEntity:
+        return reqThreadCommentEntityFromJson(
+            data as ReqThreadCommentEntity, json) as T;
+      case ReqSendRegisterEmailEntity:
+        return reqSendRegisterEmailEntityFromJson(
+            data as ReqSendRegisterEmailEntity, json) as T;
+      case ReqGetThreadsEntity:
+        return reqGetThreadsEntityFromJson(data as ReqGetThreadsEntity, json)
+            as T;
       case RespGetThreadCommentEntity:
         return respGetThreadCommentEntityFromJson(
             data as RespGetThreadCommentEntity, json) as T;
       case RespGetThreadCommentData:
         return respGetThreadCommentDataFromJson(
             data as RespGetThreadCommentData, json) as T;
-      case RespLoginEntity:
-        return respLoginEntityFromJson(data as RespLoginEntity, json) as T;
-      case RespLoginData:
-        return respLoginDataFromJson(data as RespLoginData, json) as T;
-      case RespGetCodesEntity:
-        return respGetCodesEntityFromJson(
-            data as RespGetCodesEntity, json) as T;
-      case RespGetCodesData:
-        return respGetCodesDataFromJson(data as RespGetCodesData, json) as T;
-      case ReqGetProfileEntity:
-        return reqGetProfileEntityFromJson(
-            data as ReqGetProfileEntity, json) as T;
-      case RespGetMallItemsEntity:
-        return respGetMallItemsEntityFromJson(
-            data as RespGetMallItemsEntity, json) as T;
-      case RespGetMallItemsData:
-        return respGetMallItemsDataFromJson(
-            data as RespGetMallItemsData, json) as T;
-      case RespGetProfileEntity:
-        return respGetProfileEntityFromJson(
-            data as RespGetProfileEntity, json) as T;
-      case RespGetProfileData:
-        return respGetProfileDataFromJson(
-            data as RespGetProfileData, json) as T;
-      case ReqSendRegisterEmailEntity:
-        return reqSendRegisterEmailEntityFromJson(
-            data as ReqSendRegisterEmailEntity, json) as T;
-      case ReqAddCartEntity:
-        return reqAddCartEntityFromJson(data as ReqAddCartEntity, json) as T;
-      case ReqThreadCommentEntity:
-        return reqThreadCommentEntityFromJson(
-            data as ReqThreadCommentEntity, json) as T;
+      case ReqGetRepositoryEntity:
+        return reqGetRepositoryEntityFromJson(
+            data as ReqGetRepositoryEntity, json) as T;
+      case ReqExecuteCodeEntity:
+        return reqExecuteCodeEntityFromJson(data as ReqExecuteCodeEntity, json)
+            as T;
+      case RespStatusEntity:
+        return respStatusEntityFromJson(data as RespStatusEntity, json) as T;
       case ReqGetCreditsEntity:
-        return reqGetCreditsEntityFromJson(
-            data as ReqGetCreditsEntity, json) as T;
-      case ReqGetMyCartEntity:
-        return reqGetMyCartEntityFromJson(
-            data as ReqGetMyCartEntity, json) as T;
+        return reqGetCreditsEntityFromJson(data as ReqGetCreditsEntity, json)
+            as T;
+      case RespUploadCodeEntity:
+        return respUploadCodeEntityFromJson(data as RespUploadCodeEntity, json)
+            as T;
+      case RespUploadCodeData:
+        return respUploadCodeDataFromJson(data as RespUploadCodeData, json)
+            as T;
+      case ReqGetThreadCommentEntity:
+        return reqGetThreadCommentEntityFromJson(
+            data as ReqGetThreadCommentEntity, json) as T;
       case RespGetRepositoryEntity:
         return respGetRepositoryEntityFromJson(
             data as RespGetRepositoryEntity, json) as T;
       case RespGetRepositoryData:
         return respGetRepositoryDataFromJson(
             data as RespGetRepositoryData, json) as T;
-      case ReqResetPasswordEntity:
-        return reqResetPasswordEntityFromJson(
-            data as ReqResetPasswordEntity, json) as T;
-      case ReqBuyCartItemsEntity:
-        return reqBuyCartItemsEntityFromJson(
-            data as ReqBuyCartItemsEntity, json) as T;
-      case ReqLoginEntity:
-        return reqLoginEntityFromJson(data as ReqLoginEntity, json) as T;
-      case ReqGetMallItemsEntity:
-        return reqGetMallItemsEntityFromJson(
-            data as ReqGetMallItemsEntity, json) as T;
-      case ReqGetThreadCommentEntity:
-        return reqGetThreadCommentEntityFromJson(
-            data as ReqGetThreadCommentEntity, json) as T;
-      case ReqAlterProfileEntity:
-        return reqAlterProfileEntityFromJson(
-            data as ReqAlterProfileEntity, json) as T;
-      case RespGetCreditsEntity:
-        return respGetCreditsEntityFromJson(
-            data as RespGetCreditsEntity, json) as T;
-      case RespGetCreditsData:
-        return respGetCreditsDataFromJson(
-            data as RespGetCreditsData, json) as T;
-      case ReqGetMyBoughtEntity:
-        return reqGetMyBoughtEntityFromJson(
-            data as ReqGetMyBoughtEntity, json) as T;
-      case ReqAddItemEntity:
-        return reqAddItemEntityFromJson(data as ReqAddItemEntity, json) as T;
-      case RespExecuteCodeEntity:
-        return respExecuteCodeEntityFromJson(
-            data as RespExecuteCodeEntity, json) as T;
-      case RespExecuteCodeData:
-        return respExecuteCodeDataFromJson(
-            data as RespExecuteCodeData, json) as T;
-      case ReqPostThreadEntity:
-        return reqPostThreadEntityFromJson(
-            data as ReqPostThreadEntity, json) as T;
-      case RespGetMyBoughtEntity:
-        return respGetMyBoughtEntityFromJson(
-            data as RespGetMyBoughtEntity, json) as T;
-      case RespGetMyBoughtData:
-        return respGetMyBoughtDataFromJson(
-            data as RespGetMyBoughtData, json) as T;
-      case ReqGetThreadsEntity:
-        return reqGetThreadsEntityFromJson(
-            data as ReqGetThreadsEntity, json) as T;
-      case RespGetThreadsEntity:
-        return respGetThreadsEntityFromJson(
-            data as RespGetThreadsEntity, json) as T;
-      case RespGetThreadsData:
-        return respGetThreadsDataFromJson(
-            data as RespGetThreadsData, json) as T;
-      case ReqRegisterEntity:
-        return reqRegisterEntityFromJson(data as ReqRegisterEntity, json) as T;
-      case RespGetMyCartEntity:
-        return respGetMyCartEntityFromJson(
-            data as RespGetMyCartEntity, json) as T;
-      case RespGetMyCartData:
-        return respGetMyCartDataFromJson(data as RespGetMyCartData, json) as T;
-      case ReqExecuteCodeEntity:
-        return reqExecuteCodeEntityFromJson(
-            data as ReqExecuteCodeEntity, json) as T;
       case RespGetMyRepositoryEntity:
         return respGetMyRepositoryEntityFromJson(
             data as RespGetMyRepositoryEntity, json) as T;
       case RespGetMyRepositoryData:
         return respGetMyRepositoryDataFromJson(
             data as RespGetMyRepositoryData, json) as T;
-      case RespStatusEntity:
-        return respStatusEntityFromJson(data as RespStatusEntity, json) as T;
+      case ReqBuyCartItemsEntity:
+        return reqBuyCartItemsEntityFromJson(
+            data as ReqBuyCartItemsEntity, json) as T;
+      case ReqGetProfileEntity:
+        return reqGetProfileEntityFromJson(data as ReqGetProfileEntity, json)
+            as T;
+      case RespLoginEntity:
+        return respLoginEntityFromJson(data as RespLoginEntity, json) as T;
+      case RespLoginData:
+        return respLoginDataFromJson(data as RespLoginData, json) as T;
       case ReqGetMyRepositoryEntity:
         return reqGetMyRepositoryEntityFromJson(
             data as ReqGetMyRepositoryEntity, json) as T;
-      case RespUploadCodeEntity:
-        return respUploadCodeEntityFromJson(
-            data as RespUploadCodeEntity, json) as T;
-      case RespUploadCodeData:
-        return respUploadCodeDataFromJson(
-            data as RespUploadCodeData, json) as T;
-      case RespRegisterEntity:
-        return respRegisterEntityFromJson(
-            data as RespRegisterEntity, json) as T;
-      case RespRegisterData:
-        return respRegisterDataFromJson(data as RespRegisterData, json) as T;
-      case ReqDelCartEntity:
-        return reqDelCartEntityFromJson(data as ReqDelCartEntity, json) as T;
-      case ReqGetRepositoryEntity:
-        return reqGetRepositoryEntityFromJson(
-            data as ReqGetRepositoryEntity, json) as T;
+      case ReqSendResetPasswordMailEntity:
+        return reqSendResetPasswordMailEntityFromJson(
+            data as ReqSendResetPasswordMailEntity, json) as T;
+      case ReqAddCartEntity:
+        return reqAddCartEntityFromJson(data as ReqAddCartEntity, json) as T;
+      case ReqGetMyBoughtEntity:
+        return reqGetMyBoughtEntityFromJson(data as ReqGetMyBoughtEntity, json)
+            as T;
+      case RespGetCreditsEntity:
+        return respGetCreditsEntityFromJson(data as RespGetCreditsEntity, json)
+            as T;
+      case RespGetCreditsData:
+        return respGetCreditsDataFromJson(data as RespGetCreditsData, json)
+            as T;
+      case RespExecuteCodeEntity:
+        return respExecuteCodeEntityFromJson(
+            data as RespExecuteCodeEntity, json) as T;
+      case RespExecuteCodeData:
+        return respExecuteCodeDataFromJson(data as RespExecuteCodeData, json)
+            as T;
+      case ReqLoginEntity:
+        return reqLoginEntityFromJson(data as ReqLoginEntity, json) as T;
     }
     return data as T;
   }
 
   static _getToJson<T>(Type type, data) {
     switch (type) {
-      case RespMyCreditsEntity:
-        return respMyCreditsEntityToJson(data as RespMyCreditsEntity);
-      case RespMyCreditsData:
-        return respMyCreditsDataToJson(data as RespMyCreditsData);
-      case ReqMyCreditsEntity:
-        return reqMyCreditsEntityToJson(data as ReqMyCreditsEntity);
-      case ReqUploadCodeEntity:
-        return reqUploadCodeEntityToJson(data as ReqUploadCodeEntity);
-      case RespBuyCartItemsEntity:
-        return respBuyCartItemsEntityToJson(data as RespBuyCartItemsEntity);
-      case RespGetCodeResultEntity:
-        return respGetCodeResultEntityToJson(data as RespGetCodeResultEntity);
-      case RespGetCodeResultData:
-        return respGetCodeResultDataToJson(data as RespGetCodeResultData);
-      case ReqSendResetPasswordMailEntity:
-        return reqSendResetPasswordMailEntityToJson(
-            data as ReqSendResetPasswordMailEntity);
-      case RespGetThreadCommentEntity:
-        return respGetThreadCommentEntityToJson(
-            data as RespGetThreadCommentEntity);
-      case RespGetThreadCommentData:
-        return respGetThreadCommentDataToJson(data as RespGetThreadCommentData);
-      case RespLoginEntity:
-        return respLoginEntityToJson(data as RespLoginEntity);
-      case RespLoginData:
-        return respLoginDataToJson(data as RespLoginData);
+      case ReqDelCartEntity:
+        return reqDelCartEntityToJson(data as ReqDelCartEntity);
+      case ReqGetMyCartEntity:
+        return reqGetMyCartEntityToJson(data as ReqGetMyCartEntity);
+      case RespGetMyCartEntity:
+        return respGetMyCartEntityToJson(data as RespGetMyCartEntity);
+      case RespGetMyCartData:
+        return respGetMyCartDataToJson(data as RespGetMyCartData);
+      case ReqResetPasswordEntity:
+        return reqResetPasswordEntityToJson(data as ReqResetPasswordEntity);
+      case ReqAlterProfileEntity:
+        return reqAlterProfileEntityToJson(data as ReqAlterProfileEntity);
       case RespGetCodesEntity:
         return respGetCodesEntityToJson(data as RespGetCodesEntity);
       case RespGetCodesData:
         return respGetCodesDataToJson(data as RespGetCodesData);
-      case ReqGetProfileEntity:
-        return reqGetProfileEntityToJson(data as ReqGetProfileEntity);
-      case RespGetMallItemsEntity:
-        return respGetMallItemsEntityToJson(data as RespGetMallItemsEntity);
-      case RespGetMallItemsData:
-        return respGetMallItemsDataToJson(data as RespGetMallItemsData);
-      case RespGetProfileEntity:
-        return respGetProfileEntityToJson(data as RespGetProfileEntity);
-      case RespGetProfileData:
-        return respGetProfileDataToJson(data as RespGetProfileData);
-      case ReqSendRegisterEmailEntity:
-        return reqSendRegisterEmailEntityToJson(
-            data as ReqSendRegisterEmailEntity);
-      case ReqAddCartEntity:
-        return reqAddCartEntityToJson(data as ReqAddCartEntity);
-      case ReqThreadCommentEntity:
-        return reqThreadCommentEntityToJson(data as ReqThreadCommentEntity);
-      case ReqGetCreditsEntity:
-        return reqGetCreditsEntityToJson(data as ReqGetCreditsEntity);
-      case ReqGetMyCartEntity:
-        return reqGetMyCartEntityToJson(data as ReqGetMyCartEntity);
-      case RespGetRepositoryEntity:
-        return respGetRepositoryEntityToJson(data as RespGetRepositoryEntity);
-      case RespGetRepositoryData:
-        return respGetRepositoryDataToJson(data as RespGetRepositoryData);
-      case ReqResetPasswordEntity:
-        return reqResetPasswordEntityToJson(data as ReqResetPasswordEntity);
-      case ReqBuyCartItemsEntity:
-        return reqBuyCartItemsEntityToJson(data as ReqBuyCartItemsEntity);
-      case ReqLoginEntity:
-        return reqLoginEntityToJson(data as ReqLoginEntity);
-      case ReqGetMallItemsEntity:
-        return reqGetMallItemsEntityToJson(data as ReqGetMallItemsEntity);
-      case ReqGetThreadCommentEntity:
-        return reqGetThreadCommentEntityToJson(
-            data as ReqGetThreadCommentEntity);
-      case ReqAlterProfileEntity:
-        return reqAlterProfileEntityToJson(data as ReqAlterProfileEntity);
-      case RespGetCreditsEntity:
-        return respGetCreditsEntityToJson(data as RespGetCreditsEntity);
-      case RespGetCreditsData:
-        return respGetCreditsDataToJson(data as RespGetCreditsData);
-      case ReqGetMyBoughtEntity:
-        return reqGetMyBoughtEntityToJson(data as ReqGetMyBoughtEntity);
-      case ReqAddItemEntity:
-        return reqAddItemEntityToJson(data as ReqAddItemEntity);
-      case RespExecuteCodeEntity:
-        return respExecuteCodeEntityToJson(data as RespExecuteCodeEntity);
-      case RespExecuteCodeData:
-        return respExecuteCodeDataToJson(data as RespExecuteCodeData);
+      case ReqRegisterEntity:
+        return reqRegisterEntityToJson(data as ReqRegisterEntity);
+      case RespRegisterEntity:
+        return respRegisterEntityToJson(data as RespRegisterEntity);
+      case RespRegisterData:
+        return respRegisterDataToJson(data as RespRegisterData);
       case ReqPostThreadEntity:
         return reqPostThreadEntityToJson(data as ReqPostThreadEntity);
       case RespGetMyBoughtEntity:
         return respGetMyBoughtEntityToJson(data as RespGetMyBoughtEntity);
       case RespGetMyBoughtData:
         return respGetMyBoughtDataToJson(data as RespGetMyBoughtData);
-      case ReqGetThreadsEntity:
-        return reqGetThreadsEntityToJson(data as ReqGetThreadsEntity);
+      case RespBuyCartItemsEntity:
+        return respBuyCartItemsEntityToJson(data as RespBuyCartItemsEntity);
+      case RespMyCreditsEntity:
+        return respMyCreditsEntityToJson(data as RespMyCreditsEntity);
+      case RespMyCreditsData:
+        return respMyCreditsDataToJson(data as RespMyCreditsData);
+      case ReqMyCreditsEntity:
+        return reqMyCreditsEntityToJson(data as ReqMyCreditsEntity);
+      case ReqGetMallItemsEntity:
+        return reqGetMallItemsEntityToJson(data as ReqGetMallItemsEntity);
+      case RespGetMallItemsEntity:
+        return respGetMallItemsEntityToJson(data as RespGetMallItemsEntity);
+      case RespGetMallItemsData:
+        return respGetMallItemsDataToJson(data as RespGetMallItemsData);
+      case ReqUploadCodeEntity:
+        return reqUploadCodeEntityToJson(data as ReqUploadCodeEntity);
+      case RespGetProfileEntity:
+        return respGetProfileEntityToJson(data as RespGetProfileEntity);
+      case RespGetProfileData:
+        return respGetProfileDataToJson(data as RespGetProfileData);
+      case ReqAddItemEntity:
+        return reqAddItemEntityToJson(data as ReqAddItemEntity);
       case RespGetThreadsEntity:
         return respGetThreadsEntityToJson(data as RespGetThreadsEntity);
       case RespGetThreadsData:
         return respGetThreadsDataToJson(data as RespGetThreadsData);
-      case ReqRegisterEntity:
-        return reqRegisterEntityToJson(data as ReqRegisterEntity);
-      case RespGetMyCartEntity:
-        return respGetMyCartEntityToJson(data as RespGetMyCartEntity);
-      case RespGetMyCartData:
-        return respGetMyCartDataToJson(data as RespGetMyCartData);
+      case RespGetCodeResultEntity:
+        return respGetCodeResultEntityToJson(data as RespGetCodeResultEntity);
+      case RespGetCodeResultData:
+        return respGetCodeResultDataToJson(data as RespGetCodeResultData);
+      case ReqThreadCommentEntity:
+        return reqThreadCommentEntityToJson(data as ReqThreadCommentEntity);
+      case ReqSendRegisterEmailEntity:
+        return reqSendRegisterEmailEntityToJson(
+            data as ReqSendRegisterEmailEntity);
+      case ReqGetThreadsEntity:
+        return reqGetThreadsEntityToJson(data as ReqGetThreadsEntity);
+      case RespGetThreadCommentEntity:
+        return respGetThreadCommentEntityToJson(
+            data as RespGetThreadCommentEntity);
+      case RespGetThreadCommentData:
+        return respGetThreadCommentDataToJson(data as RespGetThreadCommentData);
+      case ReqGetRepositoryEntity:
+        return reqGetRepositoryEntityToJson(data as ReqGetRepositoryEntity);
       case ReqExecuteCodeEntity:
         return reqExecuteCodeEntityToJson(data as ReqExecuteCodeEntity);
+      case RespStatusEntity:
+        return respStatusEntityToJson(data as RespStatusEntity);
+      case ReqGetCreditsEntity:
+        return reqGetCreditsEntityToJson(data as ReqGetCreditsEntity);
+      case RespUploadCodeEntity:
+        return respUploadCodeEntityToJson(data as RespUploadCodeEntity);
+      case RespUploadCodeData:
+        return respUploadCodeDataToJson(data as RespUploadCodeData);
+      case ReqGetThreadCommentEntity:
+        return reqGetThreadCommentEntityToJson(
+            data as ReqGetThreadCommentEntity);
+      case RespGetRepositoryEntity:
+        return respGetRepositoryEntityToJson(data as RespGetRepositoryEntity);
+      case RespGetRepositoryData:
+        return respGetRepositoryDataToJson(data as RespGetRepositoryData);
       case RespGetMyRepositoryEntity:
         return respGetMyRepositoryEntityToJson(
             data as RespGetMyRepositoryEntity);
       case RespGetMyRepositoryData:
         return respGetMyRepositoryDataToJson(data as RespGetMyRepositoryData);
-      case RespStatusEntity:
-        return respStatusEntityToJson(data as RespStatusEntity);
+      case ReqBuyCartItemsEntity:
+        return reqBuyCartItemsEntityToJson(data as ReqBuyCartItemsEntity);
+      case ReqGetProfileEntity:
+        return reqGetProfileEntityToJson(data as ReqGetProfileEntity);
+      case RespLoginEntity:
+        return respLoginEntityToJson(data as RespLoginEntity);
+      case RespLoginData:
+        return respLoginDataToJson(data as RespLoginData);
       case ReqGetMyRepositoryEntity:
         return reqGetMyRepositoryEntityToJson(data as ReqGetMyRepositoryEntity);
-      case RespUploadCodeEntity:
-        return respUploadCodeEntityToJson(data as RespUploadCodeEntity);
-      case RespUploadCodeData:
-        return respUploadCodeDataToJson(data as RespUploadCodeData);
-      case RespRegisterEntity:
-        return respRegisterEntityToJson(data as RespRegisterEntity);
-      case RespRegisterData:
-        return respRegisterDataToJson(data as RespRegisterData);
-      case ReqDelCartEntity:
-        return reqDelCartEntityToJson(data as ReqDelCartEntity);
-      case ReqGetRepositoryEntity:
-        return reqGetRepositoryEntityToJson(data as ReqGetRepositoryEntity);
+      case ReqSendResetPasswordMailEntity:
+        return reqSendResetPasswordMailEntityToJson(
+            data as ReqSendResetPasswordMailEntity);
+      case ReqAddCartEntity:
+        return reqAddCartEntityToJson(data as ReqAddCartEntity);
+      case ReqGetMyBoughtEntity:
+        return reqGetMyBoughtEntityToJson(data as ReqGetMyBoughtEntity);
+      case RespGetCreditsEntity:
+        return respGetCreditsEntityToJson(data as RespGetCreditsEntity);
+      case RespGetCreditsData:
+        return respGetCreditsDataToJson(data as RespGetCreditsData);
+      case RespExecuteCodeEntity:
+        return respExecuteCodeEntityToJson(data as RespExecuteCodeEntity);
+      case RespExecuteCodeData:
+        return respExecuteCodeDataToJson(data as RespExecuteCodeData);
+      case ReqLoginEntity:
+        return reqLoginEntityToJson(data as ReqLoginEntity);
     }
     return data as T;
   }
   //Go back to a single instance by type
   static _fromJsonSingle(String type, json) {
     switch (type) {
-      case 'RespMyCreditsEntity':
-        return RespMyCreditsEntity().fromJson(json);
-      case 'RespMyCreditsData':
-        return RespMyCreditsData().fromJson(json);
-      case 'ReqMyCreditsEntity':
-        return ReqMyCreditsEntity().fromJson(json);
-      case 'ReqUploadCodeEntity':
-        return ReqUploadCodeEntity().fromJson(json);
-      case 'RespBuyCartItemsEntity':
-        return RespBuyCartItemsEntity().fromJson(json);
-      case 'RespGetCodeResultEntity':
-        return RespGetCodeResultEntity().fromJson(json);
-      case 'RespGetCodeResultData':
-        return RespGetCodeResultData().fromJson(json);
-      case 'ReqSendResetPasswordMailEntity':
-        return ReqSendResetPasswordMailEntity().fromJson(json);
-      case 'RespGetThreadCommentEntity':
-        return RespGetThreadCommentEntity().fromJson(json);
-      case 'RespGetThreadCommentData':
-        return RespGetThreadCommentData().fromJson(json);
-      case 'RespLoginEntity':
-        return RespLoginEntity().fromJson(json);
-      case 'RespLoginData':
-        return RespLoginData().fromJson(json);
+      case 'ReqDelCartEntity':
+        return ReqDelCartEntity().fromJson(json);
+      case 'ReqGetMyCartEntity':
+        return ReqGetMyCartEntity().fromJson(json);
+      case 'RespGetMyCartEntity':
+        return RespGetMyCartEntity().fromJson(json);
+      case 'RespGetMyCartData':
+        return RespGetMyCartData().fromJson(json);
+      case 'ReqResetPasswordEntity':
+        return ReqResetPasswordEntity().fromJson(json);
+      case 'ReqAlterProfileEntity':
+        return ReqAlterProfileEntity().fromJson(json);
       case 'RespGetCodesEntity':
         return RespGetCodesEntity().fromJson(json);
       case 'RespGetCodesData':
         return RespGetCodesData().fromJson(json);
-      case 'ReqGetProfileEntity':
-        return ReqGetProfileEntity().fromJson(json);
-      case 'RespGetMallItemsEntity':
-        return RespGetMallItemsEntity().fromJson(json);
-      case 'RespGetMallItemsData':
-        return RespGetMallItemsData().fromJson(json);
-      case 'RespGetProfileEntity':
-        return RespGetProfileEntity().fromJson(json);
-      case 'RespGetProfileData':
-        return RespGetProfileData().fromJson(json);
-      case 'ReqSendRegisterEmailEntity':
-        return ReqSendRegisterEmailEntity().fromJson(json);
-      case 'ReqAddCartEntity':
-        return ReqAddCartEntity().fromJson(json);
-      case 'ReqThreadCommentEntity':
-        return ReqThreadCommentEntity().fromJson(json);
-      case 'ReqGetCreditsEntity':
-        return ReqGetCreditsEntity().fromJson(json);
-      case 'ReqGetMyCartEntity':
-        return ReqGetMyCartEntity().fromJson(json);
-      case 'RespGetRepositoryEntity':
-        return RespGetRepositoryEntity().fromJson(json);
-      case 'RespGetRepositoryData':
-        return RespGetRepositoryData().fromJson(json);
-      case 'ReqResetPasswordEntity':
-        return ReqResetPasswordEntity().fromJson(json);
-      case 'ReqBuyCartItemsEntity':
-        return ReqBuyCartItemsEntity().fromJson(json);
-      case 'ReqLoginEntity':
-        return ReqLoginEntity().fromJson(json);
-      case 'ReqGetMallItemsEntity':
-        return ReqGetMallItemsEntity().fromJson(json);
-      case 'ReqGetThreadCommentEntity':
-        return ReqGetThreadCommentEntity().fromJson(json);
-      case 'ReqAlterProfileEntity':
-        return ReqAlterProfileEntity().fromJson(json);
-      case 'RespGetCreditsEntity':
-        return RespGetCreditsEntity().fromJson(json);
-      case 'RespGetCreditsData':
-        return RespGetCreditsData().fromJson(json);
-      case 'ReqGetMyBoughtEntity':
-        return ReqGetMyBoughtEntity().fromJson(json);
-      case 'ReqAddItemEntity':
-        return ReqAddItemEntity().fromJson(json);
-      case 'RespExecuteCodeEntity':
-        return RespExecuteCodeEntity().fromJson(json);
-      case 'RespExecuteCodeData':
-        return RespExecuteCodeData().fromJson(json);
+      case 'ReqRegisterEntity':
+        return ReqRegisterEntity().fromJson(json);
+      case 'RespRegisterEntity':
+        return RespRegisterEntity().fromJson(json);
+      case 'RespRegisterData':
+        return RespRegisterData().fromJson(json);
       case 'ReqPostThreadEntity':
         return ReqPostThreadEntity().fromJson(json);
       case 'RespGetMyBoughtEntity':
         return RespGetMyBoughtEntity().fromJson(json);
       case 'RespGetMyBoughtData':
         return RespGetMyBoughtData().fromJson(json);
-      case 'ReqGetThreadsEntity':
-        return ReqGetThreadsEntity().fromJson(json);
+      case 'RespBuyCartItemsEntity':
+        return RespBuyCartItemsEntity().fromJson(json);
+      case 'RespMyCreditsEntity':
+        return RespMyCreditsEntity().fromJson(json);
+      case 'RespMyCreditsData':
+        return RespMyCreditsData().fromJson(json);
+      case 'ReqMyCreditsEntity':
+        return ReqMyCreditsEntity().fromJson(json);
+      case 'ReqGetMallItemsEntity':
+        return ReqGetMallItemsEntity().fromJson(json);
+      case 'RespGetMallItemsEntity':
+        return RespGetMallItemsEntity().fromJson(json);
+      case 'RespGetMallItemsData':
+        return RespGetMallItemsData().fromJson(json);
+      case 'ReqUploadCodeEntity':
+        return ReqUploadCodeEntity().fromJson(json);
+      case 'RespGetProfileEntity':
+        return RespGetProfileEntity().fromJson(json);
+      case 'RespGetProfileData':
+        return RespGetProfileData().fromJson(json);
+      case 'ReqAddItemEntity':
+        return ReqAddItemEntity().fromJson(json);
       case 'RespGetThreadsEntity':
         return RespGetThreadsEntity().fromJson(json);
       case 'RespGetThreadsData':
         return RespGetThreadsData().fromJson(json);
-      case 'ReqRegisterEntity':
-        return ReqRegisterEntity().fromJson(json);
-      case 'RespGetMyCartEntity':
-        return RespGetMyCartEntity().fromJson(json);
-      case 'RespGetMyCartData':
-        return RespGetMyCartData().fromJson(json);
+      case 'RespGetCodeResultEntity':
+        return RespGetCodeResultEntity().fromJson(json);
+      case 'RespGetCodeResultData':
+        return RespGetCodeResultData().fromJson(json);
+      case 'ReqThreadCommentEntity':
+        return ReqThreadCommentEntity().fromJson(json);
+      case 'ReqSendRegisterEmailEntity':
+        return ReqSendRegisterEmailEntity().fromJson(json);
+      case 'ReqGetThreadsEntity':
+        return ReqGetThreadsEntity().fromJson(json);
+      case 'RespGetThreadCommentEntity':
+        return RespGetThreadCommentEntity().fromJson(json);
+      case 'RespGetThreadCommentData':
+        return RespGetThreadCommentData().fromJson(json);
+      case 'ReqGetRepositoryEntity':
+        return ReqGetRepositoryEntity().fromJson(json);
       case 'ReqExecuteCodeEntity':
         return ReqExecuteCodeEntity().fromJson(json);
-      case 'RespGetMyRepositoryEntity':
-        return RespGetMyRepositoryEntity().fromJson(json);
-      case 'RespGetMyRepositoryData':
-        return RespGetMyRepositoryData().fromJson(json);
       case 'RespStatusEntity':
         return RespStatusEntity().fromJson(json);
-      case 'ReqGetMyRepositoryEntity':
-        return ReqGetMyRepositoryEntity().fromJson(json);
+      case 'ReqGetCreditsEntity':
+        return ReqGetCreditsEntity().fromJson(json);
       case 'RespUploadCodeEntity':
         return RespUploadCodeEntity().fromJson(json);
       case 'RespUploadCodeData':
         return RespUploadCodeData().fromJson(json);
-      case 'RespRegisterEntity':
-        return RespRegisterEntity().fromJson(json);
-      case 'RespRegisterData':
-        return RespRegisterData().fromJson(json);
-      case 'ReqDelCartEntity':
-        return ReqDelCartEntity().fromJson(json);
-      case 'ReqGetRepositoryEntity':
-        return ReqGetRepositoryEntity().fromJson(json);
+      case 'ReqGetThreadCommentEntity':
+        return ReqGetThreadCommentEntity().fromJson(json);
+      case 'RespGetRepositoryEntity':
+        return RespGetRepositoryEntity().fromJson(json);
+      case 'RespGetRepositoryData':
+        return RespGetRepositoryData().fromJson(json);
+      case 'RespGetMyRepositoryEntity':
+        return RespGetMyRepositoryEntity().fromJson(json);
+      case 'RespGetMyRepositoryData':
+        return RespGetMyRepositoryData().fromJson(json);
+      case 'ReqBuyCartItemsEntity':
+        return ReqBuyCartItemsEntity().fromJson(json);
+      case 'ReqGetProfileEntity':
+        return ReqGetProfileEntity().fromJson(json);
+      case 'RespLoginEntity':
+        return RespLoginEntity().fromJson(json);
+      case 'RespLoginData':
+        return RespLoginData().fromJson(json);
+      case 'ReqGetMyRepositoryEntity':
+        return ReqGetMyRepositoryEntity().fromJson(json);
+      case 'ReqSendResetPasswordMailEntity':
+        return ReqSendResetPasswordMailEntity().fromJson(json);
+      case 'ReqAddCartEntity':
+        return ReqAddCartEntity().fromJson(json);
+      case 'ReqGetMyBoughtEntity':
+        return ReqGetMyBoughtEntity().fromJson(json);
+      case 'RespGetCreditsEntity':
+        return RespGetCreditsEntity().fromJson(json);
+      case 'RespGetCreditsData':
+        return RespGetCreditsData().fromJson(json);
+      case 'RespExecuteCodeEntity':
+        return RespExecuteCodeEntity().fromJson(json);
+      case 'RespExecuteCodeData':
+        return RespExecuteCodeData().fromJson(json);
+      case 'ReqLoginEntity':
+        return ReqLoginEntity().fromJson(json);
     }
     return null;
   }
@@ -517,122 +517,122 @@ class JsonConvert<T> {
   //empty list is returned by type
   static _getListFromType(String type) {
     switch (type) {
-      case 'RespMyCreditsEntity':
-        return List<RespMyCreditsEntity>();
-      case 'RespMyCreditsData':
-        return List<RespMyCreditsData>();
-      case 'ReqMyCreditsEntity':
-        return List<ReqMyCreditsEntity>();
-      case 'ReqUploadCodeEntity':
-        return List<ReqUploadCodeEntity>();
-      case 'RespBuyCartItemsEntity':
-        return List<RespBuyCartItemsEntity>();
-      case 'RespGetCodeResultEntity':
-        return List<RespGetCodeResultEntity>();
-      case 'RespGetCodeResultData':
-        return List<RespGetCodeResultData>();
-      case 'ReqSendResetPasswordMailEntity':
-        return List<ReqSendResetPasswordMailEntity>();
-      case 'RespGetThreadCommentEntity':
-        return List<RespGetThreadCommentEntity>();
-      case 'RespGetThreadCommentData':
-        return List<RespGetThreadCommentData>();
-      case 'RespLoginEntity':
-        return List<RespLoginEntity>();
-      case 'RespLoginData':
-        return List<RespLoginData>();
+      case 'ReqDelCartEntity':
+        return List<ReqDelCartEntity>();
+      case 'ReqGetMyCartEntity':
+        return List<ReqGetMyCartEntity>();
+      case 'RespGetMyCartEntity':
+        return List<RespGetMyCartEntity>();
+      case 'RespGetMyCartData':
+        return List<RespGetMyCartData>();
+      case 'ReqResetPasswordEntity':
+        return List<ReqResetPasswordEntity>();
+      case 'ReqAlterProfileEntity':
+        return List<ReqAlterProfileEntity>();
       case 'RespGetCodesEntity':
         return List<RespGetCodesEntity>();
       case 'RespGetCodesData':
         return List<RespGetCodesData>();
-      case 'ReqGetProfileEntity':
-        return List<ReqGetProfileEntity>();
-      case 'RespGetMallItemsEntity':
-        return List<RespGetMallItemsEntity>();
-      case 'RespGetMallItemsData':
-        return List<RespGetMallItemsData>();
-      case 'RespGetProfileEntity':
-        return List<RespGetProfileEntity>();
-      case 'RespGetProfileData':
-        return List<RespGetProfileData>();
-      case 'ReqSendRegisterEmailEntity':
-        return List<ReqSendRegisterEmailEntity>();
-      case 'ReqAddCartEntity':
-        return List<ReqAddCartEntity>();
-      case 'ReqThreadCommentEntity':
-        return List<ReqThreadCommentEntity>();
-      case 'ReqGetCreditsEntity':
-        return List<ReqGetCreditsEntity>();
-      case 'ReqGetMyCartEntity':
-        return List<ReqGetMyCartEntity>();
-      case 'RespGetRepositoryEntity':
-        return List<RespGetRepositoryEntity>();
-      case 'RespGetRepositoryData':
-        return List<RespGetRepositoryData>();
-      case 'ReqResetPasswordEntity':
-        return List<ReqResetPasswordEntity>();
-      case 'ReqBuyCartItemsEntity':
-        return List<ReqBuyCartItemsEntity>();
-      case 'ReqLoginEntity':
-        return List<ReqLoginEntity>();
-      case 'ReqGetMallItemsEntity':
-        return List<ReqGetMallItemsEntity>();
-      case 'ReqGetThreadCommentEntity':
-        return List<ReqGetThreadCommentEntity>();
-      case 'ReqAlterProfileEntity':
-        return List<ReqAlterProfileEntity>();
-      case 'RespGetCreditsEntity':
-        return List<RespGetCreditsEntity>();
-      case 'RespGetCreditsData':
-        return List<RespGetCreditsData>();
-      case 'ReqGetMyBoughtEntity':
-        return List<ReqGetMyBoughtEntity>();
-      case 'ReqAddItemEntity':
-        return List<ReqAddItemEntity>();
-      case 'RespExecuteCodeEntity':
-        return List<RespExecuteCodeEntity>();
-      case 'RespExecuteCodeData':
-        return List<RespExecuteCodeData>();
+      case 'ReqRegisterEntity':
+        return List<ReqRegisterEntity>();
+      case 'RespRegisterEntity':
+        return List<RespRegisterEntity>();
+      case 'RespRegisterData':
+        return List<RespRegisterData>();
       case 'ReqPostThreadEntity':
         return List<ReqPostThreadEntity>();
       case 'RespGetMyBoughtEntity':
         return List<RespGetMyBoughtEntity>();
       case 'RespGetMyBoughtData':
         return List<RespGetMyBoughtData>();
-      case 'ReqGetThreadsEntity':
-        return List<ReqGetThreadsEntity>();
+      case 'RespBuyCartItemsEntity':
+        return List<RespBuyCartItemsEntity>();
+      case 'RespMyCreditsEntity':
+        return List<RespMyCreditsEntity>();
+      case 'RespMyCreditsData':
+        return List<RespMyCreditsData>();
+      case 'ReqMyCreditsEntity':
+        return List<ReqMyCreditsEntity>();
+      case 'ReqGetMallItemsEntity':
+        return List<ReqGetMallItemsEntity>();
+      case 'RespGetMallItemsEntity':
+        return List<RespGetMallItemsEntity>();
+      case 'RespGetMallItemsData':
+        return List<RespGetMallItemsData>();
+      case 'ReqUploadCodeEntity':
+        return List<ReqUploadCodeEntity>();
+      case 'RespGetProfileEntity':
+        return List<RespGetProfileEntity>();
+      case 'RespGetProfileData':
+        return List<RespGetProfileData>();
+      case 'ReqAddItemEntity':
+        return List<ReqAddItemEntity>();
       case 'RespGetThreadsEntity':
         return List<RespGetThreadsEntity>();
       case 'RespGetThreadsData':
         return List<RespGetThreadsData>();
-      case 'ReqRegisterEntity':
-        return List<ReqRegisterEntity>();
-      case 'RespGetMyCartEntity':
-        return List<RespGetMyCartEntity>();
-      case 'RespGetMyCartData':
-        return List<RespGetMyCartData>();
+      case 'RespGetCodeResultEntity':
+        return List<RespGetCodeResultEntity>();
+      case 'RespGetCodeResultData':
+        return List<RespGetCodeResultData>();
+      case 'ReqThreadCommentEntity':
+        return List<ReqThreadCommentEntity>();
+      case 'ReqSendRegisterEmailEntity':
+        return List<ReqSendRegisterEmailEntity>();
+      case 'ReqGetThreadsEntity':
+        return List<ReqGetThreadsEntity>();
+      case 'RespGetThreadCommentEntity':
+        return List<RespGetThreadCommentEntity>();
+      case 'RespGetThreadCommentData':
+        return List<RespGetThreadCommentData>();
+      case 'ReqGetRepositoryEntity':
+        return List<ReqGetRepositoryEntity>();
       case 'ReqExecuteCodeEntity':
         return List<ReqExecuteCodeEntity>();
-      case 'RespGetMyRepositoryEntity':
-        return List<RespGetMyRepositoryEntity>();
-      case 'RespGetMyRepositoryData':
-        return List<RespGetMyRepositoryData>();
       case 'RespStatusEntity':
         return List<RespStatusEntity>();
-      case 'ReqGetMyRepositoryEntity':
-        return List<ReqGetMyRepositoryEntity>();
+      case 'ReqGetCreditsEntity':
+        return List<ReqGetCreditsEntity>();
       case 'RespUploadCodeEntity':
         return List<RespUploadCodeEntity>();
       case 'RespUploadCodeData':
         return List<RespUploadCodeData>();
-      case 'RespRegisterEntity':
-        return List<RespRegisterEntity>();
-      case 'RespRegisterData':
-        return List<RespRegisterData>();
-      case 'ReqDelCartEntity':
-        return List<ReqDelCartEntity>();
-      case 'ReqGetRepositoryEntity':
-        return List<ReqGetRepositoryEntity>();
+      case 'ReqGetThreadCommentEntity':
+        return List<ReqGetThreadCommentEntity>();
+      case 'RespGetRepositoryEntity':
+        return List<RespGetRepositoryEntity>();
+      case 'RespGetRepositoryData':
+        return List<RespGetRepositoryData>();
+      case 'RespGetMyRepositoryEntity':
+        return List<RespGetMyRepositoryEntity>();
+      case 'RespGetMyRepositoryData':
+        return List<RespGetMyRepositoryData>();
+      case 'ReqBuyCartItemsEntity':
+        return List<ReqBuyCartItemsEntity>();
+      case 'ReqGetProfileEntity':
+        return List<ReqGetProfileEntity>();
+      case 'RespLoginEntity':
+        return List<RespLoginEntity>();
+      case 'RespLoginData':
+        return List<RespLoginData>();
+      case 'ReqGetMyRepositoryEntity':
+        return List<ReqGetMyRepositoryEntity>();
+      case 'ReqSendResetPasswordMailEntity':
+        return List<ReqSendResetPasswordMailEntity>();
+      case 'ReqAddCartEntity':
+        return List<ReqAddCartEntity>();
+      case 'ReqGetMyBoughtEntity':
+        return List<ReqGetMyBoughtEntity>();
+      case 'RespGetCreditsEntity':
+        return List<RespGetCreditsEntity>();
+      case 'RespGetCreditsData':
+        return List<RespGetCreditsData>();
+      case 'RespExecuteCodeEntity':
+        return List<RespExecuteCodeEntity>();
+      case 'RespExecuteCodeData':
+        return List<RespExecuteCodeData>();
+      case 'ReqLoginEntity':
+        return List<ReqLoginEntity>();
     }
     return null;
   }

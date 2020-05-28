@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_mall_items_entity.dart';
 
-respGetMallItemsEntityFromJson(RespGetMallItemsEntity data,
-    Map<String, dynamic> json) {
+respGetMallItemsEntityFromJson(
+    RespGetMallItemsEntity data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -24,8 +24,8 @@ Map<String, dynamic> respGetMallItemsEntityToJson(
   return data;
 }
 
-respGetMallItemsDataFromJson(RespGetMallItemsData data,
-    Map<String, dynamic> json) {
+respGetMallItemsDataFromJson(
+    RespGetMallItemsData data, Map<String, dynamic> json) {
   if (json['credits'] != null) {
     data.credits = json['credits']?.toInt();
   }

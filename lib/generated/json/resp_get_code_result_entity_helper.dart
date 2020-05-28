@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
 
-respGetCodeResultEntityFromJson(RespGetCodeResultEntity data,
-    Map<String, dynamic> json) {
+respGetCodeResultEntityFromJson(
+    RespGetCodeResultEntity data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -21,8 +21,8 @@ Map<String, dynamic> respGetCodeResultEntityToJson(
   return data;
 }
 
-respGetCodeResultDataFromJson(RespGetCodeResultData data,
-    Map<String, dynamic> json) {
+respGetCodeResultDataFromJson(
+    RespGetCodeResultData data, Map<String, dynamic> json) {
   if (json['result'] != null) {
     data.result = json['result']?.toString();
   }

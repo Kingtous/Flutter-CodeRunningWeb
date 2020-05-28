@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
 
-reqUploadCodeEntityFromJson(ReqUploadCodeEntity data,
-    Map<String, dynamic> json) {
+reqUploadCodeEntityFromJson(
+    ReqUploadCodeEntity data, Map<String, dynamic> json) {
   if (json['content'] != null) {
     data.content = json['content']?.toString();
   }

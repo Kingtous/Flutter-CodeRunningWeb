@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_thread_comment_entity.dart';
 
-respGetThreadCommentEntityFromJson(RespGetThreadCommentEntity data,
-    Map<String, dynamic> json) {
+respGetThreadCommentEntityFromJson(
+    RespGetThreadCommentEntity data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }
@@ -24,8 +24,11 @@ Map<String, dynamic> respGetThreadCommentEntityToJson(
   return data;
 }
 
-respGetThreadCommentDataFromJson(RespGetThreadCommentData data,
-    Map<String, dynamic> json) {
+respGetThreadCommentDataFromJson(
+    RespGetThreadCommentData data, Map<String, dynamic> json) {
+  if (json['avatar'] != null) {
+    data.avatar = json['avatar']?.toString();
+  }
   if (json['code_url'] != null) {
     data.codeUrl = json['code_url']?.toString();
   }
@@ -42,7 +45,7 @@ respGetThreadCommentDataFromJson(RespGetThreadCommentData data,
     data.nextId = json['next_id'];
   }
   if (json['parent_id'] != null) {
-    data.parentId = json['parent_id']?.toInt();
+    data.parentId = json['parent_id'];
   }
   if (json['threads_id'] != null) {
     data.threadsId = json['threads_id']?.toInt();
@@ -59,6 +62,7 @@ respGetThreadCommentDataFromJson(RespGetThreadCommentData data,
 Map<String, dynamic> respGetThreadCommentDataToJson(
     RespGetThreadCommentData entity) {
   final Map<String, dynamic> data = new Map<String, dynamic>();
+  data['avatar'] = entity.avatar;
   data['code_url'] = entity.codeUrl;
   data['content'] = entity.content;
   data['create_date'] = entity.createDate;

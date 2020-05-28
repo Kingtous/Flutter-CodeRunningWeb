@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_upload_code_entity.dart';
 
-respUploadCodeEntityFromJson(RespUploadCodeEntity data,
-    Map<String, dynamic> json) {
+respUploadCodeEntityFromJson(
+    RespUploadCodeEntity data, Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }

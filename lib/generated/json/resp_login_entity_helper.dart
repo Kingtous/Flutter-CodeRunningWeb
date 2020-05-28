@@ -38,6 +38,9 @@ respLoginDataFromJson(RespLoginData data, Map<String, dynamic> json) {
   if (json['username'] != null) {
     data.username = json['username']?.toString();
   }
+  if (json['role'] != null) {
+    data.role = json['role']?.toInt();
+  }
   return data;
 }
 
@@ -49,5 +52,6 @@ Map<String, dynamic> respLoginDataToJson(RespLoginData entity) {
   data['nickname'] = entity.nickname;
   data['token'] = entity.token;
   data['username'] = entity.username;
+  data['role'] = entity.role;
   return data;
 }

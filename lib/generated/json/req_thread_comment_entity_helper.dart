@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_thread_comment_entity.dart';
 
-reqThreadCommentEntityFromJson(ReqThreadCommentEntity data,
-    Map<String, dynamic> json) {
+reqThreadCommentEntityFromJson(
+    ReqThreadCommentEntity data, Map<String, dynamic> json) {
   if (json['thread_id'] != null) {
     data.threadId = json['thread_id']?.toInt();
   }
