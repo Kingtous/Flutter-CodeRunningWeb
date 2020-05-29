@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 
-respExecuteCodeEntityFromJson(
-    RespExecuteCodeEntity data, Map<String, dynamic> json) {
+respExecuteCodeEntityFromJson(RespExecuteCodeEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }

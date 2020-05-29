@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/response/resp_get_credits_entity.dart';
 
-respGetCreditsEntityFromJson(
-    RespGetCreditsEntity data, Map<String, dynamic> json) {
+respGetCreditsEntityFromJson(RespGetCreditsEntity data,
+    Map<String, dynamic> json) {
   if (json['code'] != null) {
     data.code = json['code']?.toInt();
   }

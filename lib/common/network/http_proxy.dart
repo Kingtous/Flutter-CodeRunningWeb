@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:code_running_front/business/user/dashboard/modules/code/result/get_code_result_event.dart';
 import 'package:code_running_front/business/user/models/request/req_add_cart_entity.dart';
+import 'package:code_running_front/business/user/models/request/req_add_items_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_alter_profile_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_buy_cart_items_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_del_cart_entity.dart';
@@ -23,7 +24,10 @@ import 'package:code_running_front/business/user/models/request/req_send_registe
 import 'package:code_running_front/business/user/models/request/req_send_reset_password_mail_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_add_items_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_buy_cart_items_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_change_user_role_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_change_user_status_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_credits_entity.dart';
@@ -39,6 +43,7 @@ import 'package:code_running_front/business/user/models/response/resp_login_enti
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_status_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_upload_code_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_users_list_entity.dart';
 import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/common/network/http_utils.dart';
 import 'package:code_running_front/utils/general_json_parser.dart';
@@ -280,5 +285,47 @@ class ApiRequest {
       header: addBasicAuthHeader(Map()),
       parser: GeneralJsonParser(RespStatusEntity()),
     );
+  }
+
+  /// 获取用户列表
+  static getUserList() async {
+    return await HttpUtils.get().req(
+      getUserListApi,
+      method: HConstants.get,
+      header: addBasicAuthHeader(Map()),
+      parser: GeneralJsonParser(RespUsersListEntity()),
+    );
+  }
+
+  static changeRole(int id) async {
+    return await HttpUtils.get().req(changeUserRoleApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespChangeUserRoleEntity()),
+        body: {"id": id});
+  }
+
+  static changeUserStatus(int id) async {
+    return await HttpUtils.get().req(changeUserStatusApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespChangeUserStatusEntity()),
+        body: {"id": id});
+  }
+
+  static changeItemStatus(int id) async {
+    return await HttpUtils.get().req(changeItemStatusApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespChangeUserStatusEntity()),
+        body: {"id": id});
+  }
+
+  static addMallItems(ReqAddItemsEntity reqAddItemsEntity) async {
+    return await HttpUtils.get().req(addMallItemsApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespAddItemsEntity()),
+        body: reqAddItemsEntity.toJson());
   }
 }

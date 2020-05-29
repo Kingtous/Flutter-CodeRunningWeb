@@ -10,5 +10,6 @@ class RespGetMallItemsData with JsonConvert<RespGetMallItemsData> {
   String detail;
   int id;
   String img;
+  bool isOn;
   String name;
 }

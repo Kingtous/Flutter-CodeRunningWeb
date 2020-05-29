@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:code_running_front/business/admin/mall_manage/mall_manage_page.dart';
+import 'package:code_running_front/business/admin/user_manage/users_page.dart';
 import 'package:code_running_front/business/user/dashboard/dashboard.dart';
 import 'package:code_running_front/business/user/dashboard/modules/cart/cart_page.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/coding_page.dart';
@@ -28,4 +30,6 @@ class $Router {
   CartPage cartPage;
   HomePage homePage;
   FindBackPage findBackPasswordPage;
+  UsersPage usersPage;
+  ItemsManagePage itemsManagePage;
 }

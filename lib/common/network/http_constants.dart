@@ -2,7 +2,7 @@ String get productionUrl => "https://code-api.kingtous.cn";
 
 String get developmentUrl => "http://127.0.0.1:5000";
 
-String get baseUrl => productionUrl;
+String get baseUrl => developmentUrl;
 
 String get loginApi => baseUrl + "/auth/login";
 
@@ -20,6 +20,7 @@ String get getMyThreadsApi => baseUrl + "/threads/me";
 
 String get postThreadApi => baseUrl + "/threads/push_show";
 
+// 管理员可用
 String get deleteThreadApi => baseUrl + "/threads/delete";
 
 String get getThreadsApi => baseUrl + "/threads/push_show";
@@ -58,9 +59,22 @@ String get getRepositoryItemsApi => baseUrl + "/repository/get";
 
 String get addToCartApi => baseUrl + "/mall/cart/add";
 
+// 管理员可用
 String get delFromCartApi => baseUrl + "/mall/cart/del";
 
 String get alterProfileApi => baseUrl + "/user/profile/alter";
+
+// 以下是管理员API
+String get changeUserRoleApi => baseUrl + "/user/change_role";
+
+String get changeUserStatusApi => baseUrl + "/user/change_status";
+
+String get getUserListApi => baseUrl + "/user/list";
+
+String get changeItemStatusApi => baseUrl + "/mall/change_items";
+
+String get addMallItemsApi => baseUrl + "/mall/add_items";
+
 
 /// 错误原因 TODO 1013、1012
 Map<int, String> errorMap = {

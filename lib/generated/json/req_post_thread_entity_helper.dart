@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_post_thread_entity.dart';
 
-reqPostThreadEntityFromJson(
-    ReqPostThreadEntity data, Map<String, dynamic> json) {
+reqPostThreadEntityFromJson(ReqPostThreadEntity data,
+    Map<String, dynamic> json) {
   if (json['title'] != null) {
     data.title = json['title']?.toString();
   }

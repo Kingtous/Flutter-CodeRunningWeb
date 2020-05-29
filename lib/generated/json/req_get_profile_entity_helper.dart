@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_get_profile_entity.dart';
 
-reqGetProfileEntityFromJson(
-    ReqGetProfileEntity data, Map<String, dynamic> json) {
+reqGetProfileEntityFromJson(ReqGetProfileEntity data,
+    Map<String, dynamic> json) {
   if (json['id'] != null) {
     data.id = json['id']?.toInt();
   }

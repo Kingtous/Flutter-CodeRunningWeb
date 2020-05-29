@@ -1,7 +1,7 @@
 import 'package:code_running_front/business/user/models/request/req_get_credits_entity.dart';
 
-reqGetCreditsEntityFromJson(
-    ReqGetCreditsEntity data, Map<String, dynamic> json) {
+reqGetCreditsEntityFromJson(ReqGetCreditsEntity data,
+    Map<String, dynamic> json) {
   return data;
 }
 
