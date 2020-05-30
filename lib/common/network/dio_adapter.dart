@@ -65,7 +65,7 @@ class DioAdapter implements HAdapter {
       if (ctx.parser != null) {
         data = ctx.parser.parse(resp.data);
         resp.data = data;
-        if (resp.data.code == 1002) {
+        if (resp.data.code == 1000) {
           await removeUserData();
           NavUtil.navigator().pushNamedAndRemoveUntil(
               Routes.indexRoute, (route) => false);

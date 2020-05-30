@@ -170,6 +170,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
                     }
                   },
                 ),
+
                 // 修改头像
                 BlocBuilder(
                   bloc: widget.pBloc,
@@ -203,6 +204,13 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
                     }
                   },
                 ),
+                    Gaps.vGap(50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("已购买的"),
+                      ],
+                    ),
 //              SmartRefresher(
 //                enablePullDown: false,
 //                enablePullUp: true,

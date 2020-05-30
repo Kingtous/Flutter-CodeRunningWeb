@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:code_running_front/business/admin/ground_manage/comments_manage_page.dart';
+import 'package:code_running_front/business/admin/ground_manage/threads_manage_page.dart';
 import 'package:code_running_front/business/admin/mall_manage/mall_manage_page.dart';
 import 'package:code_running_front/business/admin/user_manage/users_page.dart';
 import 'package:code_running_front/business/user/dashboard/dashboard.dart';
@@ -32,4 +34,6 @@ class $Router {
   FindBackPage findBackPasswordPage;
   UsersPage usersPage;
   ItemsManagePage itemsManagePage;
+  ThreadsManagePage threadsManagePage;
+  CommentsManagePage commentsManagePage;
 }

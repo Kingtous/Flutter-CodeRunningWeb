@@ -1,10 +1,9 @@
 import 'package:code_running_front/business/user/models/request/req_get_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_thread_comment_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_change_user_role_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_thread_comment_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_threads_entity.dart';
-import 'package:code_running_front/business/user/models/response/resp_status_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
-import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/nav_util.dart';
@@ -187,7 +186,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                         Row(
                           children: [
                             Text(
-                              data.username,
+                              data.username.toString(),
                               style: TextStyle(fontSize: 14),
                             ),
                           ],
@@ -196,7 +195,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                         Row(
                           children: [
                             Text(
-                              data.createDate,
+                              data.createDate.toString(),
                               style: TextStyle(fontSize: 12),
                             ),
                           ],
@@ -210,7 +209,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
               Row(
                 children: [
                   Text(
-                    data.title,
+                    data.title.toString(),
                     style: TextStyle(fontSize: 16),
                   )
                 ],
@@ -219,7 +218,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
               Row(
                 children: [
                   Text(
-                    data.subtitle,
+                    data.subtitle.toString(),
                     style: TextStyle(fontSize: 14),
                   )
                 ],
@@ -387,15 +386,12 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
   }
 
   handleLike(int userId) async {
-    RespStatusEntity entity = (await ApiRequest.likeUser(userId)).data;
+    RespChangeUserRoleEntity entity = (await ApiRequest.likeUser(userId)).data;
     debugPrint("start process");
     if (entity.code == 0) {
       setState(() {
-        widget.data.userLike += 1;
+        widget.data.userLike = entity.data;
       });
-    }
-    else {
-      showError(msg: getErrMsg(entity.code));
     }
   }
 }

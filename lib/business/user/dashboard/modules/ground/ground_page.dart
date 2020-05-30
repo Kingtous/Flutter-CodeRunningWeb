@@ -260,7 +260,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                           Row(
                             children: [
                               Text(
-                                data.username,
+                                "${data.username}",
                                 style: TextStyle(fontSize: 14),
                               ),
                             ],
@@ -269,7 +269,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                           Row(
                             children: [
                               Text(
-                                data.createDate,
+                                '${data.createDate}',
                                 style: TextStyle(fontSize: 12),
                               ),
                             ],
@@ -283,7 +283,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                 Row(
                   children: [
                     Text(
-                      data.title,
+                      '${data.title}',
                       style: TextStyle(fontSize: 14),
                     )
                   ],
@@ -291,7 +291,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                 Gaps.vGap(16),
                 Row(children: [
                   Text(
-                    data.subtitle,
+                    '${data.subtitle}',
                     style: TextStyle(fontSize: 12),
                   )
                 ],),

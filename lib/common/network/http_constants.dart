@@ -2,7 +2,7 @@ String get productionUrl => "https://code-api.kingtous.cn";
 
 String get developmentUrl => "http://127.0.0.1:5000";
 
-String get baseUrl => developmentUrl;
+String get baseUrl => productionUrl;
 
 String get loginApi => baseUrl + "/auth/login";
 
@@ -103,5 +103,28 @@ String getErrMsg(int code) {
     return errorMap[code];
   } else {
     return "未知错误";
+  }
+}
+
+String getStateStr(int status) {
+  switch (status) {
+    case 0:
+      return "正在排队，请稍后";
+    case 1:
+      return "正在编译";
+    case 2:
+      return "正在运行";
+    case 3:
+      return "已完成";
+    case 4:
+      return "错误";
+    case 5:
+      return "文件被服务器删除，请重试";
+    case 6:
+      return "运行出错";
+    case 7:
+      return "文件不受支持";
+    case 8:
+      return "编译失败";
   }
 }

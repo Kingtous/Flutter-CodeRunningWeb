@@ -223,7 +223,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
                   "用户管理",
                   "职责、账户管理")),
           GestureDetector(
-            onTap: () => {handleGroundOpen(context)},
+            onTap: () => {handleGroundManageOpen(context)},
             child: buildMenuBtn(
                 FaIcon(
                   FontAwesomeIcons.cloud,
@@ -461,5 +461,9 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   handleMallManageOpen(BuildContext context) {
     NavUtil.navigator().pushNamed(Routes.itemsManagePage);
+  }
+
+  handleGroundManageOpen(BuildContext context) {
+    NavUtil.navigator().pushNamed(Routes.threadsManagePage);
   }
 }

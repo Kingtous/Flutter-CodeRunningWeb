@@ -283,7 +283,7 @@ class ApiRequest {
       "$likeProfileApi$id",
       method: HConstants.get,
       header: addBasicAuthHeader(Map()),
-      parser: GeneralJsonParser(RespStatusEntity()),
+      parser: GeneralJsonParser(RespChangeUserRoleEntity()),
     );
   }
 
@@ -327,5 +327,21 @@ class ApiRequest {
         header: addBasicAuthHeader(Map()),
         parser: GeneralJsonParser(RespAddItemsEntity()),
         body: reqAddItemsEntity.toJson());
+  }
+
+  static deleteThread(int id) async {
+    return await HttpUtils.get().req(deleteThreadApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespStatusEntity()),
+        body: {"thread_id": id});
+  }
+
+  static deleteComment(int threadId, int commentId) async {
+    return await HttpUtils.get().req(deleteThreadCommentApi,
+        method: HConstants.post,
+        header: addBasicAuthHeader(Map()),
+        parser: GeneralJsonParser(RespStatusEntity()),
+        body: {"thread_id": threadId, "comment_id": commentId});
   }
 }

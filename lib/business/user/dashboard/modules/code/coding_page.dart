@@ -6,6 +6,7 @@ import 'package:code_running_front/business/user/dashboard/modules/code/upload/b
 import 'package:code_running_front/business/user/models/request/req_execute_code_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_upload_code_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/code_editor.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
@@ -38,7 +39,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     'theme': 'default',
     'mode': 'python',
     'styleActiveLine': true,
-    'indentWithTabs': true,
+    'indentWithTabs': false,
     'autoCloseTags': true,
     'extraKeys': {
       'Ctrl-Space': 'autocomplete',
@@ -93,8 +94,14 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
           ImageLoadView(
             "images/background/02.jpg",
             imageType: ImageType.assets,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
             fit: BoxFit.cover,
           ),
           Container(
@@ -116,13 +123,13 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                             // Gaps.hGap(8.0),
                             DropdownButton(
                                 items: <String>["C++", "Java", "Python3"]
-                                    .map((String e) => DropdownMenuItem<String>(
+                                    .map((String e) =>
+                                    DropdownMenuItem<String>(
                                         child: Text(e), value: e))
                                     .toList(),
                                 value: _codeType,
                                 onChanged: handleCodeTypeChanged),
                             Gaps.hGap(4.0),
-                            Text("$_lineNumbers/$_colNumbers"),
                           ],
                         ),
                         CodeEditor(
@@ -166,7 +173,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                                 },
                                 child: FlatButton.icon(
                                     onPressed:
-                                        _storeUrl != null ? handleExe : null,
+                                    _storeUrl != null ? handleExe : null,
                                     icon: FaIcon(FontAwesomeIcons.autoprefixer),
                                     label: Text("2.执行")),
                               )
@@ -174,39 +181,43 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                           ),
                           Expanded(
                               child: BlocListener(
-                            bloc: _executeCodeBloc,
-                            listener: (BuildContext context, state) {
-                              if (state is ExecuteCodeedState) {
-                                _getCodeResultBloc?.add(InGetCodeResultEvent(
-                                    ReqGetCodeResultEntity(
-                                        state.entity.data.codeId)));
-                              }
-                            },
-                            child: Container(
-                              width: 400,
-                              decoration: BoxDecoration(color: Colors.grey),
-                              child: BlocBuilder(
-                                bloc: _getCodeResultBloc,
-                                builder: (BuildContext context, state) {
-                                  if (state is InGetCodeResultState) {
-                                    return Text("已提交，等待服务器响应");
-                                  } else if (state is NoGetCodeResultState) {
-                                    return Text(state.msg);
-                                  } else if (state
-                                      is InitialGetCodeResultState) {
-                                    return Text("请在代码写好后保存至仓库再执行");
-                                  } else if (state is GetCodeResultedState) {
-                                    return Text(
-                                      "状态号：${state.entity.data.status}: \n" +
-                                          state.entity.data.result,
-                                      overflow: TextOverflow.clip,
-                                      softWrap: true,
-                                    );
+                                bloc: _executeCodeBloc,
+                                listener: (BuildContext context, state) {
+                                  if (state is ExecuteCodeedState) {
+                                    _getCodeResultBloc?.add(
+                                        InGetCodeResultEvent(
+                                            ReqGetCodeResultEntity(
+                                                state.entity.data.codeId)));
                                   }
                                 },
-                              ),
-                            ),
-                          ))
+                                child: Container(
+                                  width: 400,
+                                  decoration: BoxDecoration(color: Colors.grey),
+                                  child: BlocBuilder(
+                                    bloc: _getCodeResultBloc,
+                                    builder: (BuildContext context, state) {
+                                      if (state is InGetCodeResultState) {
+                                        return Text("已提交，等待服务器响应");
+                                      } else
+                                      if (state is NoGetCodeResultState) {
+                                        return Text(state.msg);
+                                      } else if (state
+                                      is InitialGetCodeResultState) {
+                                        return Text("请在代码写好后保存至仓库再执行");
+                                      } else
+                                      if (state is GetCodeResultedState) {
+                                        return Text(
+                                          "状态号：${getStateStr(
+                                              state.entity.data.status)}: \n" +
+                                              state.entity.data.result,
+                                          overflow: TextOverflow.clip,
+                                          softWrap: true,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ))
                         ],
                       ),
                     )
@@ -286,4 +297,5 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
       _codeType = value;
     });
   }
+
 }

@@ -1,9 +1,13 @@
 import 'dart:js' as js;
 
 import 'package:after_layout/after_layout.dart';
+import 'package:code_running_front/business/user/dashboard/modules/code/result/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_get_repository_entity.dart';
+import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_repository_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/common/network/http_constants.dart';
+import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/common/network/http_utils.dart';
 import 'package:code_running_front/common/utils/toast_utils.dart';
 import 'package:code_running_front/res/styles.dart';
@@ -190,7 +194,8 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FlatButton(
-                onPressed: () => handleLook(data.localPath), child: Text("查看")),
+                onPressed: () => handleLook(data.id, data.localPath),
+                child: Text("查看")),
             FlatButton(
                 onPressed: () => handleDownload(data.localPath),
                 child: Text("下载")),
@@ -204,11 +209,17 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
     js.context.callMethod("open", ["$path?token=${getUserInfo().token}"]);
   }
 
-  void handleLook(String path) async {
+  void handleLook(int id, String path) async {
     Response<dynamic> resp = await HttpUtils.get()
         .req("$path?token=${getUserInfo().token}", method: "get");
+
+    RespGetCodeResultEntity entity = (await ApiRequest.getCodeResult(
+        ReqGetCodeResultEntity(id))).data;
     setState(() {
-      codeContent = resp.data.toString();
+      debugPrint("update");
+      codeContent =
+          resp.data.toString() + '\n\n运行结果：' + getStateStr(entity.data.status) +
+              '\n' + entity.data.result;
     });
   }
 
