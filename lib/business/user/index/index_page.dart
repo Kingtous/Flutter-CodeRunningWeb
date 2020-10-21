@@ -33,86 +33,85 @@ class _IndexPageState extends State<IndexPage> {
             placeholder: "images/placeholders/black.jpg",
             imageType: ImageType.assets,
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                IndexAppBar(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Gaps.vGap(h(100)),
-                    ControlledAnimation(
-                      duration: Duration(milliseconds: 1000),
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      builder: (context, num) {
-                        return Opacity(
-                          opacity: num,
-                          child:
-                          TypeWriterText(
-                            ["码上社区"],
-                            style: TextStyles.textStyle(fontSize: 24),
-                          ),
-                        );
-                      },
-                    ),
-                    Gaps.vGap(h(10)),
-                    ControlledAnimation(
-                      duration: Duration(milliseconds: 1500),
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      builder: (context, num) {
-                        return Opacity(
-                          opacity: num,
-                          child: TypeWriterText(
-                            ["无限创作，分享你的创造力"],
-                            style: TextStyles.textStyle(fontSize: 22),
-                          ),
-                        );
-                      },
-                    ),
-                    Gaps.vGap(h(50)),
-                    FlatButton(
-                        padding: EdgeInsets.all(16),
-                        shape: StadiumBorder(),
-                        color: Theme
-                            .of(context)
-                            .accentColor,
-                        child: Text("进入社区",
-                            style: TextStyles.textStyle(fontSize: 24)),
-                        onPressed: handleEnter),
-                    Gaps.vGap(h(100)),
-                    ControlledAnimation(
-                      duration: Duration(milliseconds: 1500),
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      builder: (c, n) => Opacity(
-                        opacity: n,
-                        child: Wrap(
-                          spacing: 40,
-                          runSpacing: 5,
-                          alignment: WrapAlignment.spaceAround,
-                          children: <Widget>[
-                            introCards(
-                                "随心",
-                                "传统OJ平台只执行题目解答，而你可以在这里随时随地编写属于你自己的项目！",
-                                FaIcon(FontAwesomeIcons.accessibleIcon,
-                                    size: 50)),
-                            introCards(
-                                "分享",
-                                "向全社区的用户分享你的新创意，并赢取社区积分，成为社区支柱！",
-                                FaIcon(
-                                  FontAwesomeIcons.shareSquare,
-                                  size: 50,
-                                )),
-                            introCards(
-                                "开源",
-                                "项目完全开源，隐私性得以保证，并提供丰富的API支持，欢迎编写前端界面！",
-                                FaIcon(FontAwesomeIcons.doorOpen, size: 50))
-                          ],
-                        ),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  IndexAppBar(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Gaps.vGap(h(100)),
+                      ControlledAnimation(
+                        duration: Duration(milliseconds: 1000),
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        builder: (context, num) {
+                          return Opacity(
+                            opacity: num,
+                            child: TypeWriterText(
+                              ["码上社区"],
+                              style: TextStyles.textStyle(fontSize: 24),
+                            ),
+                          );
+                        },
                       ),
-                    )
-                  ],
-                )
-              ],
+                      Gaps.vGap(h(10)),
+                      ControlledAnimation(
+                        duration: Duration(milliseconds: 1500),
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        builder: (context, num) {
+                          return Opacity(
+                            opacity: num,
+                            child: TypeWriterText(
+                              ["无限创作，分享你的创造力"],
+                              style: TextStyles.textStyle(fontSize: 22),
+                            ),
+                          );
+                        },
+                      ),
+                      Gaps.vGap(h(50)),
+                      FlatButton(
+                          padding: EdgeInsets.all(16),
+                          shape: StadiumBorder(),
+                          color: Theme.of(context).accentColor,
+                          child: Text("进入社区",
+                              style: TextStyles.textStyle(fontSize: 24)),
+                          onPressed: handleEnter),
+                      Gaps.vGap(h(100)),
+                      ControlledAnimation(
+                        duration: Duration(milliseconds: 1500),
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        builder: (c, n) => Opacity(
+                          opacity: n,
+                          child: Wrap(
+                            spacing: 40,
+                            runSpacing: 5,
+                            alignment: WrapAlignment.spaceAround,
+                            children: <Widget>[
+                              introCards(
+                                  "随心",
+                                  "传统OJ平台只执行题目解答，而你可以在这里随时随地编写属于你自己的项目！",
+                                  FaIcon(FontAwesomeIcons.accessibleIcon,
+                                      size: 50)),
+                              introCards(
+                                  "分享",
+                                  "向全社区的用户分享你的新创意，并赢取社区积分，成为社区支柱！",
+                                  FaIcon(
+                                    FontAwesomeIcons.shareSquare,
+                                    size: 50,
+                                  )),
+                              introCards(
+                                  "开源",
+                                  "项目完全开源，隐私性得以保证，并提供丰富的API支持，欢迎编写前端界面！",
+                                  FaIcon(FontAwesomeIcons.doorOpen, size: 50))
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -122,10 +121,14 @@ class _IndexPageState extends State<IndexPage> {
 
   void handleEnter() {
     if (getUserInfo() == null)
-      NavUtil.navigator().pushNamed(Routes.loginRoute);
+      NavUtil.navigator().push(Routes.loginPage,
+          arguments: LoginPageArguments(
+              networkId: 0, timestamps: DateTime
+              .now()
+              .millisecond));
     else {
-      ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
-          Routes.userDashBoard, (route) => false);
+      ExtendedNavigator.root
+          .pushAndRemoveUntil(Routes.userDashBoard, (route) => false);
     }
   }
 

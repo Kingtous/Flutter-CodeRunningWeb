@@ -82,7 +82,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
     return Scaffold(
       appBar: AppBar(title: Text("个人资料")),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 64),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: SmartRefresher(
           enablePullDown: false,
           enablePullUp: true,
@@ -102,7 +102,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
                       return Card(
                         elevation: 10,
                         child: Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
@@ -266,6 +266,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
       elevation: 10,
       child: Container(
           width: 200,
+          // padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -273,8 +274,8 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
             children: <Widget>[
               ImageLoadView(
                 data.img,
-                width: 200,
-                height: 200,
+                width: 100,
+                height: 100,
                 fit: BoxFit.cover,
               ),
               Text("售价:${data.credits}积分",

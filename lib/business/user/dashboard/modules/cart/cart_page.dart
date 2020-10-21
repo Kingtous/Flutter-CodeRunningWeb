@@ -178,9 +178,10 @@ class _CartPageState extends BaseLoadingPageState<CartPage> {
       key: ValueKey(index),
       elevation: 10,
       child: Container(
+          padding: EdgeInsets.all(16.0),
           width: 200,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -195,8 +196,8 @@ class _CartPageState extends BaseLoadingPageState<CartPage> {
               ),
               ImageLoadView(
                 data.img,
-                width: 200,
-                height: 200,
+                width: 100,
+                height: 100,
                 fit: BoxFit.cover,
               ),
               Text("售价:${data.credits}积分",

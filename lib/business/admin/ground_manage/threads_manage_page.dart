@@ -138,7 +138,7 @@ class _ThreadsManagePageState extends BaseLoadingPageState<ThreadsManagePage> {
   }
 
   handleGetThreadComment(int id) {
-    NavUtil.navigator().pushNamed(Routes.commentsManagePage,
+    NavUtil.navigator().push(Routes.commentsManagePage,
         arguments: CommentsManagePageArguments(threadId: id));
   }
 }

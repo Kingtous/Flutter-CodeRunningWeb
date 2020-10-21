@@ -81,8 +81,8 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
           ),
           entryAnimation: EntryAnimation.DEFAULT,
           onOkButtonPressed: () {
-            ExtendedNavigator.ofRouter<Router>().pop();
-          },
+            ExtendedNavigator.root.pop();
+              },
         ));
   }
 
@@ -119,7 +119,7 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
   @override
   void logOut() async {
     await sp().remove("user");
-    ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
-        Routes.indexRoute, (route) => false);
+    ExtendedNavigator.root.pushAndRemoveUntil(
+        Routes.indexPage, (route) => false);
   }
 }

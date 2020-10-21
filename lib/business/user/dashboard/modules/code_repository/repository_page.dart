@@ -1,5 +1,3 @@
-import 'dart:js' as js;
-
 import 'package:after_layout/after_layout.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/result/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_get_repository_entity.dart';
@@ -20,7 +18,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:universal_html/html.dart';
 
 import 'get/bloc.dart';
 import 'get/get_repository_bloc.dart';
@@ -81,7 +78,7 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
             ),
             Container(
               alignment: Alignment.center,
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
@@ -196,9 +193,9 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
             FlatButton(
                 onPressed: () => handleLook(data.id, data.localPath),
                 child: Text("查看")),
-            FlatButton(
-                onPressed: () => handleDownload(data.localPath),
-                child: Text("下载")),
+            // FlatButton(
+            //     onPressed: () => handleDownload(data.localPath),
+            //     child: Text("下载")),
           ],
         ),
       ],
@@ -206,7 +203,7 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
   }
 
   void handleDownload(String path) {
-    js.context.callMethod("open", ["$path?token=${getUserInfo().token}"]);
+    // js.context.callMethod("open", ["$path?token=${getUserInfo().token}"]);
   }
 
   void handleLook(int id, String path) async {

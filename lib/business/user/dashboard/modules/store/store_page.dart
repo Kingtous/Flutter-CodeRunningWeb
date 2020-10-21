@@ -100,7 +100,7 @@ class _StorePageState extends BaseLoadingPageState<StorePage> {
   }
 
   void handleEnterCart() {
-    NavUtil.navigator().pushNamed(Routes.cartPage);
+    NavUtil.navigator().push(Routes.cartPage);
   }
 
   Widget buildMallItems(RespGetMallItemsData data) {

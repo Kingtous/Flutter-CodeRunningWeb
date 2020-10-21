@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:code_running_front/common/utils/toast_utils.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/user_util.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Lock;
 import 'package:flutter/material.dart';
+import 'package:synchronized/synchronized.dart';
 
 import 'http_utils.dart';
 
 class DioAdapter implements HAdapter {
   Dio _dio;
+  static final lock = Lock();
 
   DioAdapter() {
     _dio = new Dio();
@@ -67,8 +70,8 @@ class DioAdapter implements HAdapter {
         resp.data = data;
         if (resp.data.code == 1000) {
           await removeUserData();
-          NavUtil.navigator().pushNamedAndRemoveUntil(
-              Routes.indexRoute, (route) => false);
+          NavUtil.navigator()
+              .pushAndRemoveUntil(Routes.indexPage, (route) => false);
         }
       }
       if (ctx.callback != null) {
@@ -76,9 +79,22 @@ class DioAdapter implements HAdapter {
       }
       return resp;
     } catch (e) {
+      if (e is DioError) {
+        if (e.response.statusCode == 401) {
+          await lock.synchronized(() async {
+            if (getUserInfo() != null) {
+              ToastUtils.show("登录过期，请重新登录");
+              await removeUserData();
+              NavUtil.navigator()
+                  .pushAndRemoveUntil(Routes.indexPage, (route) => false);
+            }
+          });
+        }
+      }
       if (ctx.callback != null) {
         ctx.callback(HState.fail, e);
       }
+
       return null;
     }
   }

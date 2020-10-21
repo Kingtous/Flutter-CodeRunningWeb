@@ -16,24 +16,22 @@ import 'package:code_running_front/business/user/index/index_page.dart';
 import 'package:code_running_front/business/user/login/login_page.dart';
 import 'package:code_running_front/business/user/register/register_page.dart';
 
-
-@MaterialAutoRouter()
-class $Router {
-  @initial
-  IndexPage indexRoute;
-  LoginPage loginRoute;
-  UserRegisterPage userRegisterPage;
-  UserDashBoard userDashBoard;
-  CodingPage codePage;
-  RepositoryPage userRepositoryPage;
-  ThreadGroundPage threadGroundPage;
-  ThreadPage threadDetailPage;
-  StorePage mallPage;
-  CartPage cartPage;
-  HomePage homePage;
-  FindBackPage findBackPasswordPage;
-  UsersPage usersPage;
-  ItemsManagePage itemsManagePage;
-  ThreadsManagePage threadsManagePage;
-  CommentsManagePage commentsManagePage;
-}
+@MaterialAutoRouter(routes: <AutoRoute>[
+  MaterialRoute(page: IndexPage, initial: true),
+  MaterialRoute(page: LoginPage),
+  MaterialRoute(page: UserRegisterPage),
+  MaterialRoute(page: UserDashBoard),
+  MaterialRoute(page: CodingPage),
+  MaterialRoute(page: RepositoryPage),
+  MaterialRoute(page: ThreadGroundPage),
+  MaterialRoute(page: ThreadPage),
+  MaterialRoute(page: StorePage),
+  MaterialRoute(page: CartPage),
+  MaterialRoute(page: HomePage),
+  MaterialRoute(page: FindBackPage),
+  MaterialRoute(page: ItemsManagePage),
+  MaterialRoute(page: ThreadsManagePage),
+  MaterialRoute(page: CommentsManagePage),
+  MaterialRoute(page: UsersPage),
+])
+class $Router {}

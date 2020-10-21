@@ -74,7 +74,6 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
             ),
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(32),
               child: BlocBuilder(
                 bloc: _bloc,
                 builder: (BuildContext context, state) {
@@ -220,8 +219,9 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
 
   Widget buildThreadListItem(RespGetThreadsData data) {
     return GestureDetector(
-      onTap: () => NavUtil.navigator().pushNamed(Routes.threadDetailPage,
-          arguments: ThreadPageArguments(data: data)),
+      onTap: () =>
+          NavUtil.navigator().push(Routes.threadPage,
+              arguments: ThreadPageArguments(data: data)),
       child: Container(
         key: ValueKey(data.id),
         margin: EdgeInsets.all(16),
@@ -262,6 +262,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                               Text(
                                 "${data.username}",
                                 style: TextStyle(fontSize: 14),
+                                overflow: TextOverflow.fade,
                               ),
                             ],
                           ),
@@ -271,6 +272,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                               Text(
                                 '${data.createDate}',
                                 style: TextStyle(fontSize: 12),
+                                overflow: TextOverflow.fade,
                               ),
                             ],
                           ),
@@ -282,17 +284,25 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                 Gaps.vGap(16),
                 Row(
                   children: [
-                    Text(
-                      '${data.title}',
-                      style: TextStyle(fontSize: 14),
+                    Expanded(
+                      child: Text(
+                        '${data.title}',
+                        style: TextStyle(fontSize: 14),
+                        overflow: TextOverflow.fade,
+
+                      ),
                     )
                   ],
                 ),
                 Gaps.vGap(16),
                 Row(children: [
-                  Text(
-                    '${data.subtitle}',
-                    style: TextStyle(fontSize: 12),
+                  Expanded(
+                    child: Text(
+                      '${data.subtitle}',
+                      style: TextStyle(fontSize: 14),
+                      overflow: TextOverflow.fade,
+
+                    ),
                   )
                 ],),
                 Gaps.vGap(4),

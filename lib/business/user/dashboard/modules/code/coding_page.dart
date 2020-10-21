@@ -1,3 +1,4 @@
+import 'package:code_editor/code_editor.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/execute/execute_code_bloc.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/execute/execute_code_event.dart';
 import 'package:code_running_front/business/user/dashboard/modules/code/execute/execute_code_state.dart';
@@ -8,16 +9,13 @@ import 'package:code_running_front/business/user/models/request/req_upload_code_
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/res/styles.dart';
-import 'package:code_running_front/ui/code_editor.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
-import 'package:codemirror/codemirror.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:universal_html/html.dart';
 
 import 'get/bloc.dart';
 import 'result/get_code_result_bloc.dart';
@@ -48,8 +46,6 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     }
   };
 
-  CodeMirror _codeMirror;
-
   // TODO 后期改成static
   String _storeUrl;
   String _codeType = "Python3";
@@ -63,6 +59,14 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
 //  var _textEditingController =
 //      TextEditingController(text: DateTime.now().toString());
 
+  FileEditor _editor = FileEditor(name: "tmp", language: "cpp", code: "");
+
+  EditorModel model;
+
+  var _ceKey = UniqueKey();
+
+  var _editorWidget = CodeEditor();
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +75,24 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     _getCodesBloc = GetCodesBloc();
     _uploadCodeBloc = UploadCodeBloc();
     _executeCodeBloc = ExecuteCodeBloc();
+
+    model = new EditorModel(
+      files: [_editor], // the files created above
+      // you can customize the editor as you want
+      styleOptions: new EditorModelStyleOptions(
+        fontSize: 13,
+      ),
+    );
+    _editorWidget = CodeEditor(
+      key: _ceKey,
+      model: model,
+      edit: true,
+      disableNavigationbar: false,
+      onSubmit: (language, value) {
+        // TODO handle
+        debugPrint("on save");
+      },
+    );
   }
 
   @override
@@ -84,6 +106,8 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    debugPrint("rebuild coding page");
     return Scaffold(
       appBar: AppBar(
         title: Text("代码编辑器"),
@@ -94,14 +118,8 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
           ImageLoadView(
             "images/background/02.jpg",
             imageType: ImageType.assets,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
           ),
           Container(
@@ -112,15 +130,14 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                 padding: EdgeInsets.all(16.0),
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 10,
                   children: <Widget>[
                     Column(
                       children: <Widget>[
                         Row(
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            // Text("代码编辑器"),
-                            // Gaps.hGap(8.0),
+                            Text("代码语言"),
+                            Gaps.hGap(16.0),
                             DropdownButton(
                                 items: <String>["C++", "Java", "Python3"]
                                     .map((String e) =>
@@ -132,18 +149,11 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                             Gaps.hGap(4.0),
                           ],
                         ),
-                        CodeEditor(
-                            editorId: _editorId,
-                            height: 800,
-                            width: 400,
-                            initialOptions: _editorOptions,
-                            onEditorCreated: handleEditorCreated,
-                            focusNode: _focusNode),
                       ],
                     ),
+                    _editorWidget,
                     Container(
-                      width: 400,
-                      height: 800,
+                      // width: 400,
                       alignment: Alignment.topCenter,
                       child: Column(
                         children: <Widget>[
@@ -179,45 +189,43 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                               )
                             ],
                           ),
-                          Expanded(
-                              child: BlocListener(
-                                bloc: _executeCodeBloc,
-                                listener: (BuildContext context, state) {
-                                  if (state is ExecuteCodeedState) {
-                                    _getCodeResultBloc?.add(
-                                        InGetCodeResultEvent(
-                                            ReqGetCodeResultEntity(
-                                                state.entity.data.codeId)));
+                          BlocListener(
+                            bloc: _executeCodeBloc,
+                            listener: (BuildContext context, state) {
+                              if (state is ExecuteCodeedState) {
+                                Future.delayed(Duration(milliseconds: 500), () {
+                                  _getCodeResultBloc?.add(InGetCodeResultEvent(
+                                      ReqGetCodeResultEntity(
+                                          state.entity.data.codeId)));
+                                });
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(color: Colors.grey),
+                              child: BlocBuilder(
+                                bloc: _getCodeResultBloc,
+                                builder: (BuildContext context, state) {
+                                  if (state is InGetCodeResultState) {
+                                    return Text("已提交，等待服务器响应");
+                                  } else if (state is NoGetCodeResultState) {
+                                    return Text(state.msg);
+                                  } else if (state
+                                  is InitialGetCodeResultState) {
+                                    return Text("执行结果显示处：\n请在代码写好后保存至仓库再执行");
+                                  } else if (state is GetCodeResultedState) {
+                                    return Text(
+                                      "状态：${getStateStr(
+                                          state.entity.data.status)} \n\n" +
+                                          state.entity.data.result,
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
+                                    );
                                   }
                                 },
-                                child: Container(
-                                  width: 400,
-                                  decoration: BoxDecoration(color: Colors.grey),
-                                  child: BlocBuilder(
-                                    bloc: _getCodeResultBloc,
-                                    builder: (BuildContext context, state) {
-                                      if (state is InGetCodeResultState) {
-                                        return Text("已提交，等待服务器响应");
-                                      } else
-                                      if (state is NoGetCodeResultState) {
-                                        return Text(state.msg);
-                                      } else if (state
-                                      is InitialGetCodeResultState) {
-                                        return Text("请在代码写好后保存至仓库再执行");
-                                      } else
-                                      if (state is GetCodeResultedState) {
-                                        return Text(
-                                          "状态号：${getStateStr(
-                                              state.entity.data.status)}: \n" +
-                                              state.entity.data.result,
-                                          overflow: TextOverflow.clip,
-                                          softWrap: true,
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ))
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     )
@@ -231,25 +239,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     );
   }
 
-  handleEditorCreated(CodeMirror mirror) {
-    _codeMirror = mirror;
-    _codeMirror.setSize(400, 800);
-    // 显示行数导致无法使用
-    _codeMirror.setLineNumbers(false);
-    _codeMirror.getDoc().setValue("");
-    _codeMirror.onDoubleClick.listen((event) {
-      // 行列号
-      setState(() {
-        _colNumbers = _codeMirror
-            .getCursor()
-            .ch;
-        _lineNumbers = _codeMirror
-            .getCursor()
-            .line;
-        _focusNode.requestFocus();
-      });
-    });
-  }
+  handleEditorCreated() {}
 
   String getPrefix() {
     debugPrint("当前扩展名$_codeType");
@@ -266,7 +256,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
     _uploadCodeBloc?.add(InUploadCodeEvent(ReqUploadCodeEntity()
       ..fileName =
           getUserInfo().nickname + "-" + DateTime.now().toString() + getPrefix()
-      ..content = _codeMirror?.getDoc()?.getValue()));
+      ..content = _editor.code));
   }
 
   void handleClose() {
@@ -288,14 +278,16 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
   void handleCodeTypeChanged(String value) {
     if (value == "Python3") {
       debugPrint("switch python");
-      _codeMirror?.setMode("python");
+      // _codeMirror?.setMode("python");
     } else {
       debugPrint("switch clike");
-      _codeMirror?.setMode("clike");
+      // _codeMirror?.setMode("clike");
     }
     setState(() {
       _codeType = value;
+      _editor = FileEditor(
+          code: _editor.code, language: value, name: "tmp" + getPrefix());
+      model = EditorModel(files: [_editor]);
     });
   }
-
 }

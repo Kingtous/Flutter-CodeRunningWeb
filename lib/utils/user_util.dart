@@ -8,8 +8,7 @@ import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/sharedpreference_util.dart';
 
 void popToUserIndex() {
-  NavUtil.navigator()
-      .pushNamedAndRemoveUntil(Routes.indexRoute, (route) => false);
+  NavUtil.navigator().pushAndRemoveUntil(Routes.indexPage, (route) => false);
 }
 
 String getStoredToken() {

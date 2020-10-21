@@ -51,6 +51,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -69,17 +70,13 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
         ],
       ),
       body: Container(
+          alignment: Alignment.center,
           child: Stack(
             children: <Widget>[
               ImageLoadView(
                 "images/background/02.jpg",
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                height: MediaQuery
-                    .of(context)
-                    .size
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size
                     .height,
                 placeholder: "images/placeholders/black.jpg",
                 imageType: ImageType.assets,
@@ -103,12 +100,13 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
   /// 菜单，左侧为功能菜单，右侧为动态
   Widget buildContent() =>
       Container(
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           border: Border.all(),
         ),
-        child: Row(
-          children: <Widget>[Expanded(child: buildMenu()), buildMoments()],
+        child: Column(
+          children: <Widget>[Expanded(child: buildMenu())],
         ),
       );
 
@@ -128,9 +126,11 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   Widget buildUserMenu() {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
       child: Wrap(
-        direction: Axis.vertical,
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.center,
+        direction: Axis.horizontal,
         spacing: 10,
         runSpacing: 10,
         children: <Widget>[
@@ -206,9 +206,9 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   Widget buildAdminMenu() {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
       child: Wrap(
-        direction: Axis.vertical,
+        direction: Axis.horizontal,
         spacing: 10,
         runSpacing: 10,
         children: <Widget>[
@@ -263,7 +263,8 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
   /// 动态
   Widget buildMoments() {
     var info = getUserInfo();
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         //时间面板
         FlutterAnalogClock(
@@ -298,13 +299,13 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
             'XII'
           ],
           isLive: true,
-          width: 150,
-          height: 150,
+          width: 100,
+          height: 100,
         ),
         Gaps.vGap(16.0),
         Card(
           child: Container(
-            padding: EdgeInsets.all(32),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -420,25 +421,25 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
       );
 
   void handleEditorOpen(context) {
-    NavUtil.navigator().pushNamed(Routes.codePage);
+    NavUtil.navigator().push(Routes.codingPage);
   }
 
   handleRepositoryOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.userRepositoryPage);
+    NavUtil.navigator().push(Routes.repositoryPage);
   }
 
   handleGroundOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.threadGroundPage).then((value) =>
+    NavUtil.navigator().push(Routes.threadGroundPage).then((value) =>
         _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
   }
 
   handleMallOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.mallPage);
+    NavUtil.navigator().push(Routes.storePage);
   }
 
   handleCartOpen(BuildContext context) {
     NavUtil.navigator()
-        .pushNamed(Routes.cartPage,
+        .push(Routes.cartPage,
         arguments: CartPageArguments(getCreditsBloc: _getCreditsBloc))
         .then((value) =>
         _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
@@ -446,7 +447,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   handleHomeOpen(BuildContext context) {
     NavUtil.navigator()
-        .pushNamed(Routes.homePage,
+        .push(Routes.homePage,
         arguments: HomePageArguments(pBloc: _getProfileBloc))
         .then((value) =>
         _getProfileBloc?.add(
@@ -456,14 +457,14 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
 
   handleUserListOpen(BuildContext context) {
     NavUtil.navigator()
-        .pushNamed(Routes.usersPage);
+        .push(Routes.usersPage);
   }
 
   handleMallManageOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.itemsManagePage);
+    NavUtil.navigator().push(Routes.itemsManagePage);
   }
 
   handleGroundManageOpen(BuildContext context) {
-    NavUtil.navigator().pushNamed(Routes.threadsManagePage);
+    NavUtil.navigator().push(Routes.threadsManagePage);
   }
 }

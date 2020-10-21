@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class IndexAppBar extends StatefulWidget {
   @override
@@ -14,6 +13,7 @@ class _IndexAppBarState extends State<IndexAppBar> {
       decoration: BoxDecoration(color: Colors.transparent),
       padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
               child: TypewriterAnimatedTextKit(

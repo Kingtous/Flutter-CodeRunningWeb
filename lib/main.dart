@@ -3,22 +3,25 @@ import 'package:code_running_front/application/application.dart';
 import 'package:code_running_front/common/widgets/loading_dialog.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/third_libs_manager.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' hide Router;
+import 'package:flutter/material.dart' hide Router;
 import 'package:load/load.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   ThirdLibsManager.get().setup();
-  SharedPreferences.getInstance().then((value) =>
-  {Application.sp = value, runApp(LoadingProvider(
-      themeData: LoadingThemeData(),
-      loadingWidgetBuilder: (ctx, data) {
-        return LoadingDialog(
-          text: "加载中",
-        );
-      },
-      child: MyApp()))});
+  SharedPreferences.getInstance().then((value) => {
+        Application.sp = value,
+        runApp(LoadingProvider(
+            themeData: LoadingThemeData(),
+            loadingWidgetBuilder: (ctx, data) {
+              return LoadingDialog(
+                text: "加载中",
+              );
+            },
+            child: MyApp()))
+      });
 }
 
 class MyApp extends StatelessWidget {
@@ -32,6 +35,15 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             accentColor: Colors.blueAccent,
             primaryColor: Colors.black),
-        builder: ExtendedNavigator<Router>(router: Router()));
+        builder: ExtendedNavigator.builder<Router>(
+          router: Router(),
+          builder: (context, extendedNav) =>
+              Theme(
+                data: ThemeData(brightness: Brightness.light,
+                    accentColor: Colors.blueAccent,
+                    primaryColor: Colors.black),
+                child: extendedNav,
+              ),
+        ));
   }
 }

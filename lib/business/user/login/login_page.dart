@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/login/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
-import 'package:code_running_front/common/network/image_constants.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
@@ -52,6 +51,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocListener<LoginBloc, LoginState>(
       bloc: _loginBloc,
       listener: handleLoginBlocChanged,
@@ -67,24 +67,17 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
             closeLoading();
             _loginMsg = "登录成功";
             showSuccess(msg: _loginMsg);
-            saveUserLoginData(curr.entity.data).then((value) =>
-                Timer(Duration(seconds: 2), () {
-                  ExtendedNavigator.ofRouter<Router>().pushNamedAndRemoveUntil(
-                      Routes.userDashBoard, (route) => false);
-                }));
+            saveUserLoginData(curr.entity.data)
+                .then((value) => Timer(Duration(seconds: 2), () {
+                      ExtendedNavigator.root.pushAndRemoveUntil(
+                          Routes.userDashBoard, (route) => false);
+                    }));
           });
         }
         return true;
       },
       child: Scaffold(
           backgroundColor: Colors.black,
-          appBar: AppBar(
-            title: Text(
-              "码上登录",
-              style: TextStyle(fontSize: 16),
-            ),
-//            backgroundColor: Colors.transparent,
-          ),
           body: Stack(
             children: <Widget>[
               ImageLoadView("images/background/03.jpg",
@@ -99,127 +92,129 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
                       .height,
                   fit: BoxFit.cover,
                   placeholder: "images/placeholders/black.jpg"),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Gaps.vGap(50),
-                    TypeWriterText(
-                      tips,
-                      style: TextStyles.textStyle(fontSize: 30),
-                    ),
-                    Gaps.vGap(50),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 100,
-                        runSpacing: 50,
-                        children: <Widget>[
-                          ImageLoadView(loginLeftImageUrl,
-                              width: 50,
-                              height: 50,
-                              placeholder: "images/placeholders/black.jpg"),
-//                    Gaps.hGap(100),
-                          Card(
-                            elevation: 10,
-                            color: Colors.white,
-                            child: Container(
-                              width: 400,
-                              height: 400,
-                              padding: EdgeInsets.all(16),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                          child: TypeWriterText(
-                                            ["登录"],
-                                            style: TextStyles.textBoldDark20,
-                                          )),
-                                      TypeWriterText(
-                                        ["点此注册"],
-                                        style: TextStyles.textDark14,
-                                        onTap: handleRegister,
-                                      )
-                                    ],
-                                  ),
-                                  Gaps.vGap(30),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      SevenTextField(
-                                        width: 350,
-                                        height: 100,
-                                        onChanged: handleUserNameChanged,
-                                        textEditingController:
-                                        userNameController,
-                                        isPassword: false,
-                                        onEditComplete: () {},
-                                        labelText: "用户名/邮箱",
-                                        icon: Icon(Icons.person_outline),
-                                      ),
-                                      SevenTextField(
-                                        width: 350,
-                                        height: 100,
-                                        onChanged: handlePasswordChanged,
-                                        textEditingController:
-                                        passwordController,
-                                        isPassword: true,
-                                        onEditComplete: () {},
-                                        labelText: "密码",
-                                        icon: Icon(Icons.lock),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Offstage(
-                                                  offstage:
-                                                  _loginMsg.length == 0,
-                                                  child: Text(
-                                                    _loginMsg,
-                                                    style: TextStyles.textRed14,
-                                                  )),
-                                            ),
-                                            FlatButton(
-                                              child: Text(
-                                                "忘记密码",
-                                                style: TextStyles.textDark16,
-                                              ),
-                                              onPressed: handleForgetPassword,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 400,
-                                        child: FlatButton(
-                                          child: Text(
-                                            "登录",
-                                            style: TextStyles.textWhite16,
-                                          ),
-                                          onPressed: handleLogin,
-                                          focusColor: Colors.grey,
-                                          hoverColor: Colors.grey,
-                                          color: Colors.black,
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
+              SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Gaps.vGap(50),
+                      TypeWriterText(
+                        tips,
+                        style: TextStyles.textStyle(fontSize: 30),
                       ),
-                    ),
-                  ],
+                      Gaps.vGap(50),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(16.0),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 100,
+                          runSpacing: 50,
+                          children: <Widget>[
+//                    Gaps.hGap(100),
+                            Card(
+
+                              elevation: 10,
+                              color: Colors.white,
+                              child: Container(
+                                width: 400,
+                                height: 400,
+                                padding: EdgeInsets.all(16),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                            child: TypeWriterText(
+                                              ["登录"],
+                                              style: TextStyles.textBoldDark20,
+                                            )),
+                                        TypeWriterText(
+                                          ["点此注册"],
+                                          style: TextStyles.textDark14,
+                                          onTap: handleRegister,
+                                        )
+                                      ],
+                                    ),
+                                    Gaps.vGap(30),
+                                    Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        SevenTextField(
+                                          width: 350,
+                                          height: 100,
+                                          onChanged: handleUserNameChanged,
+                                          textEditingController:
+                                          userNameController,
+                                          isPassword: false,
+                                          onEditComplete: () {},
+                                          labelText: "用户名/邮箱",
+                                          icon: Icon(Icons.person_outline),
+                                        ),
+                                        SevenTextField(
+                                          width: 350,
+                                          height: 100,
+                                          onChanged: handlePasswordChanged,
+                                          textEditingController:
+                                          passwordController,
+                                          isPassword: true,
+                                          onEditComplete: () {},
+                                          labelText: "密码",
+                                          icon: Icon(Icons.lock),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: Offstage(
+                                                    offstage:
+                                                    _loginMsg.length == 0,
+                                                    child: Text(
+                                                      _loginMsg,
+                                                      style:
+                                                      TextStyles.textRed14,
+                                                    )),
+                                              ),
+                                              FlatButton(
+                                                child: Text(
+                                                  "忘记密码",
+                                                  style: TextStyles.textDark16,
+                                                ),
+                                                onPressed: handleForgetPassword,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 400,
+                                          child: FlatButton(
+                                            child: Text(
+                                              "登录",
+                                              style: TextStyles.textWhite16,
+                                            ),
+                                            onPressed: handleLogin,
+                                            focusColor: Colors.grey,
+                                            hoverColor: Colors.grey,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -229,7 +224,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
 
   void handleRegister() {
     // jump
-    ExtendedNavigator.ofRouter<Router>().pushNamed(Routes.userRegisterPage);
+    ExtendedNavigator.root.push(Routes.userRegisterPage);
   }
 
   void handleLoginBlocChanged(BuildContext context, LoginState state) {
@@ -252,7 +247,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
   }
 
   void handleForgetPassword() {
-    NavUtil.navigator().pushNamed(Routes.findBackPasswordPage);
+    NavUtil.navigator().push(Routes.findBackPage);
   }
 
   void handleLogin() {

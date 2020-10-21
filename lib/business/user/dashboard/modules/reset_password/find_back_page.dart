@@ -1,8 +1,12 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:code_running_front/business/user/dashboard/modules/reset_password/reset_password/bloc.dart';
 import 'package:code_running_front/business/user/dashboard/modules/reset_password/reset_password/reset_password_event.dart';
 import 'package:code_running_front/business/user/dashboard/modules/reset_password/send_reset_password_email/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_reset_password_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_send_reset_password_mail_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/common/utils/toast_utils.dart';
+import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +55,16 @@ class _FindBackPageState extends BaseLoadingPageState<FindBackPage> {
         showError(msg: "没有对应的账户，请检查");
       }
     });
+    _rbloc.listen((state) {
+      if (state is ResetPasswordedState) {
+        hideLoadingDialog();
+        ToastUtils.show("重置成功");
+        ExtendedNavigator.root.pop();
+      } else if (state is NoResetPasswordState) {
+        hideLoadingDialog();
+        showError(msg: "重置密码出现错误");
+      }
+    });
   }
 
   @override
@@ -74,120 +88,132 @@ class _FindBackPageState extends BaseLoadingPageState<FindBackPage> {
               fit: BoxFit.cover,
               imageType: ImageType.assets,
               placeholder: "images/placeholders/black.jpg"),
-          Container(
-            padding: EdgeInsets.all(32),
-            alignment: Alignment.center,
+          SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Card(
-                  elevation: 10,
-                  child: Container(
-                    width: 400,
-                    padding: EdgeInsets.all(32),
-                    child: Form(
-                        key: sendMailFormKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: '请输入用户名/邮箱',
-                                hintText: "用户名/邮箱",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 13,
-                                ),
-                                prefixIcon: Icon(Icons.person),
-                              ),
-                              //校验用户
-                              validator: (value) {
-                                return value.trim().length > 0
-                                    ? null
-                                    : "用户名不能为空";
-                              },
-                              //当 Form 表单调用保存方法 Save时回调的函数。
-                              onSaved: (value) {
-                                username = value;
-                              },
-                              // 当用户确定已经完成编辑时触发
-                              onFieldSubmitted: (value) {},
-                            ),
-                            FlatButton(
-                                onPressed:
-                                    !isEmailOK ? handleEnteredUsername : null,
-                                child: Text("确定"))
-                          ],
-                        )),
-                  ),
-                ),
-                Offstage(
-                  offstage: !isEmailOK,
-                  child: Card(
-                    elevation: 10,
-                    child: Container(
-                      width: 400,
-                      height: 250,
-                      padding: EdgeInsets.all(32),
-                      child: Form(
-                          key: resetPasswordFormKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: '请输入验证码',
-                                  hintText: "6位验证码",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 13,
+              children: [
+                Gaps.vGap60,
+                Container(
+                  padding: EdgeInsets.all(32),
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Card(
+                        elevation: 10,
+                        child: Container(
+                          width: 400,
+                          padding: EdgeInsets.all(32),
+                          child: Form(
+                              key: sendMailFormKey,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: '请输入用户名/邮箱',
+                                      hintText: "用户名/邮箱",
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 13,
+                                      ),
+                                      prefixIcon: Icon(Icons.person),
+                                    ),
+                                    //校验用户
+                                    validator: (value) {
+                                      return value.trim().length > 0
+                                          ? null
+                                          : "用户名不能为空";
+                                    },
+                                    //当 Form 表单调用保存方法 Save时回调的函数。
+                                    onSaved: (value) {
+                                      username = value;
+                                    },
+                                    // 当用户确定已经完成编辑时触发
+                                    onFieldSubmitted: (value) {},
                                   ),
-                                  prefixIcon: Icon(Icons.call_missed_outgoing),
-                                ),
-                                //校验用户
-                                validator: (value) {
-                                  return value.trim().length == 6
-                                      ? null
-                                      : "验证码位数不对";
-                                },
-                                //当 Form 表单调用保存方法 Save时回调的函数。
-                                onSaved: (value) {
-                                  code = value;
-                                },
-                                // 当用户确定已经完成编辑时触发
-                                onFieldSubmitted: (value) {},
-                              ),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: '请输入新密码',
-                                  hintText: "新密码",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 13,
-                                  ),
-                                  prefixIcon: Icon(Icons.call_missed_outgoing),
-                                ),
-                                //校验用户
-                                validator: (value) {
-                                  return value.length >= 6 ? null : "密码不得少于6位";
-                                },
-                                obscureText: true,
-                                //当 Form 表单调用保存方法 Save时回调的函数。
-                                onSaved: (value) {
-                                  password = value;
-                                },
-                                // 当用户确定已经完成编辑时触发
-                                onFieldSubmitted: (value) {},
-                              ),
-                              FlatButton(
-                                  onPressed: handleResetPassword,
-                                  child: Text("确定"))
-                            ],
-                          )),
-                    ),
+                                  FlatButton(
+                                      onPressed: !isEmailOK
+                                          ? handleEnteredUsername
+                                          : null,
+                                      child: Text("确定"))
+                                ],
+                              )),
+                        ),
+                      ),
+                      Offstage(
+                        offstage: !isEmailOK,
+                        child: Card(
+                          elevation: 10,
+                          child: Container(
+                            width: 400,
+                            height: 250,
+                            padding: EdgeInsets.all(32),
+                            child: Form(
+                                key: resetPasswordFormKey,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: '请输入验证码',
+                                        hintText: "6位验证码",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 13,
+                                        ),
+                                        prefixIcon:
+                                            Icon(Icons.call_missed_outgoing),
+                                      ),
+                                      //校验用户
+                                      validator: (value) {
+                                        return value.trim().length == 6
+                                            ? null
+                                            : "验证码位数不对";
+                                      },
+                                      //当 Form 表单调用保存方法 Save时回调的函数。
+                                      onSaved: (value) {
+                                        code = value;
+                                      },
+                                      // 当用户确定已经完成编辑时触发
+                                      onFieldSubmitted: (value) {},
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: '请输入新密码',
+                                        hintText: "新密码",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 13,
+                                        ),
+                                        prefixIcon:
+                                            Icon(Icons.call_missed_outgoing),
+                                      ),
+                                      //校验用户
+                                      validator: (value) {
+                                        return value.length >= 6
+                                            ? null
+                                            : "密码不得少于6位";
+                                      },
+                                      obscureText: true,
+                                      //当 Form 表单调用保存方法 Save时回调的函数。
+                                      onSaved: (value) {
+                                        password = value;
+                                      },
+                                      // 当用户确定已经完成编辑时触发
+                                      onFieldSubmitted: (value) {},
+                                    ),
+                                    FlatButton(
+                                        onPressed: handleResetPassword,
+                                        child: Text("确定"))
+                                  ],
+                                )),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
