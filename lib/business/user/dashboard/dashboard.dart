@@ -4,6 +4,7 @@ import 'package:code_running_front/business/user/dashboard/modules/profile/get/c
 import 'package:code_running_front/business/user/models/request/req_get_credits_entity.dart';
 import 'package:code_running_front/business/user/models/request/req_get_profile_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
+import 'package:code_running_front/common/utils/toast_utils.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
@@ -11,7 +12,7 @@ import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -39,6 +40,9 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
     _getProfileBloc
         ?.add(InGetProfileEvent(ReqGetProfileEntity()..id = getUserInfo().id));
     _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity()));
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      ToastUtils.show("正在加载中，请稍后");
+    });
   }
 
   @override
@@ -48,6 +52,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
     _getCreditsBloc?.close();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +111,7 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
           border: Border.all(),
         ),
         child: Column(
-          children: <Widget>[Expanded(child: buildMenu())],
+          children: <Widget>[buildMoments(), Expanded(child: buildMenu())],
         ),
       );
 
@@ -267,45 +272,45 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         //时间面板
-        FlutterAnalogClock(
-          dateTime: DateTime.now(),
-          dialPlateColor: Colors.white,
-          hourHandColor: Colors.black,
-          minuteHandColor: Colors.black,
-          secondHandColor: Colors.black,
-          numberColor: Colors.black,
-          borderColor: Colors.black,
-          tickColor: Colors.black,
-          centerPointColor: Colors.black,
-          showBorder: true,
-          showTicks: true,
-          showMinuteHand: true,
-          showSecondHand: true,
-          showNumber: true,
-          borderWidth: 8.0,
-          hourNumberScale: .10,
-          hourNumbers: [
-            'I',
-            'II',
-            'III',
-            'IV',
-            'V',
-            'VI',
-            'VII',
-            'VIII',
-            'IX',
-            'X',
-            'XI',
-            'XII'
-          ],
-          isLive: true,
-          width: 100,
-          height: 100,
-        ),
-        Gaps.vGap(16.0),
+        // FlutterAnalogClock(
+        //   dateTime: DateTime.now(),
+        //   dialPlateColor: Colors.white,
+        //   hourHandColor: Colors.black,
+        //   minuteHandColor: Colors.black,
+        //   secondHandColor: Colors.black,
+        //   numberColor: Colors.black,
+        //   borderColor: Colors.black,
+        //   tickColor: Colors.black,
+        //   centerPointColor: Colors.black,
+        //   showBorder: true,
+        //   showTicks: true,
+        //   showMinuteHand: true,
+        //   showSecondHand: true,
+        //   showNumber: true,
+        //   borderWidth: 8.0,
+        //   hourNumberScale: .10,
+        //   hourNumbers: [
+        //     'I',
+        //     'II',
+        //     'III',
+        //     'IV',
+        //     'V',
+        //     'VI',
+        //     'VII',
+        //     'VIII',
+        //     'IX',
+        //     'X',
+        //     'XI',
+        //     'XII'
+        //   ],
+        //   isLive: true,
+        //   width: 100,
+        //   height: 100,
+        // ),
+        // Gaps.vGap(16.0),
         Card(
           child: Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 48),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,

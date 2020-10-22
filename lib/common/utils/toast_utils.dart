@@ -14,7 +14,6 @@ class ToastUtils {
           msg: s,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIos: 1,
           backgroundColor: Colors.black54,
           textColor: Colors.white,
           fontSize: 13.5);

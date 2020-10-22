@@ -48,7 +48,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
 
   // TODO 后期改成static
   String _storeUrl;
-  String _codeType = "Python3";
+  String _codeType = "C++";
 
   var _colNumbers = 0;
   var _lineNumbers = 0;
@@ -59,7 +59,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
 //  var _textEditingController =
 //      TextEditingController(text: DateTime.now().toString());
 
-  FileEditor _editor = FileEditor(name: "tmp", language: "cpp", code: "");
+  FileEditor _editor = FileEditor(name: "tmp.cpp", language: "cpp", code: "");
 
   EditorModel model;
 
@@ -288,6 +288,16 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
       _editor = FileEditor(
           code: _editor.code, language: value, name: "tmp" + getPrefix());
       model = EditorModel(files: [_editor]);
+      _editorWidget = CodeEditor(
+        key: _ceKey,
+        model: model,
+        edit: true,
+        disableNavigationbar: false,
+        onSubmit: (language, value) {
+          // TODO handle
+          debugPrint("on save");
+        },
+      );
     });
   }
 }
