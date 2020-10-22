@@ -1,14 +1,18 @@
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.3.61'
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/jcenter/'}
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        maven { url 'https://dl.bintray.com/magicbaby/maven' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.sk.hannibal:hannibal:1.0.7'
+        classpath "com.tencent.bugly:tinker-support:1.1.5"
+        classpath 'com.tencent.bugly:symtabfileuploader:latest.release'
     }
 }
 
@@ -16,6 +20,7 @@ allprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/jcenter/'}
+        maven { url 'https://dl.bintray.com/magicbaby/maven' }
     }
 }
 

@@ -49,7 +49,7 @@ class _IndexPageState extends State<IndexPage> {
                           return Opacity(
                             opacity: num,
                             child: TypeWriterText(
-                              ["码上社区"],
+                              ["码上社区(hotfix-4)"],
                               style: TextStyles.textStyle(fontSize: 24),
                             ),
                           );

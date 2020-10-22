@@ -32,6 +32,8 @@ class GetCodeResultBloc extends Bloc<GetCodeResultEvent, GetCodeResultState> {
           if (entity.data.status > 2) {
             // status >2 表示服务器已经处理完请求
             break;
+          } else {
+            await Future.delayed(Duration(seconds: 1), () {});
           }
         } else {
           yield NoGetCodeResultState(true, msg: getErrMsg(entity.code));
