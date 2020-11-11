@@ -10,12 +10,12 @@ import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import 'get/bloc.dart';
 import 'result/get_code_result_bloc.dart';
@@ -158,6 +158,8 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
                       child: Column(
                         children: <Widget>[
                           Wrap(
+                            spacing: 16,
+                            runSpacing: 16,
                             children: <Widget>[
                               BlocListener(
                                 bloc: _uploadCodeBloc,
@@ -260,7 +262,7 @@ class _CodingPageState extends BaseLoadingPageState<CodingPage> {
   }
 
   void handleClose() {
-    NavUtil.navigator().pop();
+    Get.back();
   }
 
   @override

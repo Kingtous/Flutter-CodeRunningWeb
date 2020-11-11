@@ -4,11 +4,11 @@ import 'package:code_running_front/business/user/models/response/resp_status_ent
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommentsManagePage extends StatefulWidget {
-  final int threadId;
 
-  const CommentsManagePage({Key key, this.threadId}) : super(key: key);
+  const CommentsManagePage({Key key}) : super(key: key);
 
   @override
   _CommentsManagePageState createState() => _CommentsManagePageState();
@@ -20,12 +20,14 @@ class _CommentsManagePageState
   ReqGetThreadCommentEntity _reqEntity = ReqGetThreadCommentEntity()..page = 0;
 
   String _name;
+  int threadId;
 
   @override
   void initState() {
     super.initState();
+    threadId = Get.arguments.threadId;
     //
-    _reqEntity.threadId = widget.threadId;
+    _reqEntity.threadId = threadId;
     ApiRequest.getThreadComment(_reqEntity).then((callback) {
       if (callback.data != null && callback.data.code == 0) {
         setState(() {
@@ -121,7 +123,7 @@ class _CommentsManagePageState
   }
 
   handleCommentDelete(int id) async {
-    var callback = await ApiRequest.deleteComment(widget.threadId, id);
+    var callback = await ApiRequest.deleteComment(threadId, id);
     debugPrint(callback.toString());
     RespStatusEntity entity = callback.data;
     if (entity != null && entity.code == 0) {

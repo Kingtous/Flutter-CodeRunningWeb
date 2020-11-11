@@ -3,7 +3,6 @@ import 'package:code_running_front/business/user/dashboard/modules/code/result/b
 import 'package:code_running_front/business/user/models/request/req_get_repository_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_code_result_entity.dart';
 import 'package:code_running_front/business/user/models/response/resp_get_repository_entity.dart';
-import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_constants.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/common/network/http_utils.dart';
@@ -27,8 +26,7 @@ class RepositoryPage extends StatefulWidget {
   _RepositoryPageState createState() => _RepositoryPageState();
 }
 
-class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
-    with AfterLayoutMixin {
+class _RepositoryPageState extends State<RepositoryPage> with AfterLayoutMixin {
   var _scrollController = ScrollController();
 
   bool get wantKeepAlive => false;
@@ -59,7 +57,6 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -117,7 +114,7 @@ class _RepositoryPageState extends BaseLoadingPageState<RepositoryPage>
                                 showLoadingDialog();
                               } else if (state is NoGetRepositoryState) {
                                 _refreshController.loadFailed();
-                                showError(msg: state.msg ?? "");
+                                // showError(msg: state.msg ?? "");
                               }
                               return SizedBox(
                                 width: 0,

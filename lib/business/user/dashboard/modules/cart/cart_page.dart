@@ -14,6 +14,7 @@ import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -21,9 +22,8 @@ import 'cart/del/del_cart_bloc.dart';
 import 'cart/get/get_my_cart_bloc.dart';
 
 class CartPage extends StatefulWidget {
-  final GetCreditsBloc getCreditsBloc;
 
-  const CartPage({Key key, this.getCreditsBloc}) : super(key: key);
+  const CartPage({Key key}) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -77,7 +77,8 @@ class _CartPageState extends BaseLoadingPageState<CartPage> {
     _bBloc.listen((state) {
       if (state is BuyCartItemsedState) {
         showSuccess(msg: "购买成功！剩余积分：${state.entity.data}");
-        widget.getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity()));
+        Get.arguments.getCreditsBloc
+            .add(InGetCreditsEvent(ReqGetCreditsEntity()));
         hideLoadingDialog();
         reset();
       } else if (state is NoBuyCartItemsState) {
@@ -102,7 +103,7 @@ class _CartPageState extends BaseLoadingPageState<CartPage> {
         title: Text("我的购物车"),
         actions: <Widget>[
           BlocBuilder(
-            bloc: widget.getCreditsBloc,
+            bloc: Get.arguments.getCreditsBloc as GetCreditsBloc,
             builder: (BuildContext context, state) {
               if (state is GetCreditsedState) {
                 return FlatButton(

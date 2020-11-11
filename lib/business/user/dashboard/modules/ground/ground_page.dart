@@ -6,10 +6,10 @@ import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -186,7 +186,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       FlatButton(
-                        onPressed: () => NavUtil.navigator().pop(),
+                        onPressed: () => Get.back(),
                         child: Text(
                           "取消",
                           textAlign: TextAlign.center,
@@ -197,7 +197,7 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
                           if (title.length == 0 || subtitle.length == 0) {
                             showError(msg: "标题或副标题不能为空");
                           } else {
-                            NavUtil.navigator().pop();
+                            Get.back();
                             _pbloc.add(InPostThreadEvent(ReqPostThreadEntity()
                               ..title = title
                               ..subtitle = subtitle));
@@ -220,8 +220,8 @@ class _ThreadGroundPageState extends BaseLoadingPageState<ThreadGroundPage> {
   Widget buildThreadListItem(RespGetThreadsData data) {
     return GestureDetector(
       onTap: () =>
-          NavUtil.navigator().push(Routes.threadPage,
-              arguments: ThreadPageArguments(data: data)),
+          Get.toNamed(Routes.threadPage,
+          arguments: ThreadPageArguments(data: data)),
       child: Container(
         key: ValueKey(data.id),
         margin: EdgeInsets.all(16),

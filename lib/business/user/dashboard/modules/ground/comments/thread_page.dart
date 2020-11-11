@@ -6,10 +6,10 @@ import 'package:code_running_front/business/user/models/response/resp_get_thread
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/res/styles.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -17,9 +17,8 @@ import 'get/bloc.dart';
 import 'post/bloc.dart';
 
 class ThreadPage extends StatefulWidget {
-  final RespGetThreadsData data;
 
-  const ThreadPage({Key key, this.data}) : super(key: key);
+  const ThreadPage({Key key}) : super(key: key);
 
   @override
   _ThreadPageState createState() => _ThreadPageState();
@@ -28,6 +27,8 @@ class ThreadPage extends StatefulWidget {
 class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
   GetThreadCommentBloc _bloc;
   PostThreadCommentBloc _pbloc;
+
+  RespGetThreadsData data;
 
   var page = 0;
 
@@ -38,9 +39,10 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
   @override
   void initState() {
     super.initState();
+    data = Get.arguments.data;
     _bloc = GetThreadCommentBloc();
     _bloc.add(InGetThreadCommentEvent(ReqGetThreadCommentEntity()
-      ..threadId = widget.data.id
+      ..threadId = data.id
       ..page = page));
 
     _pbloc = PostThreadCommentBloc();
@@ -61,7 +63,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
         showSuccess(msg: "评论成功！");
         page = 0;
         _bloc?.add(InGetThreadCommentEvent(ReqGetThreadCommentEntity()
-          ..threadId = widget.data.id
+          ..threadId = data.id
           ..page = page));
       } else if (state is InPostThreadCommentState) {
 
@@ -92,26 +94,27 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
         onRefresh: () => {
           page = 0,
           _bloc?.add(InGetThreadCommentEvent(ReqGetThreadCommentEntity()
-            ..threadId = widget.data.id
+            ..threadId = data.id
             ..page = page))
         },
         onLoading: () => {
           page += 1,
           _bloc?.add(InGetThreadCommentEvent(ReqGetThreadCommentEntity()
-            ..threadId = widget.data.id
+            ..threadId = data.id
             ..page = page))
         },
         child: Container(
           alignment: Alignment.center,
           child: Column(
             children: <Widget>[
-              buildThreadListItem(widget.data),
+              buildThreadListItem(data),
               Expanded(
                 child: BlocBuilder(
                   bloc: _bloc,
                   builder: (BuildContext context, state) {
                     switch (state.runtimeType) {
                       case GetThreadCommentedState:
+                        // 评论
                         return ListView.builder(
                           controller: _scrollController,
                           itemBuilder: (context, index) =>
@@ -347,7 +350,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       FlatButton(
-                        onPressed: () => NavUtil.navigator().pop(),
+                        onPressed: () => Get.back(),
                         child: Text(
                           "取消",
                           textAlign: TextAlign.center,
@@ -375,13 +378,13 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
   }
 
   handleComment() {
-    NavUtil.navigator().pop();
+    Get.back();
     if (comment == "") {
       showError(msg: "评论内容不能为空");
       return;
     }
     _pbloc.add(InPostThreadCommentEvent(ReqThreadCommentEntity()
-      ..threadId = widget.data.id
+      ..threadId = data.id
       ..content = comment));
   }
 
@@ -390,7 +393,7 @@ class _ThreadPageState extends BaseLoadingPageState<ThreadPage> {
     debugPrint("start process");
     if (entity.code == 0) {
       setState(() {
-        widget.data.userLike = entity.data;
+        data.userLike = entity.data;
       });
     }
   }

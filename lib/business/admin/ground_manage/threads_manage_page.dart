@@ -4,8 +4,8 @@ import 'package:code_running_front/business/user/models/response/resp_status_ent
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ThreadsManagePage extends StatefulWidget {
   @override
@@ -138,7 +138,7 @@ class _ThreadsManagePageState extends BaseLoadingPageState<ThreadsManagePage> {
   }
 
   handleGetThreadComment(int id) {
-    NavUtil.navigator().push(Routes.commentsManagePage,
+    Get.toNamed(Routes.commentsManagePage,
         arguments: CommentsManagePageArguments(threadId: id));
   }
 }

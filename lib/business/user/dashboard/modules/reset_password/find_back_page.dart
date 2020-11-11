@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/dashboard/modules/reset_password/reset_password/bloc.dart';
 import 'package:code_running_front/business/user/dashboard/modules/reset_password/reset_password/reset_password_event.dart';
 import 'package:code_running_front/business/user/dashboard/modules/reset_password/send_reset_password_email/bloc.dart';
@@ -10,6 +9,7 @@ import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:load/load.dart';
 
 import 'reset_password/reset_password_bloc.dart';
@@ -59,7 +59,7 @@ class _FindBackPageState extends BaseLoadingPageState<FindBackPage> {
       if (state is ResetPasswordedState) {
         hideLoadingDialog();
         ToastUtils.show("重置成功");
-        ExtendedNavigator.root.pop();
+        Get.back();
       } else if (state is NoResetPasswordState) {
         hideLoadingDialog();
         showError(msg: "重置密码出现错误");

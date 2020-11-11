@@ -31,7 +31,7 @@ dependencies:
   flare_flutter: ^2.0.1
   fluttertoast: 7.1.0
   shared_preferences: ^0.5.6+1
-  auto_route: ^0.6.9
+#  auto_route: ^0.6.9
   load: ^0.1.6
   after_layout: 1.0.7+2
   font_awesome_flutter: ^8.8.0
@@ -51,16 +51,17 @@ dependencies:
   giffy_dialog: 1.7.0
   slide_countdown_clock: 1.0.3
   flutter_analog_clock: 0.1.0
-  pull_to_refresh: 1.5.8
+  pull_to_refresh: ^1.6.2
   loadmore: 1.0.4
   code_editor: ^1.0.0
   synchronized: 2.2.0+2
+  get:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # add the generator to your dev_dependencies
-  auto_route_generator: ^0.6.9
+  #  auto_route_generator: ^0.6.9
   # of course build_runner is needed to run the generator
   build_runner:
 

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/common/widgets/success_dialog.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/utils/sharedpreference_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:load/load.dart';
 
@@ -81,7 +81,7 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
           ),
           entryAnimation: EntryAnimation.DEFAULT,
           onOkButtonPressed: () {
-            ExtendedNavigator.root.pop();
+            Get.back();
               },
         ));
   }
@@ -119,7 +119,6 @@ abstract class BaseLoadingPageState<T extends StatefulWidget>
   @override
   void logOut() async {
     await sp().remove("user");
-    ExtendedNavigator.root.pushAndRemoveUntil(
-        Routes.indexPage, (route) => false);
+    Get.offNamedUntil(Routes.indexPage, (route) => false);
   }
 }

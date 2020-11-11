@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/business/user/login/bloc.dart';
 import 'package:code_running_front/business/user/models/request/req_login_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/ui/seven_textfield.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:code_running_front/utils/enum.dart';
@@ -16,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   final int networkId;
@@ -69,8 +68,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
             showSuccess(msg: _loginMsg);
             saveUserLoginData(curr.entity.data)
                 .then((value) => Timer(Duration(seconds: 2), () {
-                      ExtendedNavigator.root.pushAndRemoveUntil(
-                          Routes.userDashBoard, (route) => false);
+              Get.offNamedUntil(Routes.userDashBoard, (route) => false);
                     }));
           });
         }
@@ -224,7 +222,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
 
   void handleRegister() {
     // jump
-    ExtendedNavigator.root.push(Routes.userRegisterPage);
+    Get.toNamed(Routes.userRegisterPage);
   }
 
   void handleLoginBlocChanged(BuildContext context, LoginState state) {
@@ -247,7 +245,7 @@ class _LoginPageState extends BaseLoadingPageState<LoginPage> {
   }
 
   void handleForgetPassword() {
-    NavUtil.navigator().push(Routes.findBackPage);
+    Get.toNamed(Routes.findBackPage);
   }
 
   void handleLogin() {

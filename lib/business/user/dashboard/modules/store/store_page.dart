@@ -5,10 +5,9 @@ import 'package:code_running_front/business/user/models/request/req_get_mall_ite
 import 'package:code_running_front/business/user/models/response/resp_get_mall_items_entity.dart';
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/res/styles.dart';
-import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -66,10 +65,10 @@ class _StorePageState extends BaseLoadingPageState<StorePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(title: Text("点点通")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: handleEnterCart,
-        child: Icon(Icons.add_shopping_cart),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: handleEnterCart,
+      //   child: Icon(Icons.add_shopping_cart),
+      // ),
       body: Container(
           padding: EdgeInsets.all(32),
           child: Scrollbar(
@@ -100,7 +99,6 @@ class _StorePageState extends BaseLoadingPageState<StorePage> {
   }
 
   void handleEnterCart() {
-    NavUtil.navigator().push(Routes.cartPage);
   }
 
   Widget buildMallItems(RespGetMallItemsData data) {
@@ -164,7 +162,7 @@ class _StorePageState extends BaseLoadingPageState<StorePage> {
               buttonOkText: Text("加入购物车"),
               buttonCancelText: Text("取消"),
               onOkButtonPressed: () {
-                NavUtil.navigator().pop();
+                Get.back();
                 handleAddCart(data);
               },
             ));

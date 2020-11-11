@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:code_running_front/common/utils/toast_utils.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:dio/dio.dart' hide Lock;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:synchronized/synchronized.dart';
 
 import 'http_utils.dart';
@@ -26,9 +26,7 @@ class DioAdapter implements HAdapter {
     _dio.options = new BaseOptions(
         connectTimeout: ctx.timeout == null ? HConstants.timeout : ctx.timeout,
         receiveTimeout: ctx.timeout == null ? HConstants.timeout : ctx.timeout,
-        headers: ctx.headerMap == null
-            ? {}
-            : ctx.headerMap,
+        headers: ctx.headerMap == null ? {} : ctx.headerMap,
         contentType: ctx.contentType == null
             ? ContentType.json.toString()
             : ctx.contentType.toString(),
@@ -70,8 +68,7 @@ class DioAdapter implements HAdapter {
         resp.data = data;
         if (resp.data.code == 1000) {
           await removeUserData();
-          NavUtil.navigator()
-              .pushAndRemoveUntil(Routes.indexPage, (route) => false);
+          Get.offNamedUntil(Routes.indexPage, (route) => false);
         }
       }
       if (ctx.callback != null) {
@@ -85,8 +82,7 @@ class DioAdapter implements HAdapter {
             if (getUserInfo() != null) {
               ToastUtils.show("登录过期，请重新登录");
               await removeUserData();
-              NavUtil.navigator()
-                  .pushAndRemoveUntil(Routes.indexPage, (route) => false);
+              Get.offNamedUntil(Routes.indexPage, (route) => false);
             }
           });
         }

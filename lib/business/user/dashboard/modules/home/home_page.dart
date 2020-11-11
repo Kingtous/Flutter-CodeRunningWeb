@@ -13,6 +13,7 @@ import 'package:code_running_front/ui/image_load_view.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:load/load.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -50,7 +51,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
       if (state is AlterProfileedState) {
         showSuccess(msg: "修改成功");
         hideLoadingDialog();
-        widget.pBloc.add(
+        Get.arguments.pBloc.add(
             InGetProfileEvent(ReqGetProfileEntity()..id = getUserInfo().id));
       } else if (state is NoAlterProfileState) {
         showError(msg: state.msg);
@@ -79,6 +80,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(title: Text("个人资料")),
       body: Container(
@@ -95,115 +97,115 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
             slivers: <Widget>[
               SliverList(
                   delegate: SliverChildListDelegate([
-                BlocBuilder(
-                  bloc: widget.pBloc,
-                  builder: (BuildContext context, state) {
-                    if (state is GetProfileedState) {
-                      return Card(
-                        elevation: 10,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Gaps.vGap(16),
-                                    Text('编号：${state.entity.data.id}'),
-                                    Gaps.vGap(16),
-                                    Text('ID：${state.entity.data.username}'),
-                                    Gaps.vGap(16),
-                                    Text('昵称：${state.entity.data.nickname}'),
-                                    Gaps.vGap(16),
-                                  ],
-                                ),
+                    BlocBuilder(
+                      bloc: Get.arguments.pBloc as GetProfileBloc,
+                      builder: (BuildContext context, state) {
+                        if (state is GetProfileedState) {
+                          return Card(
+                            elevation: 10,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Gaps.vGap(16),
+                                        Text('编号：${state.entity.data.id}'),
+                                        Gaps.vGap(16),
+                                        Text('ID：${state.entity.data.username}'),
+                                        Gaps.vGap(16),
+                                        Text('昵称：${state.entity.data.nickname}'),
+                                        Gaps.vGap(16),
+                                      ],
+                                    ),
+                                  ),
+                                  ImageLoadView(
+                                    state.entity.data.avatarUrl,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  )
+                                ],
                               ),
-                              ImageLoadView(
-                                state.entity.data.avatarUrl,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        width: 0,
-                      );
-                    }
-                  },
-                ),
-                // 修改昵称
-                BlocBuilder(
-                  bloc: widget.pBloc,
-                  builder: (BuildContext context, state) {
-                    if (state is GetProfileedState) {
-                      return Card(
-                        elevation: 10,
-                        child: Container(
-                          padding: EdgeInsets.all(32),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
-                                  controller: TextEditingController(
-                                      text: state.entity.data.nickname),
-                                  onChanged: (s) => {_nickname = s},
-                                ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: 0,
+                          );
+                        }
+                      },
+                    ),
+                    // 修改昵称
+                    BlocBuilder(
+                      bloc: Get.arguments.pBloc as GetProfileBloc,
+                      builder: (BuildContext context, state) {
+                        if (state is GetProfileedState) {
+                          return Card(
+                            elevation: 10,
+                            child: Container(
+                              padding: EdgeInsets.all(32),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: TextField(
+                                      controller: TextEditingController(
+                                          text: state.entity.data.nickname),
+                                      onChanged: (s) => {_nickname = s},
+                                    ),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () => handleAlterNickName(_nickname),
+                                    child: Text("修改昵称"),
+                                  )
+                                ],
                               ),
-                              FlatButton(
-                                onPressed: () => handleAlterNickName(_nickname),
-                                child: Text("修改昵称"),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        width: 0,
-                      );
-                    }
-                  },
-                ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: 0,
+                          );
+                        }
+                      },
+                    ),
 
-                // 修改头像
-                BlocBuilder(
-                  bloc: widget.pBloc,
-                  builder: (BuildContext context, state) {
-                    if (state is GetProfileedState) {
-                      return Card(
-                        elevation: 10,
-                        child: Container(
-                          padding: EdgeInsets.all(32),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
-                                  controller: TextEditingController(
-                                      text: state.entity.data.avatarUrl),
-                                  onChanged: (s) => {_avatarUrl = s},
-                                ),
+                    // 修改头像
+                    BlocBuilder(
+                      bloc: Get.arguments.pBloc as GetProfileBloc,
+                      builder: (BuildContext context, state) {
+                        if (state is GetProfileedState) {
+                          return Card(
+                            elevation: 10,
+                            child: Container(
+                              padding: EdgeInsets.all(32),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: TextField(
+                                      controller: TextEditingController(
+                                          text: state.entity.data.avatarUrl),
+                                      onChanged: (s) => {_avatarUrl = s},
+                                    ),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () => handleAlterUrl(_avatarUrl),
+                                    child: Text("修改头像"),
+                                  )
+                                ],
                               ),
-                              FlatButton(
-                                onPressed: () => handleAlterUrl(_avatarUrl),
-                                child: Text("修改头像"),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        width: 0,
-                      );
-                    }
-                  },
-                ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: 0,
+                          );
+                        }
+                      },
+                    ),
                     Gaps.vGap(50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -228,7 +230,7 @@ class _HomePageState extends BaseLoadingPageState<HomePage> {
 //                  itemCount: data.length,
 //                ),
 //              )
-              ])),
+                  ])),
               SliverGrid(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 600),

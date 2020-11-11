@@ -8,13 +8,14 @@ import 'package:code_running_front/common/utils/toast_utils.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import 'modules/profile/get/credits/get_credits_bloc.dart';
 import 'modules/profile/get/profile/bloc.dart';
@@ -110,8 +111,21 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
         decoration: BoxDecoration(
           border: Border.all(),
         ),
-        child: Column(
-          children: <Widget>[buildMoments(), Expanded(child: buildMenu())],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              buildMoments(),
+              kIsWeb
+                  ? SizedBox(
+                      height: 50,
+                    )
+                  : SizedBox(
+                      height: 0,
+                    ),
+              buildMenu()
+            ],
+          ),
         ),
       );
 
@@ -150,7 +164,9 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
                   "我的编辑器",
                   "开始创作")),
           GestureDetector(
-            onTap: () => {handleRepositoryOpen(context)},
+            onTap: () {
+              handleRepositoryOpen(context);
+            },
             child: buildMenuBtn(
                 FaIcon(
                   FontAwesomeIcons.cloud,
@@ -426,33 +442,33 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
       );
 
   void handleEditorOpen(context) {
-    NavUtil.navigator().push(Routes.codingPage);
+    Get.toNamed(Routes.codingPage);
   }
 
   handleRepositoryOpen(BuildContext context) {
-    NavUtil.navigator().push(Routes.repositoryPage);
+    Get.toNamed(Routes.repositoryPage);
   }
 
   handleGroundOpen(BuildContext context) {
-    NavUtil.navigator().push(Routes.threadGroundPage).then((value) =>
+    Get.toNamed(Routes.threadGroundPage).then((value) =>
         _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
   }
 
   handleMallOpen(BuildContext context) {
-    NavUtil.navigator().push(Routes.storePage);
+    Get.toNamed(Routes.storePage);
   }
 
   handleCartOpen(BuildContext context) {
-    NavUtil.navigator()
-        .push(Routes.cartPage,
+    Get
+        .toNamed(Routes.cartPage,
         arguments: CartPageArguments(getCreditsBloc: _getCreditsBloc))
         .then((value) =>
         _getCreditsBloc.add(InGetCreditsEvent(ReqGetCreditsEntity())));
   }
 
   handleHomeOpen(BuildContext context) {
-    NavUtil.navigator()
-        .push(Routes.homePage,
+    Get
+        .toNamed(Routes.homePage,
         arguments: HomePageArguments(pBloc: _getProfileBloc))
         .then((value) =>
         _getProfileBloc?.add(
@@ -461,15 +477,15 @@ class UserDashBoardState extends BaseLoadingPageState<UserDashBoard> {
   }
 
   handleUserListOpen(BuildContext context) {
-    NavUtil.navigator()
-        .push(Routes.usersPage);
+    Get
+        .toNamed(Routes.usersPage);
   }
 
   handleMallManageOpen(BuildContext context) {
-    NavUtil.navigator().push(Routes.itemsManagePage);
+    Get.toNamed(Routes.itemsManagePage);
   }
 
   handleGroundManageOpen(BuildContext context) {
-    NavUtil.navigator().push(Routes.threadsManagePage);
+    Get.toNamed(Routes.threadsManagePage);
   }
 }

@@ -1,17 +1,16 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:code_running_front/common/utils/px_utils.dart';
 import 'package:code_running_front/res/styles.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
 import 'package:code_running_front/third_libs_manager.dart';
 import 'package:code_running_front/ui/bar/index_appbar.dart';
 import 'package:code_running_front/ui/image_load_view.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/ui/typewriter_text.dart';
 import 'package:code_running_front/utils/enum.dart';
 import 'package:code_running_front/utils/user_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class IndexPage extends StatefulWidget {
@@ -121,14 +120,12 @@ class _IndexPageState extends State<IndexPage> {
 
   void handleEnter() {
     if (getUserInfo() == null)
-      NavUtil.navigator().push(Routes.loginPage,
+      Get.toNamed(Routes.loginPage,
           arguments: LoginPageArguments(
-              networkId: 0, timestamps: DateTime
-              .now()
-              .millisecond));
+              networkId: 0, timestamps: DateTime.now().millisecond));
     else {
-      ExtendedNavigator.root
-          .pushAndRemoveUntil(Routes.userDashBoard, (route) => false);
+      Get
+          .offNamedUntil(Routes.userDashBoard, (route) => false);
     }
   }
 

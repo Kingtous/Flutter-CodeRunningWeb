@@ -4,11 +4,11 @@ import 'package:code_running_front/business/user/models/response/resp_login_enti
 import 'package:code_running_front/business/user/models/response/resp_register_entity.dart';
 import 'package:code_running_front/generated/json/resp_login_entity_helper.dart';
 import 'package:code_running_front/router/my_router.gr.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:code_running_front/utils/sharedpreference_util.dart';
+import 'package:get/get.dart';
 
 void popToUserIndex() {
-  NavUtil.navigator().pushAndRemoveUntil(Routes.indexPage, (route) => false);
+  Get.offNamedUntil(Routes.indexPage, (route) => false);
 }
 
 String getStoredToken() {

@@ -1,7 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class SuccessDialog extends Dialog {
@@ -44,7 +43,7 @@ class SuccessDialog extends Dialog {
                   ),
                   new Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtil().setWidth(10),
+                      top: 10,
                     ),
                     child: new Text(
                       text,

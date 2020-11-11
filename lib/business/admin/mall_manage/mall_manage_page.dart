@@ -5,8 +5,8 @@ import 'package:code_running_front/business/user/models/response/resp_get_mall_i
 import 'package:code_running_front/common/base/page_state.dart';
 import 'package:code_running_front/common/network/http_proxy.dart';
 import 'package:code_running_front/res/styles.dart';
-import 'package:code_running_front/ui/nav_util.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ItemsManagePage extends StatefulWidget {
   @override
@@ -35,6 +35,7 @@ class _ItemsManagePageState extends BaseLoadingPageState<ItemsManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(title: Text("商品目录")),
       body: SingleChildScrollView(
@@ -46,46 +47,46 @@ class _ItemsManagePageState extends BaseLoadingPageState<ItemsManagePage> {
               padding: EdgeInsets.all(50),
               child: _entity == null
                   ? SizedBox(
-                      width: 0,
-                    )
+                width: 0,
+              )
                   : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        sortColumnIndex: 0,
-                        sortAscending: true,
-                        columns: [
-                          DataColumn(label: Text("编号")),
-                          DataColumn(label: Text("商品名称")),
-                          DataColumn(label: Text("商品描述")),
-                          DataColumn(label: Text("商品图片")),
-                          DataColumn(label: Text("所需积分数")),
-                          DataColumn(label: Text("状态")),
-                          DataColumn(label: Text("操作")),
-                        ],
-                        rows: _entity.data
-                            .map((item) => DataRow(cells: [
-                                  DataCell(Text("${item.id}")),
-                                  DataCell(Text(item.name)),
-                                  DataCell(Text("${item.detail}")),
-                                  DataCell(Image.network(
-                                    item.img,
-                                    fit: BoxFit.cover,
-                                    width: 50,
-                                    height: 50,
-                                  )),
-                                  DataCell(Text(item.credits.toString())),
-                                  DataCell(Text(item.isOn ? "已上架" : "已下架")),
-                                  DataCell(Wrap(
-                                    children: [
-                                      FlatButton(
-                                          onPressed: () => handleIsOn(item.id),
-                                          child: Text(item.isOn ? "下架" : "上架")),
-                                    ],
-                                  ))
-                                ]))
-                            .toList(),
-                      ),
-                    ),
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  sortColumnIndex: 0,
+                  sortAscending: true,
+                  columns: [
+                    DataColumn(label: Text("编号")),
+                    DataColumn(label: Text("商品名称")),
+                    DataColumn(label: Text("商品描述")),
+                    DataColumn(label: Text("商品图片")),
+                    DataColumn(label: Text("所需积分数")),
+                    DataColumn(label: Text("状态")),
+                    DataColumn(label: Text("操作")),
+                  ],
+                  rows: _entity.data
+                      .map((item) => DataRow(cells: [
+                    DataCell(Text("${item.id}")),
+                    DataCell(Text(item.name)),
+                    DataCell(Text("${item.detail}")),
+                    DataCell(Image.network(
+                      item.img,
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                    )),
+                    DataCell(Text(item.credits.toString())),
+                    DataCell(Text(item.isOn ? "已上架" : "已下架")),
+                    DataCell(Wrap(
+                      children: [
+                        FlatButton(
+                            onPressed: () => handleIsOn(item.id),
+                            child: Text(item.isOn ? "下架" : "上架")),
+                      ],
+                    ))
+                  ]))
+                      .toList(),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +219,7 @@ class _ItemsManagePageState extends BaseLoadingPageState<ItemsManagePage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       FlatButton(
-                        onPressed: () => NavUtil.navigator().pop(),
+                        onPressed: () => Get.back(),
                         child: Text(
                           "取消",
                           textAlign: TextAlign.center,
@@ -243,15 +244,19 @@ class _ItemsManagePageState extends BaseLoadingPageState<ItemsManagePage> {
   handleSubmit() async {
     var callback = await ApiRequest.addMallItems(_reqAddItemsEntity);
     if (callback != null && callback.data.code == 0) {
-      showSuccess(msg: "添加成功！");
+      Get.back();
+      Get.snackbar("消息", '添加成功', snackPosition: SnackPosition.BOTTOM);
       RespGetMallItemsData data = RespGetMallItemsData()
         ..credits = _reqAddItemsEntity.credits
         ..name = _reqAddItemsEntity.name
         ..detail = _reqAddItemsEntity.detail
         ..img = _reqAddItemsEntity.img
+        ..isOn = false
         ..id = callback.data.data.id;
-      setState(() {
-        _entity.data.add(data);
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          _entity?.data?.add(data);
+        });
       });
     }
   }
